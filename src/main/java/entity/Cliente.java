@@ -12,15 +12,24 @@ public class Cliente {
     
     private int id;
     private String nombre;
+    private String apellidos;
     private String telefono;
     private String direccion;
     
     
     // CONSTRUCTOR
-    
-    public Cliente(String nombre, String telefono, String direccion){
+    public Cliente(int id, String nombre, String apellidos, String telefono, String direccion){
         this.id = id;
         this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.direccion = direccion;
+    }
+    
+    public Cliente(String nombre, String apellidos, String telefono, String direccion){
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
         this.telefono = telefono;
         this.direccion = direccion;
     }
@@ -46,6 +55,14 @@ public class Cliente {
         this.nombre = nombre;
     }
 
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -67,6 +84,7 @@ public class Cliente {
             return 
                 "ID: " + id + "\n" + 
                 "NOMBRE: " + nombre + "\n" +
+                "APELLIDOS: " + apellidos + "\n" +
                 "TELEFONO: " + telefono + "\n" +
                 "DIRECCION: " + direccion + "\n"
                 ;

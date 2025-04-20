@@ -4,8 +4,10 @@
  */
 package ui.frames;
 
+import dao.ClienteDao;
 import javax.swing.JDialog;
-import ui.components.NuevoCliente;
+import javax.swing.JOptionPane;
+import ui.components.ClientePanel;
 
 /**
  *
@@ -19,6 +21,7 @@ public class ClienteFrame extends javax.swing.JFrame {
     public ClienteFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -30,61 +33,65 @@ public class ClienteFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        añadirButton1 = new javax.swing.JButton();
-        buscarButton2 = new javax.swing.JButton();
-        eliminarButton3 = new javax.swing.JButton();
+        registrarClienteButton = new javax.swing.JButton();
+        buscarClienteButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
-        añadirButton1.setText("AÑADIR CLIENTE");
-        añadirButton1.addActionListener(new java.awt.event.ActionListener() {
+        registrarClienteButton.setText("REGISTRAR CLIENTE");
+        registrarClienteButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                añadirButton1ActionPerformed(evt);
+                registrarClienteButtonActionPerformed(evt);
             }
         });
 
-        buscarButton2.setText("BUSCAR CLIENTE");
-
-        eliminarButton3.setText("ELIMINAR CLIENTE");
+        buscarClienteButton.setText("BUSCAR CLIENTE");
+        buscarClienteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarClienteButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(133, 133, 133)
+                .addGap(141, 141, 141)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(añadirButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buscarButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(eliminarButton3))
-                .addContainerGap(137, Short.MAX_VALUE))
+                    .addComponent(registrarClienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(buscarClienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(124, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(añadirButton1)
+                .addGap(40, 40, 40)
+                .addComponent(registrarClienteButton)
                 .addGap(18, 18, 18)
-                .addComponent(buscarButton2)
-                .addGap(18, 18, 18)
-                .addComponent(eliminarButton3)
-                .addContainerGap(105, Short.MAX_VALUE))
+                .addComponent(buscarClienteButton)
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void añadirButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_añadirButton1ActionPerformed
-        NuevoCliente panel = new NuevoCliente();
-        
-        JDialog dialog = new JDialog(this, "Nuevo Cliente", true);
-        dialog.setContentPane(panel);
-        dialog.pack(); // ajusta al tamaño del panel
-        dialog.setLocationRelativeTo(null); // centra la ventana
-        dialog.setResizable(false); // no permite cambiar tamaño
-        dialog.setVisible(true); // muestra la ventana
-    }//GEN-LAST:event_añadirButton1ActionPerformed
+    private void registrarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarClienteButtonActionPerformed
+        ClientePanel clientePanel = new ClientePanel();
+
+        JDialog dialog = new JDialog(this, "Registrar Cliente", true);
+        dialog.setContentPane(clientePanel);
+        dialog.pack();
+        dialog.setLocationRelativeTo(null);
+        dialog.setResizable(false);
+        dialog.setVisible(true);
+    }//GEN-LAST:event_registrarClienteButtonActionPerformed
+
+    private void buscarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarClienteButtonActionPerformed
+        // Muestra un input directo para que el usuario escriba el nombre o ID
+        String input = JOptionPane.showInputDialog(this, "Introduce el número de teléfono o nombre:");
+        ClienteDao.findCliente(input);
+    }//GEN-LAST:event_buscarClienteButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,8 +129,7 @@ public class ClienteFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton añadirButton1;
-    private javax.swing.JButton buscarButton2;
-    private javax.swing.JButton eliminarButton3;
+    private javax.swing.JButton buscarClienteButton;
+    private javax.swing.JButton registrarClienteButton;
     // End of variables declaration//GEN-END:variables
 }
