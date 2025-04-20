@@ -12,13 +12,13 @@ public class Cliente {
     
     private int id;
     private String nombre;
-    private char telefono;
+    private String telefono;
     private String direccion;
     
     
     // CONSTRUCTOR
     
-    public Cliente(int id, String nombre, char telefono, String direccion){
+    public Cliente(String nombre, String telefono, String direccion){
         this.id = id;
         this.nombre = nombre;
         this.telefono = telefono;
@@ -46,11 +46,11 @@ public class Cliente {
         this.nombre = nombre;
     }
 
-    public char getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(char telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
