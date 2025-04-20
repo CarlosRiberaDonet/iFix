@@ -4,10 +4,14 @@
  */
 package ui.frames;
 
-import dao.ClienteDao;
+import controller.ClienteController;
+import entity.Cliente;
+import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import ui.components.ClientePanel;
+import ui.components.ClientesTableDialog;
 
 /**
  *
@@ -89,10 +93,21 @@ public class ClienteFrame extends javax.swing.JFrame {
 
     private void buscarClienteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarClienteButtonActionPerformed
         // Muestra un input directo para que el usuario escriba el nombre o ID
-        String input = JOptionPane.showInputDialog(this, "Introduce el número de teléfono o nombre:");
-        ClienteDao.findCliente(input);
+        String input = JOptionPane.showInputDialog(this, "Introduce nombre completo o número de telefono:");
+        
+        if(input != null && !input.isBlank()){
+            List<Cliente> clientesList = ClienteController.findClientes(input);
+            if(!clientesList.isEmpty()){
+                ClientesTableDialog tableDialog = new ClientesTableDialog(this);
+                tableDialog.cargarClientes(clientesList);
+                tableDialog.setVisible(true);
+            } else{
+                JOptionPane.showMessageDialog(this, "No se encontraron resultados.");
+            }
+        }
     }//GEN-LAST:event_buscarClienteButtonActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

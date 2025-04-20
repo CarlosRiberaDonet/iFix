@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
  */
 public class Utils {
     
-   public static boolean checkNombre(String nombre){
+   public static boolean checkNombre(String input){
        
-       if(nombre != null && !nombre.isBlank()){
+       if(input != null && !input.isBlank()){
            return true;
        } else{
-           JOptionPane.showMessageDialog(null, "No puede dejar el campo nombre en blanco");
+           JOptionPane.showMessageDialog(null, "El campo nombre y/o apellidos no puede estar vacío.");
            return false;
        }
    }
@@ -27,7 +27,7 @@ public class Utils {
        if(telefono != null && telefono.matches("\\d{9}")){
            return true;
        } else{
-           JOptionPane.showMessageDialog(null, "El teléfono debe contener 9 digitos");
+           JOptionPane.showMessageDialog(null, "El teléfono no puede estar vacío y, debe contener 9 dígitos.");
            return false;
        } 
    }

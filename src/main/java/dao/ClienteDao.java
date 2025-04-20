@@ -18,8 +18,10 @@ import java.util.ArrayList;
  */
 public class ClienteDao {
     
-    private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, telefono, direccion) VALUES (?,?,?);";
-    private static final String FIND_CLIENTE = "SELECT * FROM cliente WHERE nombre LIKE ? OR apellidos LIKE ? OR CONCAT(nombre, ' ', apellidos) LIKE ?";
+    private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?);";
+    private static final String FIND_CLIENTE = "SELECT * FROM cliente WHERE " +
+                                                "LOWER(CONCAT(nombre, ' ', apellidos)) LIKE ? " +
+                                                "OR telefono = ? ";
     
     public static boolean addCliente(Cliente cliente){
         
@@ -27,8 +29,9 @@ public class ClienteDao {
         
         try(PreparedStatement stmt = conn.prepareStatement(ADD_CLIENTE)){
             stmt.setString(1, cliente.getNombre());
-            stmt.setString(2, cliente.getTelefono());
-            stmt.setString(3, cliente.getDireccion());
+            stmt.setString (2, cliente.getApellidos());
+            stmt.setString(3, cliente.getTelefono());
+            stmt.setString(4, cliente.getDireccion());
             stmt.executeUpdate();
         }catch(SQLException e){
             System.out.println("Error al añadir cliente a la BD");
@@ -38,16 +41,18 @@ public class ClienteDao {
         }
         return true;
     }
-    
-    public static void findCliente(String input){
+    // NO ENCUENTRA EL CLIENTE INTRODUCIENDO EL NÚMERO DE TELEFONO
+    //
+    //
+    //
+    public static List<Cliente> getClientesList(String input){
         List<Cliente> clienteList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
         
         try(PreparedStatement stmt = conn.prepareStatement(FIND_CLIENTE)){
-            String busqueda = "%" + input.trim() + "%";
+            String busqueda = "%" + input.trim().toLowerCase() + "%";
             stmt.setString(1, busqueda);
             stmt.setString(2, busqueda);
-            stmt.setString(3, busqueda);
             
             ResultSet rs = stmt.executeQuery();
             
@@ -59,11 +64,13 @@ public class ClienteDao {
                     rs.getString("telefono"),
                     rs.getString("direccion")
                 );
+                clienteList.add(cliente);
             }
         } catch(SQLException e){
-            System.out.println("Error al buscar el cliente");
+            System.out.println("Error al buscar el cliente" + e.getMessage());
         } finally{
             ConexionBD.close(conn);
         }
+        return clienteList;
     }
 }

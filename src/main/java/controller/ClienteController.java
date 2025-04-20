@@ -6,6 +6,7 @@ package controller;
 
 import dao.ClienteDao;
 import entity.Cliente;
+import java.util.List;
 import utils.Utils;
 
 /**
@@ -15,13 +16,20 @@ import utils.Utils;
 public class ClienteController {
     
     
-    public static boolean nuevoCliente(String nombre, String telefono, String direccion){
+    public static boolean nuevoCliente(String nombre, String apellidos, String telefono, String direccion){
         
-        if(Utils.checkNombre(nombre) && Utils.checkTelefono(telefono)){
-            Cliente nuevoCliente = new Cliente(nombre, telefono, direccion);
+        if(Utils.checkNombre(nombre) && Utils.checkNombre(apellidos) && Utils.checkTelefono(telefono)){
+            Cliente nuevoCliente = new Cliente(nombre, apellidos, telefono, direccion);
             return ClienteDao.addCliente(nuevoCliente);
         } else{
             return false;
         } 
     }
+    
+    public static List<Cliente> findClientes(String input){
+        
+        return ClienteDao.getClientesList(input);
+    }
 }
+
+
