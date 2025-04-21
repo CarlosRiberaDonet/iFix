@@ -26,10 +26,18 @@ public class ClienteController {
         } 
     }
     
-    public static List<Cliente> findClientes(String input){
-        
+    public static List<Cliente> findClientes(String input){    
         return ClienteDao.getClientesList(input);
     }
+    
+    public static boolean eliminarCliente(String telefono){
+        return ClienteDao.deleteCliente(telefono);
+    }
+    
+     public static List<Cliente> getClientesList(){
+         
+         return ClienteDao.getClientesList("");
+     }
 }
 
 

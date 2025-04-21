@@ -30,6 +30,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         clienteFrameButton = new javax.swing.JButton();
         reparacionesFrameButton = new javax.swing.JButton();
+        salirButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -43,6 +44,13 @@ public class MainFrame extends javax.swing.JFrame {
 
         reparacionesFrameButton.setText("REPARACIONES");
 
+        salirButton.setText("SALIR");
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -51,7 +59,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(143, 143, 143)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(clienteFrameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(reparacionesFrameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(reparacionesFrameButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(salirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(143, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -61,7 +70,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(clienteFrameButton)
                 .addGap(18, 18, 18)
                 .addComponent(reparacionesFrameButton)
-                .addContainerGap(197, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(salirButton)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         setBounds(0, 0, 416, 308);
@@ -71,6 +82,10 @@ public class MainFrame extends javax.swing.JFrame {
         ClienteFrame clienteFrame = new ClienteFrame();
         clienteFrame.setVisible(true);    
     }//GEN-LAST:event_clienteFrameButtonActionPerformed
+
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_salirButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -111,5 +126,6 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clienteFrameButton;
     private javax.swing.JButton reparacionesFrameButton;
+    private javax.swing.JButton salirButton;
     // End of variables declaration//GEN-END:variables
 }

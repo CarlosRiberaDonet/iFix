@@ -28,8 +28,16 @@ public class ClientesTableDialog extends JDialog {
 
         // Crear la tabla con columnas
         String[] columnas = {"ID", "Nombre", "Apellidos", "Teléfono", "Dirección"};
-        modelo = new DefaultTableModel(columnas, 0);
+        modelo = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tablaClientes = new JTable(modelo);
+        tablaClientes.getTableHeader().setReorderingAllowed(false); // impedir mover columnas
+        tablaClientes.setAutoCreateRowSorter(false); // desactiva orden automático
+
         JScrollPane scroll = new JScrollPane(tablaClientes);
 
         add(scroll, BorderLayout.CENTER);
@@ -51,5 +59,16 @@ public class ClientesTableDialog extends JDialog {
                 c.getDireccion()
             });
         }
+    }
+    
+    public void cargarCliente(Cliente cliente){
+         modelo.setRowCount(0);
+            modelo.addRow(new Object[]{
+                cliente.getId(),
+                cliente.getNombre(),
+                cliente.getApellidos(),
+                cliente.getTelefono(),
+                cliente.getDireccion()
+            });
     }
 }

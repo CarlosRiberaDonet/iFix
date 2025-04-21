@@ -22,6 +22,7 @@ public class ClienteDao {
     private static final String FIND_CLIENTE = "SELECT * FROM cliente WHERE " +
                                                 "LOWER(CONCAT(nombre, ' ', apellidos)) LIKE ? " +
                                                 "OR telefono = ? ";
+    private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE telefono = ?";
     
     public static boolean addCliente(Cliente cliente){
         
@@ -41,18 +42,16 @@ public class ClienteDao {
         }
         return true;
     }
-    // NO ENCUENTRA EL CLIENTE INTRODUCIENDO EL NÚMERO DE TELEFONO
-    //
-    //
-    //
+   
     public static List<Cliente> getClientesList(String input){
         List<Cliente> clienteList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
         
         try(PreparedStatement stmt = conn.prepareStatement(FIND_CLIENTE)){
-            String busqueda = "%" + input.trim().toLowerCase() + "%";
-            stmt.setString(1, busqueda);
-            stmt.setString(2, busqueda);
+            String nombre = "%" + input.trim().toLowerCase() + "%";
+            String telefono = input.trim();
+            stmt.setString(1, nombre);
+            stmt.setString(2, telefono);
             
             ResultSet rs = stmt.executeQuery();
             
@@ -72,5 +71,25 @@ public class ClienteDao {
             ConexionBD.close(conn);
         }
         return clienteList;
+    }
+    
+    public static boolean deleteCliente(String telefono){
+        
+        Connection conn = ConexionBD.connect();
+        
+        try{
+            PreparedStatement stmt = conn.prepareStatement(DELETE_CLIENTE);
+            stmt.setString(1, telefono);
+            int resultado = stmt.executeUpdate();
+            if(resultado > 0){
+            return true; 
+            }
+        } catch(SQLException e){
+            System.out.println("Error al eliminar el cliente: " + e.getMessage());
+            return false;
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return false;
     }
 }

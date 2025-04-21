@@ -9,7 +9,6 @@ import entity.Cliente;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import ui.components.ClientePanel;
 import ui.components.ClientesTableDialog;
 
@@ -39,6 +38,9 @@ public class ClienteFrame extends javax.swing.JFrame {
 
         registrarClienteButton = new javax.swing.JButton();
         buscarClienteButton = new javax.swing.JButton();
+        eliminarButton = new javax.swing.JButton();
+        listarButton = new javax.swing.JButton();
+        salirButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,6 +58,27 @@ public class ClienteFrame extends javax.swing.JFrame {
             }
         });
 
+        eliminarButton.setText("ELIMINAR CLIENTE");
+        eliminarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarButtonActionPerformed(evt);
+            }
+        });
+
+        listarButton.setText("LISTAR TODOS");
+        listarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listarButtonActionPerformed(evt);
+            }
+        });
+
+        salirButton.setText("SALIR");
+        salirButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salirButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -63,9 +86,12 @@ public class ClienteFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(141, 141, 141)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(registrarClienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buscarClienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(124, Short.MAX_VALUE))
+                    .addComponent(registrarClienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 136, Short.MAX_VALUE)
+                    .addComponent(buscarClienteButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(listarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(salirButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(eliminarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -74,7 +100,13 @@ public class ClienteFrame extends javax.swing.JFrame {
                 .addComponent(registrarClienteButton)
                 .addGap(18, 18, 18)
                 .addComponent(buscarClienteButton)
-                .addContainerGap(196, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(listarButton)
+                .addGap(18, 18, 18)
+                .addComponent(eliminarButton)
+                .addGap(18, 18, 18)
+                .addComponent(salirButton)
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();
@@ -106,6 +138,31 @@ public class ClienteFrame extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_buscarClienteButtonActionPerformed
+
+    private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
+        dispose();
+    }//GEN-LAST:event_salirButtonActionPerformed
+
+    private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
+        String input = JOptionPane.showInputDialog(this, "Introduce el número de télefono");
+        
+        if(input != null && input.trim().matches("\\d{9}")){
+            if(ClienteController.eliminarCliente(input)){
+                JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente");
+            } else{
+                JOptionPane.showMessageDialog(this, "Error al eliminar el cliente. Cliente no encontrado", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else{
+            JOptionPane.showMessageDialog(this, "El teléfono debe contener 9 dígitos sin espacios", "ERROR", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_eliminarButtonActionPerformed
+
+    private void listarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listarButtonActionPerformed
+        List<Cliente> clientesList = ClienteController.getClientesList();
+        ClientesTableDialog tableDialog = new ClientesTableDialog(this);
+                tableDialog.cargarClientes(clientesList);
+                tableDialog.setVisible(true);
+    }//GEN-LAST:event_listarButtonActionPerformed
 
     
     /**
@@ -145,6 +202,9 @@ public class ClienteFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buscarClienteButton;
+    private javax.swing.JButton eliminarButton;
+    private javax.swing.JButton listarButton;
     private javax.swing.JButton registrarClienteButton;
+    private javax.swing.JButton salirButton;
     // End of variables declaration//GEN-END:variables
 }
