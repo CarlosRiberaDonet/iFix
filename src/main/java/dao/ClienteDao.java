@@ -19,9 +19,7 @@ import java.util.ArrayList;
 public class ClienteDao {
     
     private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?);";
-    private static final String FIND_CLIENTE = "SELECT * FROM cliente WHERE " +
-                                                "LOWER(CONCAT(nombre, ' ', apellidos)) LIKE ? " +
-                                                "OR telefono = ? ";
+   
     private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE telefono = ?";
     
     public static boolean addCliente(Cliente cliente){
@@ -43,19 +41,46 @@ public class ClienteDao {
         return true;
     }
    
-    public static List<Cliente> getClientesList(String input){
+    public static List<Cliente> findCliente(String nombre, String apellidos, String telefono) {
         List<Cliente> clienteList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
-        
-        try(PreparedStatement stmt = conn.prepareStatement(FIND_CLIENTE)){
-            String nombre = "%" + input.trim().toLowerCase() + "%";
-            String telefono = input.trim();
-            stmt.setString(1, nombre);
-            stmt.setString(2, telefono);
-            
+
+        try {
+            // Construcción dinámica de la consulta
+            String sql = "SELECT * FROM cliente WHERE 1=1";
+            List<String> parametros = new ArrayList<>();
+
+            // Si el usuario escribe algo en nombre
+            if (!nombre.trim().isEmpty()) {
+                sql += " AND LOWER(nombre) LIKE ?";
+                parametros.add(nombre.trim().toLowerCase() + "%");
+            }
+
+            // Si el usuario escribe algo en apellidos
+            if (!apellidos.trim().isEmpty()) {
+                sql += " AND LOWER(apellidos) LIKE ?";
+                parametros.add(apellidos.trim().toLowerCase() + "%");
+            }
+
+            // Si el usuario escribe algo en teléfono
+            if (!telefono.trim().isEmpty()) {
+                sql += " AND telefono LIKE ?";
+                parametros.add(telefono.trim() + "%");
+            }
+
+            // Preparamos la consulta con los filtros aplicados
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            // Insertamos los valores en orden en el PreparedStatement
+            for (int i = 0; i < parametros.size(); i++) {
+                stmt.setString(i + 1, parametros.get(i));
+            }
+
+            // Ejecutamos la consulta
             ResultSet rs = stmt.executeQuery();
-            
-            while(rs.next()){
+
+            // Recorremos el resultado y creamos objetos Cliente
+            while (rs.next()) {
                 Cliente cliente = new Cliente(
                     rs.getInt("id"),
                     rs.getString("nombre"),
@@ -65,14 +90,16 @@ public class ClienteDao {
                 );
                 clienteList.add(cliente);
             }
-        } catch(SQLException e){
-            System.out.println("Error al buscar el cliente" + e.getMessage());
-        } finally{
+
+        } catch (SQLException e) {
+            System.out.println("Error al buscar el cliente: " + e.getMessage());
+        } finally {
             ConexionBD.close(conn);
         }
+
         return clienteList;
     }
-    
+
     public static boolean deleteCliente(String telefono){
         
         Connection conn = ConexionBD.connect();

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.ReparacionDao;
 import entity.Reparacion;
 import java.util.List;
 
@@ -13,8 +14,13 @@ import java.util.List;
  */
 public class ReparacionController {
     
-    public static List<Reparacion> findReparaciones(String input){
+    public static void crearReparacion(Reparacion reparacion){
         
-        return null;
+    }
+    
+    public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
+        
+        List<Reparacion> reparacionesList = ReparacionDao.getReparacionesList(clienteId);
+        return reparacionesList;
     }
 }

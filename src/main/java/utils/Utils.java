@@ -31,4 +31,12 @@ public class Utils {
            return false;
        } 
    }
+   
+   public static String checkTextField(String textField){
+       
+       if(textField == null || textField.isEmpty()){
+           textField  = "";
+       }
+       return textField;
+   }
 }

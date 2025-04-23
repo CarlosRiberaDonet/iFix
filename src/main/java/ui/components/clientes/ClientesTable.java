@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ui.components;
+package ui.components.clientes;
 
 import entity.Cliente;
 import javax.swing.*;
@@ -13,20 +13,14 @@ import java.util.List;
  *
  * @author Carlos Ribera
  */
-public class ClientesTableDialog extends JDialog {
+public class ClientesTable extends JPanel {
 
     private JTable tablaClientes;
     private DefaultTableModel modelo;
 
-    public ClientesTableDialog(Frame parent) {
-        super(parent, "Resultados de búsqueda", true);
-        initUI();
-    }
-
-    private void initUI() {
+    public ClientesTable() {
         setLayout(new BorderLayout());
 
-        // Crear la tabla con columnas
         String[] columnas = {"ID", "Nombre", "Apellidos", "Teléfono", "Dirección"};
         modelo = new DefaultTableModel(columnas, 0) {
             @Override
@@ -34,18 +28,13 @@ public class ClientesTableDialog extends JDialog {
                 return false;
             }
         };
+
         tablaClientes = new JTable(modelo);
-        tablaClientes.getTableHeader().setReorderingAllowed(false); // impedir mover columnas
-        tablaClientes.setAutoCreateRowSorter(false); // desactiva orden automático
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
+        tablaClientes.setAutoCreateRowSorter(false);
 
         JScrollPane scroll = new JScrollPane(tablaClientes);
-
         add(scroll, BorderLayout.CENTER);
-
-        // Tamaño y cierre
-        setSize(600, 300);
-        setLocationRelativeTo(getParent());
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     public void cargarClientes(List<Cliente> lista) {
@@ -60,15 +49,9 @@ public class ClientesTableDialog extends JDialog {
             });
         }
     }
-    
-    public void cargarCliente(Cliente cliente){
-         modelo.setRowCount(0);
-            modelo.addRow(new Object[]{
-                cliente.getId(),
-                cliente.getNombre(),
-                cliente.getApellidos(),
-                cliente.getTelefono(),
-                cliente.getDireccion()
-            });
+
+    public JTable getTablaClientes() {
+        return tablaClientes;
     }
 }
+

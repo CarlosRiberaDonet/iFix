@@ -26,18 +26,17 @@ public class ClienteController {
         } 
     }
     
-    public static List<Cliente> findClientes(String input){    
-        return ClienteDao.getClientesList(input);
+    public static List<Cliente> findClientes(String nombre, String apellidos, String telefono){
+        
+        nombre = Utils.checkTextField(nombre);
+        apellidos = Utils.checkTextField(apellidos);
+        telefono = Utils.checkTextField(telefono);
+        return ClienteDao.findCliente(nombre, apellidos, telefono);
     }
     
     public static boolean eliminarCliente(String telefono){
         return ClienteDao.deleteCliente(telefono);
     }
-    
-     public static List<Cliente> getClientesList(){
-         
-         return ClienteDao.getClientesList("");
-     }
 }
 
 

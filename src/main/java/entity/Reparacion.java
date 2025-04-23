@@ -20,11 +20,12 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private int idDispositivo;
+    String nombreDispositivo;
     private int idtipoReparacion;
     private int idCliente;
+    String nombreCliente;
     
     // CONSTRUCTOR
-
     public Reparacion(int id, Date fechaEntrada, Date fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, int idDispositivo, int idtipoReparacion, int idCliente) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
@@ -36,8 +37,17 @@ public class Reparacion {
         this.idtipoReparacion = idtipoReparacion;
         this.idCliente = idCliente;
     }
-
-    public Reparacion() {
+    
+    public Reparacion(Date fechaEntrada, Date fechaSalida, String nombreCliente, String nombreDispositivo, BigDecimal precioReparacion){
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+        this.nombreCliente = nombreCliente;
+        this.nombreDispositivo = nombreDispositivo;
+        this.precioReparacion = precioReparacion;
+    }
+    
+    public Reparacion(){
+        
     }
     
     // GETTERS Y SETTERS
@@ -98,6 +108,14 @@ public class Reparacion {
         this.idDispositivo = idDispositivo;
     }
 
+    public String getNombreDispositivo() {
+        return nombreDispositivo;
+    }
+
+    public void setNombreDispositivo(String nombreDispositivo) {
+        this.nombreDispositivo = nombreDispositivo;
+    }
+
     public int getIdtipoReparacion() {
         return idtipoReparacion;
     }
@@ -112,5 +130,13 @@ public class Reparacion {
 
     public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 }

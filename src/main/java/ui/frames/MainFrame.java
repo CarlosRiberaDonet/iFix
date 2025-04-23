@@ -43,6 +43,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         reparacionesFrameButton.setText("REPARACIONES");
+        reparacionesFrameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reparacionesFrameButtonActionPerformed(evt);
+            }
+        });
 
         salirButton.setText("SALIR");
         salirButton.addActionListener(new java.awt.event.ActionListener() {
@@ -86,6 +91,11 @@ public class MainFrame extends javax.swing.JFrame {
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed
         System.exit(0);
     }//GEN-LAST:event_salirButtonActionPerformed
+
+    private void reparacionesFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reparacionesFrameButtonActionPerformed
+        ReparacionFrame reparacionFrame = new ReparacionFrame();
+        reparacionFrame.setVisible(true);
+    }//GEN-LAST:event_reparacionesFrameButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package ui.components;
+package ui.components.clientes;
 
 import controller.ClienteController;
 import java.awt.Window;
@@ -13,12 +13,12 @@ import javax.swing.SwingUtilities;
  *
  * @author Carlos Ribera
  */
-public class ClientePanel extends javax.swing.JPanel {
+public class CrearClienteJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form NuevoCliente
      */
-    public ClientePanel() {
+    public CrearClienteJPanel() {
         initComponents();
     }
 
