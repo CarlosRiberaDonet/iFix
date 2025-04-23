@@ -20,7 +20,7 @@ public class ReparacionDao {
     
     private static final String SELECT_REPARACIONES = "SELECT r.fecha_entrada, "
                                                     + "r.fecha_salida, "
-                                                    + "d.nombre AS dispositivo, "
+                                                    + "d.modelo AS dispositivo, "
                                                     + "r.precio_reparacion "
                                                     + "FROM reparacion r "
                                                     + "JOIN dispositivo d ON r.id_dispositivo = d.id "

@@ -20,6 +20,7 @@ public class ReparacionController {
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
         
+        System.out.println("ID CLIENTE: " + clienteId);
         List<Reparacion> reparacionesList = ReparacionDao.getReparacionesList(clienteId);
         return reparacionesList;
     }
