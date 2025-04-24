@@ -27,7 +27,7 @@ import ui.components.clientes.ClientesTable;
 
     public class ClienteFrame extends JFrame{
         
-        private ClientesTable tablaPanel;
+        private ClientesTable tablePanel;
         private JTextField nombreTextField;
         private JTextField apellidosTextField;
         private JTextField telefonoTextField;
@@ -77,8 +77,8 @@ import ui.components.clientes.ClientesTable;
 
         add(topPanel, BorderLayout.NORTH);
         
-        tablaPanel = new ClientesTable();
-        add(tablaPanel, BorderLayout.CENTER);
+        tablePanel = new ClientesTable();
+        add(tablePanel, BorderLayout.CENTER);
         
         buscarButton.addActionListener( e -> buscarClienteButton());
         crearClienteButton.addActionListener( e -> crearClienteButton());
@@ -92,9 +92,9 @@ import ui.components.clientes.ClientesTable;
         telefono = telefonoTextField.getText();
         
         List<Cliente> clientesList = ClienteController.findClientes(nombre, apellidos, telefono);
-        tablaPanel.cargarClientes(clientesList);
+        tablePanel.cargarClientes(clientesList);
         
-        tablaPanel.getTablaClientes().addMouseListener( new ClienteTableMouseListener(clientesList, tablaPanel.getTablaClientes(), this)
+        tablePanel.getTablaClientes().addMouseListener(new ClienteTableMouseListener(clientesList, tablePanel.getTablaClientes())
         );
     }
     
