@@ -13,12 +13,12 @@ import javax.swing.SwingUtilities;
  *
  * @author Carlos Ribera
  */
-public class CrearClienteJPanel extends javax.swing.JPanel {
+public class CrearClientePanel extends javax.swing.JPanel {
 
     /**
      * Creates new form NuevoCliente
      */
-    public CrearClienteJPanel() {
+    public CrearClientePanel() {
         initComponents();
     }
 

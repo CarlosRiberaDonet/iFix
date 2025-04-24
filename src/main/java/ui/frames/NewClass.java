@@ -9,7 +9,7 @@ import entity.Cliente;
 import java.util.List;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import ui.components.clientes.CrearClienteJPanel;
+import ui.components.clientes.CrearClientePanel;
 import ui.components.clientes.ClientesTable;
 
 /**

@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import ui.components.clientes.CrearClienteJPanel;
+import ui.components.clientes.CrearClientePanel;
 import ui.components.clientes.ClienteTableMouseListener;
 import ui.components.clientes.ClientesTable;
 
@@ -104,7 +104,7 @@ import ui.components.clientes.ClientesTable;
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());
         
-        CrearClienteJPanel panel = new CrearClienteJPanel();
+        CrearClientePanel panel = new CrearClientePanel();
         dialog.add(panel, BorderLayout.CENTER);
         dialog.setVisible(true);
     }

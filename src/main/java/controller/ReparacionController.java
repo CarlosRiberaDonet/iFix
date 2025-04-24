@@ -6,6 +6,7 @@ package controller;
 
 import dao.ReparacionDao;
 import entity.Reparacion;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -20,8 +21,17 @@ public class ReparacionController {
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
         
-        System.out.println("ID CLIENTE: " + clienteId);
         List<Reparacion> reparacionesList = ReparacionDao.getReparacionesList(clienteId);
         return reparacionesList;
+    }
+    
+    public static List<Reparacion> findReparacionesByTelefono(String telefono){
+        
+        List<Reparacion> reparacionesList = ReparacionDao.getReparacionesbyTelefono(telefono);
+        return reparacionesList;
+    }
+    
+    public static List<Reparacion> buscarReparaciones(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
+        return ReparacionDao.buscarReparaciones(telefono, fechaEntrada, fechaSalida);
     }
 }

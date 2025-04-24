@@ -4,6 +4,10 @@
  */
 package utils;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import static java.time.temporal.TemporalQueries.zoneId;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -39,4 +43,13 @@ public class Utils {
        }
        return textField;
    }
+   
+   public static LocalDate dateToLocalDate(Date fechaDate) {
+        if (fechaDate != null) {
+            return fechaDate.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+        }
+        return null;
+    }
 }
