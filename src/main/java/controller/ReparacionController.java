@@ -31,7 +31,11 @@ public class ReparacionController {
         return reparacionesList;
     }
     
-    public static List<Reparacion> buscarReparaciones(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
+    public static List<Reparacion> findReparaciones(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
         return ReparacionDao.buscarReparaciones(telefono, fechaEntrada, fechaSalida);
+    }
+    
+    public static Reparacion getReparacionById(int idReparacion){        
+        return ReparacionDao.getReparacionById(idReparacion);
     }
 }

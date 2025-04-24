@@ -10,7 +10,6 @@ import entity.Reparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -18,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import ui.components.reparaciones.ReparacionTableMouseListener;
 import ui.components.reparaciones.ReparacionesTable;
 import utils.Utils;
 
@@ -30,8 +31,8 @@ public class ReparacionFrame extends JFrame {
     private ReparacionesTable tablePanel;
     private JTextField telefonoTextField;
     private JButton buscarButton;
-    JDateChooser fechaEntradaChooser;
-    JDateChooser fechaSalidaChooser;
+    private JDateChooser fechaEntradaChooser;
+    private JDateChooser fechaSalidaChooser;
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
@@ -70,16 +71,19 @@ public class ReparacionFrame extends JFrame {
         tablePanel = new ReparacionesTable(true);
         add(tablePanel, BorderLayout.CENTER);
         
-       buscarButton.addActionListener( e -> buscarButton());
+       buscarButton.addActionListener( e -> buscarReparacionButton());
+       
+       tablePanel.getTablaReparaciones().addMouseListener(
+       new ReparacionTableMouseListener(tablePanel.getTablaReparaciones()));
     }
     
-     private void buscarButton(){
+     private void buscarReparacionButton(){
           
         String telefono = telefonoTextField.getText().trim();
         LocalDate fechaEntrada = Utils.dateToLocalDate(fechaEntradaChooser.getDate());
         LocalDate fechaSalida = Utils.dateToLocalDate(fechaSalidaChooser.getDate());
         
-        List<Reparacion> reparacionesList = ReparacionController.buscarReparaciones(telefono, fechaEntrada, fechaSalida);
+        List<Reparacion> reparacionesList = ReparacionController.findReparaciones(telefono, fechaEntrada, fechaSalida);
         tablePanel.cargarReparaciones(reparacionesList);
     }
 }

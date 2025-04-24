@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Carlos Ribera
  */
 public class ReparacionesTable extends JPanel{
+    
     private JTable tablaReparaciones;
     private DefaultTableModel modelo;
     private boolean mostrarNombreCliente;
@@ -28,7 +29,7 @@ public class ReparacionesTable extends JPanel{
         
         // Si la tabla se llama desde ReparacionFrame, muestro estas columnas
         if (tableReparaciones) {
-            modelo = new DefaultTableModel(new String[]{"Entrada", "Salida", "Cliente", "Dispositivo", "Importe"}, 0) {
+            modelo = new DefaultTableModel(new String[]{"ID", " Entrada", "Salida", "Cliente", "Dispositivo", "Importe"}, 0) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
@@ -54,11 +55,12 @@ public class ReparacionesTable extends JPanel{
         for (Reparacion r : lista) {
             if (mostrarNombreCliente) {
                 modelo.addRow(new Object[]{
+                    r.getId(),
                     r.getFechaEntrada(),
                     r.getFechaSalida(),
                     r.getNombreCliente(),
                     r.getNombreDispositivo(),
-                    r.getPrecioReparacion()
+                    r.getPrecioReparacion(),
                 });
             } else {
                 modelo.addRow(new Object[]{
@@ -70,5 +72,9 @@ public class ReparacionesTable extends JPanel{
             }
         }
     }
+     
+     public JTable getTablaReparaciones(){
+         return tablaReparaciones;
+     }
 }
 

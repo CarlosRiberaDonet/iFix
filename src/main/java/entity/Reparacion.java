@@ -20,12 +20,28 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private int idDispositivo;
-    String nombreDispositivo;
+    private String nombreDispositivo;
+    private String nombreFabricante;
     private int idtipoReparacion;
+    private String tipoReparacion;
     private int idCliente;
-    String nombreCliente;
+    private String nombreCliente;
     
     // CONSTRUCTOR
+    public Reparacion(int id, Date fechaEntrada, Date fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, String nombreDispositivo, String nombreFabricante, String tipoReparacion, String nombreCliente) {
+        this.id = id;
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+        this.precioReparacion = precioReparacion;
+        this.garantia = garantia;
+        this.comentarios = comentarios;
+        this.nombreDispositivo = nombreDispositivo;
+        this.nombreFabricante = nombreFabricante;
+        this.tipoReparacion = tipoReparacion;
+        this.nombreCliente = nombreCliente;
+    }
+    
+
     public Reparacion(int id, Date fechaEntrada, Date fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, int idDispositivo, int idtipoReparacion, int idCliente) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
@@ -116,12 +132,28 @@ public class Reparacion {
         this.nombreDispositivo = nombreDispositivo;
     }
 
+    public String getNombreFabricante() {
+        return nombreFabricante;
+    }
+
+    public void setNombreFabricante(String nombreFabricante) {
+        this.nombreFabricante = nombreFabricante;
+    }
+
     public int getIdtipoReparacion() {
         return idtipoReparacion;
     }
 
     public void setIdtipoReparacion(int idtipoReparacion) {
         this.idtipoReparacion = idtipoReparacion;
+    }
+
+    public String getTipoReparacion() {
+        return tipoReparacion;
+    }
+
+    public void setTipoReparacion(String tipoReparacion) {
+        this.tipoReparacion = tipoReparacion;
     }
 
     public int getIdCliente() {
