@@ -26,7 +26,6 @@ public class ReparacionesTable extends JPanel{
     public ReparacionesTable(boolean tableReparaciones) {
         this.mostrarNombreCliente = tableReparaciones;
         setLayout(new BorderLayout());
-        
         // Si la tabla se llama desde ReparacionFrame, muestro estas columnas
         if (tableReparaciones) {
             modelo = new DefaultTableModel(new String[]{"ID", " Entrada", "Salida", "Cliente", "Dispositivo", "Importe"}, 0) {

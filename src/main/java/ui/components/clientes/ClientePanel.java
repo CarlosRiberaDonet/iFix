@@ -16,6 +16,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import ui.components.reparaciones.ReparacionesTable;
+import ui.components.reparaciones.CrearReparacion;
+
 
 /**
  *
@@ -24,9 +26,10 @@ import ui.components.reparaciones.ReparacionesTable;
 public class ClientePanel extends JPanel{
     
     private JFrame mainFrame;
-    
+    private Cliente cliente;
     public void mostrarReparacionesCliente(Cliente clienteSelect){
 
+        cliente = clienteSelect;
         List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSelect.getId());
 
         ReparacionesTable panel = new ReparacionesTable(false);
@@ -40,7 +43,7 @@ public class ClientePanel extends JPanel{
         menuPanel.add(btnAñadir);
         menuPanel.add(btnEliminar);
         menuPanel.add(btnBuscar);
-
+        
         // Añadir espaciado interno
         menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
@@ -51,6 +54,19 @@ public class ClientePanel extends JPanel{
         dialog.setLayout(new BorderLayout());
         dialog.add(menuPanel, BorderLayout.NORTH);
         dialog.add(panel, BorderLayout.CENTER);
+        btnAñadir.addActionListener( e -> abrirCrearReparacion());
         dialog.setVisible(true);
+    }
+    
+    private void abrirCrearReparacion() {
+        JDialog crearDialog = new JDialog(mainFrame, "Crear Reparación", true);
+        crearDialog.setSize(700, 600);
+        crearDialog.setLocationRelativeTo(mainFrame);
+        crearDialog.setLayout(new BorderLayout());
+
+        ui.components.reparaciones.CrearReparacion crearReparacionPanel = new CrearReparacion(cliente);
+        crearDialog.add(crearReparacionPanel, BorderLayout.CENTER);
+
+        crearDialog.setVisible(true);
     }
 }

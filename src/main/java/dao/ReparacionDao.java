@@ -111,12 +111,21 @@ public class ReparacionDao {
         List<Reparacion> reparacionesList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
         
-        String query = "SELECT r.fecha_entrada, r.fecha_salida, c.nombre AS cliente, d.modelo AS dispositivo, "
-                     + "r.precio_reparacion AS precio "
-                     + "FROM reparacion r "
-                     + "JOIN cliente c ON r.id_cliente = c.id "
-                     + "JOIN dispositivo d ON r.id_dispositivo = d.id "
-                     + "WHERE 1=1";
+        String query = "SELECT r.id AS idReparacion, "
+                + "r.fecha_entrada, "
+                + "r.fecha_salida, "
+                + "r.precio_reparacion AS importe, "
+                + "r.garantia, "
+                + "r.comentarios, "
+                + "c.nombre AS cliente, "
+                + "d.marca, "
+                + "d.modelo, "
+                + "t.tipo AS reparacion "
+                + "FROM reparacion r "
+                + "JOIN cliente c ON r.id_cliente = c.id "
+                + "JOIN dispositivo d ON r.id_dispositivo = d.id "
+                + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
+                + "WHERE 1=1";
         
         List<Object> parametros = new ArrayList<>();
         
@@ -137,11 +146,17 @@ public class ReparacionDao {
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
             Reparacion r = new Reparacion();
+            r.setId(rs.getInt("idReparacion"));
             r.setFechaEntrada(rs.getDate("fecha_entrada"));
             r.setFechaSalida(rs.getDate("fecha_salida"));
+            r.setPrecioReparacion(rs.getBigDecimal("importe"));
+            r.setGarantia(rs.getBoolean("garantia"));
+            r.setComentarios(rs.getString("comentarios"));
             r.setNombreCliente(rs.getString("cliente"));
-            r.setNombreDispositivo(rs.getString("dispositivo"));
-            r.setPrecioReparacion(rs.getBigDecimal("precio"));
+            r.setNombreFabricante(rs.getString("marca"));
+            r.setNombreDispositivo(rs.getString("modelo"));
+            r.setTipoReparacion(rs.getString("reparacion"));
+
             reparacionesList.add(r);
         }
         }catch(SQLException e){

@@ -32,8 +32,8 @@ public class ReparacionTableMouseListener extends MouseAdapter {
         if (e.getClickCount() == 2 && reparacionestable.getSelectedRow() != -1) {
             int fila = reparacionestable.getSelectedRow();
             int id = (int) reparacionestable.getValueAt(fila, 0);
+            
             Reparacion reparacion = ReparacionController.getReparacionById(id);
-
             if (reparacion == null) {
                 JOptionPane.showMessageDialog(reparacionestable, "No se pudo cargar la reparación", "Error", JOptionPane.ERROR_MESSAGE);
                 return;

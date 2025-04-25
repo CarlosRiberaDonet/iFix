@@ -50,8 +50,8 @@ public class Dispositivo {
         this.modelo = modelo;
     }
 
-    @Override
+     @Override
     public String toString() {
-        return "Dispositivo{" + "id=" + id + ", marca=" + marca + ", modelo=" + modelo + '}';
+        return modelo;
     }
 }

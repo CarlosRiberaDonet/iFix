@@ -7,6 +7,7 @@ package controller;
 import dao.ReparacionDao;
 import entity.Reparacion;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,7 @@ public class ReparacionController {
     
     public static void crearReparacion(Reparacion reparacion){
         
+       
     }
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
@@ -35,7 +37,7 @@ public class ReparacionController {
         return ReparacionDao.buscarReparaciones(telefono, fechaEntrada, fechaSalida);
     }
     
-    public static Reparacion getReparacionById(int idReparacion){        
+    public static Reparacion getReparacionById(int idReparacion){
         return ReparacionDao.getReparacionById(idReparacion);
     }
 }
