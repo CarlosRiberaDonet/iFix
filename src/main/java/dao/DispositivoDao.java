@@ -4,7 +4,7 @@
  */
 package dao;
 
-import entity.Dispositivo;
+import entity.Modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,14 +18,15 @@ import java.util.List;
  */
 public class DispositivoDao {
     
-    private static final String MARCA = "SELECT DISTINCT marca FROM dispositivo ";
-    private static final String SELECT_DISPOSITIVO = "SELECT * FROM dispositivo WHERE marca = ? ";
+    private static final String SELECT_MARCA = "SELECT marca FROM marca ";
+    private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE nombre = ? AND id_marca = ?";
+    private static final String MAX_ID_MODELO = "SELECT MAX(id) FROM modelo";
 
-    public static List<String> getMarcasUnicas(){
+    public static List<String> getMarcas(){
         List<String> marcas = new ArrayList<>();
         Connection conn = ConexionBD.connect();
         try{
-            PreparedStatement stmt = conn.prepareStatement(MARCA);
+            PreparedStatement stmt = conn.prepareStatement(SELECT_MARCA);
             ResultSet rs = stmt.executeQuery();
 
         while (rs.next()) {
@@ -40,27 +41,51 @@ public class DispositivoDao {
         return marcas;
     }
 
-    public static List<Dispositivo> getModelosPorMarca(String marca){
-        List<Dispositivo> dispositivos = new ArrayList<>();
+    public static Modelo checkModelo(int idMarca, String modelo){
+        
         Connection conn = ConexionBD.connect();
         
+        
         try{
-             PreparedStatement stmt = conn.prepareStatement(SELECT_DISPOSITIVO);
-            stmt.setString(1, marca);
+            PreparedStatement stmt = conn.prepareStatement(SELECT_MODELO);
+            stmt.setInt(1, idMarca);
+            stmt.setString(2, modelo);
             ResultSet rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            dispositivos.add(new Dispositivo(
-                rs.getInt("id"),
-                rs.getString("marca"),
-                rs.getString("modelo")
-            ));
-        }
+            if(rs.next()){          
+                int idModelo = rs.getInt("id");
+                modelo = rs.getString("modelo");
+                idMarca = rs.getInt("id_marca");
+                Modelo modeloExistente = new Modelo(idModelo, modelo, idMarca);
+                return modeloExistente;
+            }
+            
+            
         } catch(SQLException e){
-            System.out.println("Error al obtener dispositivos: " + e.getMessage());
+            System.out.println("Error al obtener el modelo: " + e.getMessage());
+            e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
         }
-        return dispositivos;
+        return null;
+    }
+    
+    public static int modeloMaxId(){
+        
+        int maxId = 0;
+        
+        Connection conn = ConexionBD.connect();
+        try{
+            PreparedStatement stmt = conn.prepareStatement(MAX_ID_MODELO);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {   // Siempre mover el cursor antes de leer datos
+                maxId = rs.getInt(1);  // La primera columna es MAX(id)
+            }
+        } catch(SQLException e){
+            System.out.println("Error al obtener el max. id de modelo: " + e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return maxId;
     }
 }
