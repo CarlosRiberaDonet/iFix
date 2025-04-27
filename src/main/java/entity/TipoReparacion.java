@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Enum.java to edit this template
  */
 package entity;
 
@@ -8,36 +8,20 @@ package entity;
  *
  * @author Carlos Ribera
  */
-public class TipoReparacion {
+public enum TipoReparacion {
+    ALTAVOZ,
+    BATERIA,
+    CAMARA,
+    MICROFONO,
+    PANTALLA,
+    PC,
+    SOFTWARE,
+    SOLDADURA;
     
-    private int id;
-    private String tipo;
-
-    // CONSTRUCTOR
-    public TipoReparacion(int id, String tipo) {
-        this.id = id;
-        this.tipo = tipo;
+    @Override
+    public String toString() {
+        // Que se vea la primera letra en mayúscula y el resto en minúscula
+        String lowercase = name().toLowerCase();
+        return lowercase.substring(0,1).toUpperCase() + lowercase.substring(1);
     }
-
-    public TipoReparacion() {
-    }
-
-    // GETTERS Y SETTERS
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-    
-    
 }

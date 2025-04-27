@@ -10,6 +10,8 @@ import entity.Reparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -20,7 +22,6 @@ import javax.swing.JTextField;
 
 import ui.components.reparaciones.ReparacionTableMouseListener;
 import ui.components.reparaciones.ReparacionesTable;
-import utils.Utils;
 
 /**
  *
@@ -80,10 +81,19 @@ public class ReparacionFrame extends JFrame {
      private void buscarReparacionButton(){
           
         String telefono = telefonoTextField.getText().trim();
-        LocalDate fechaEntrada = Utils.dateToLocalDate(fechaEntradaChooser.getDate());
-        LocalDate fechaSalida = Utils.dateToLocalDate(fechaSalidaChooser.getDate());
+        LocalDate fechaEntrada = dateToLocalDate(fechaEntradaChooser.getDate());
+        LocalDate fechaSalida = dateToLocalDate(fechaSalidaChooser.getDate());
         
         List<Reparacion> reparacionesList = ReparacionController.findReparaciones(telefono, fechaEntrada, fechaSalida);
         tablePanel.cargarReparaciones(reparacionesList);
+    }
+     
+     public static LocalDate dateToLocalDate(Date fechaDate) {
+        if (fechaDate != null) {
+            return fechaDate.toInstant()
+                            .atZone(ZoneId.systemDefault())
+                            .toLocalDate();
+        }
+        return null;
     }
 }

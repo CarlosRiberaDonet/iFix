@@ -5,9 +5,8 @@
 package utils;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import static java.time.temporal.TemporalQueries.zoneId;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.sql.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,13 +42,19 @@ public class Utils {
        }
        return textField;
    }
+ 
+   public static String fechaActualToString(){  
+       DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+       LocalDate fechaActual = LocalDate.now();
+       String fechaFormateada = formato.format(fechaActual);
+       
+       return fechaFormateada;
+   }
    
-   public static LocalDate dateToLocalDate(Date fechaDate) {
-        if (fechaDate != null) {
-            return fechaDate.toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate();
-        }
-        return null;
+   public static Date stringToDate(String fecha) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate localDate = LocalDate.parse(fecha, formato);
+        Date fechaDate = Date.valueOf(localDate);
+        return fechaDate;
     }
 }

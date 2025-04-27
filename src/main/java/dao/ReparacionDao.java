@@ -4,6 +4,7 @@
  */
 package dao;
 
+import controller.ReparacionController;
 import entity.Reparacion;
 import java.sql.Connection;
 import java.sql.Date;
@@ -32,10 +33,12 @@ public class ReparacionDao {
                                                             + "r.fecha_salida, "
                                                             + "c.nombre AS cliente, "
                                                             + "d.modelo AS dispositivo, "
+                                                            + "t.tipo AS reparacion, "
                                                             + "r.precio_reparacion "
                                                             + "FROM reparacion r "
                                                             + "JOIN cliente c ON r.id_cliente = c.id "
                                                             + "JOIN dispositivo d ON r.id_dispositivo = d.id "
+                                                            + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
                                                             + "WHERE telefono = ? AND "
                                                             + "fecha_salida = ? AND "
                                                             + "fecha_entrada = ?";
@@ -56,6 +59,12 @@ public class ReparacionDao {
             + "JOIN cliente c ON r.id_cliente = c.id "
             + "WHERE r.id = ?";
     
+    
+    private static final String INSERT_REPARACION = " INSERT INTO reparacion (fecha_entrada, fecha_salida, id_marca, id_modelo, id_tipo_reparacion, "
+            + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+    private static final String GET_ID_MARCA = "SELECT id FROM marca WHERE marca = ?";
+    
     public static List<Reparacion> getReparacionesList(int idCliente){
         
         List<Reparacion> reparacionesList = new ArrayList<>();
@@ -69,7 +78,7 @@ public class ReparacionDao {
                 Reparacion r = new Reparacion();
                 r.setFechaEntrada(rs.getDate("fecha_entrada"));
                 r.setFechaSalida(rs.getDate("fecha_salida"));
-                r.setNombreDispositivo(rs.getString("dispositivo"));
+                r.setModelo(rs.getString("dispositivo"));
                 r.setPrecioReparacion(rs.getBigDecimal("precio_reparacion"));
                 reparacionesList.add(r);
             }
@@ -94,7 +103,8 @@ public class ReparacionDao {
                 r.setFechaEntrada(rs.getDate("fecha_entrada"));
                 r.setFechaSalida(rs.getDate("fecha_salida"));
                 r.setNombreCliente(rs.getString("cliente"));
-                r.setNombreDispositivo(rs.getString("dispositivo"));
+                r.setModelo(rs.getString("dispositivo"));
+                r.setTipoReparacion(rs.getString("reparacion"));
                 r.setPrecioReparacion(rs.getBigDecimal("precio_reparacion"));
                 reparacionesList.add(r);
             }
@@ -153,8 +163,8 @@ public class ReparacionDao {
             r.setGarantia(rs.getBoolean("garantia"));
             r.setComentarios(rs.getString("comentarios"));
             r.setNombreCliente(rs.getString("cliente"));
-            r.setNombreFabricante(rs.getString("marca"));
-            r.setNombreDispositivo(rs.getString("modelo"));
+            r.setMarca(rs.getString("marca"));
+            r.setModelo(rs.getString("modelo"));
             r.setTipoReparacion(rs.getString("reparacion"));
 
             reparacionesList.add(r);
@@ -185,8 +195,8 @@ public class ReparacionDao {
                 reparacion.setNombreCliente(rs.getString("cliente"));
                 reparacion.setFechaEntrada(rs.getDate("fecha_entrada"));
                 reparacion.setFechaSalida(rs.getDate("fecha_salida"));
-                reparacion.setNombreFabricante(rs.getString("fabricante"));
-                reparacion.setNombreDispositivo(rs.getString("dispositivo"));
+                reparacion.setMarca(rs.getString("fabricante"));
+                reparacion.setModelo(rs.getString("dispositivo"));
                 reparacion.setTipoReparacion(rs.getString("reparacion"));
                 reparacion.setPrecioReparacion(rs.getBigDecimal("importe"));
                 reparacion.setGarantia(rs.getBoolean("garantia"));
@@ -199,5 +209,58 @@ public class ReparacionDao {
             ConexionBD.close(conn);
         }
         return reparacion;
+    }
+    
+    public static boolean insertarReparacion(Reparacion r){
+        
+        Connection conn = ConexionBD.connect();
+        
+        try{
+            PreparedStatement stmt = conn.prepareStatement(INSERT_REPARACION );
+            stmt.setDate(1, new java.sql.Date(r.getFechaEntrada().getTime()));
+            stmt.setDate(2, new java.sql.Date(r.getFechaSalida().getTime()));
+            stmt.setInt(3, r.getIdMarca());
+            stmt.setInt(4, r.getIdModelo());          
+            stmt.setInt(5, ReparacionController.getIdReparacion(r.getTipoReparacion()));
+            stmt.setBigDecimal(6, r.getPrecioReparacion());
+            stmt.setBoolean(7, r.isGarantia());
+            stmt.setString(8, r.getComentarios());
+            stmt.setInt(9, r.getIdCliente());
+            
+            int filasAfectadas = stmt.executeUpdate();
+            
+            if(filasAfectadas > 0){
+                return true;
+            } 
+            
+        } catch(SQLException e){
+            System.out.println("Error al insertar reparacion: " + e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return false;
+    }
+    
+    public static int getMarcaId(String marca){
+        
+        int idMarca = -1;
+        Connection conn = ConexionBD.connect();
+        
+        try{
+            PreparedStatement stmt = conn.prepareStatement(GET_ID_MARCA);
+            stmt.setString(1, marca);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                idMarca = rs.getInt("id");
+            }
+            
+        } catch(SQLException e){
+            System.out.println("Error al obtener el id de la marca: " + e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return idMarca;
     }
 }

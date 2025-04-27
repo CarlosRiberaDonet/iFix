@@ -7,7 +7,6 @@ package controller;
 import dao.ReparacionDao;
 import entity.Reparacion;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,7 +17,7 @@ public class ReparacionController {
     
     public static void crearReparacion(Reparacion reparacion){
         
-       
+       ReparacionDao.insertarReparacion(reparacion);
     }
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
@@ -39,5 +38,46 @@ public class ReparacionController {
     
     public static Reparacion getReparacionById(int idReparacion){
         return ReparacionDao.getReparacionById(idReparacion);
+    }
+    
+    public static int getIdReparacion(String tipoReparacion){
+        
+        int idTipoReparacion = -1;
+        
+        switch(tipoReparacion){
+            case "ALTAVOZ":{
+                idTipoReparacion = 1;
+                break;
+            }
+            case "BATERIA":{
+                 idTipoReparacion = 2;
+                break;
+            }
+            case "CAMARA":{
+                idTipoReparacion = 3;
+                break;
+            }
+            case "MICROFONO":{
+                 idTipoReparacion = 4;
+                break;
+            }
+            case "PANTALLA":{
+                idTipoReparacion = 5;
+                break;
+            }
+            case "PC":{
+                 idTipoReparacion = 6;
+                break;
+            }
+            case "SOFTWARE":{
+                 idTipoReparacion = 7;
+                break;
+            }
+            case "SOLDADURA":{
+                 idTipoReparacion = 8;
+                break;
+            }
+        }
+        return idTipoReparacion;
     }
 }
