@@ -221,7 +221,7 @@ public class ReparacionDao {
             stmt.setDate(2, new java.sql.Date(r.getFechaSalida().getTime()));
             stmt.setInt(3, r.getIdMarca());
             stmt.setInt(4, r.getIdModelo());          
-            stmt.setInt(5, ReparacionController.getIdReparacion(r.getTipoReparacion()));
+            stmt.setInt(5, ReparacionController.getIdReparacion(r.getTipoReparacion().toUpperCase()));
             stmt.setBigDecimal(6, r.getPrecioReparacion());
             stmt.setBoolean(7, r.isGarantia());
             stmt.setString(8, r.getComentarios());

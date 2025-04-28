@@ -19,7 +19,7 @@ import java.util.List;
 public class DispositivoDao {
     
     private static final String SELECT_MARCA = "SELECT marca FROM marca ";
-    private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE nombre = ? AND id_marca = ?";
+    private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE modelo = ? AND id_marca = ?";
     private static final String MAX_ID_MODELO = "SELECT MAX(id) FROM modelo";
 
     public static List<String> getMarcas(){
