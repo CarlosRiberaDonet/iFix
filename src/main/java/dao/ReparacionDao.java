@@ -4,7 +4,6 @@
  */
 package dao;
 
-import controller.ReparacionController;
 import entity.Reparacion;
 import java.sql.Connection;
 import java.sql.Date;
@@ -64,6 +63,8 @@ public class ReparacionDao {
             + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     private static final String GET_ID_MARCA = "SELECT id FROM marca WHERE marca = ?";
+    private static final String GET_ID_TIPO_REPARACION = "SELECT id FROM tipo_reparacion WHERE reparacion = ?";
+    
     
     public static List<Reparacion> getReparacionesList(int idCliente){
         
@@ -221,7 +222,7 @@ public class ReparacionDao {
             stmt.setDate(2, new java.sql.Date(r.getFechaSalida().getTime()));
             stmt.setInt(3, r.getIdMarca());
             stmt.setInt(4, r.getIdModelo());          
-            stmt.setInt(5, ReparacionController.getIdReparacion(r.getTipoReparacion().toUpperCase()));
+            stmt.setInt(5, r.getIdTipoReparacion());
             stmt.setBigDecimal(6, r.getPrecioReparacion());
             stmt.setBoolean(7, r.isGarantia());
             stmt.setString(8, r.getComentarios());
@@ -257,10 +258,31 @@ public class ReparacionDao {
             
         } catch(SQLException e){
             System.out.println("Error al obtener el id de la marca: " + e.getMessage());
-            e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
         }
         return idMarca;
     }
+    
+    public static int getTipoReparacionId(String tipo){
+        
+        int idTipo = -1;
+        
+        Connection conn = ConexionBD.connect();
+        try{
+            PreparedStatement stmt = conn.prepareStatement(GET_ID_TIPO_REPARACION);
+            stmt.setString(1, tipo);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                idTipo = rs.getInt("id");
+            }
+        } catch(SQLException e){
+            System.out.println("Error al obtener el id de la tabla tipo_reparacion: " + e.getMessage());
+        } finally{
+           ConexionBD.close(conn);
+        }
+        return idTipo;
+    }
+    
+   
 }

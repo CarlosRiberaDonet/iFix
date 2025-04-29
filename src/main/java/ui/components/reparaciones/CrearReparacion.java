@@ -8,7 +8,6 @@ import controller.ReparacionController;
 import dao.DispositivoDao;
 import dao.ReparacionDao;
 import entity.Cliente;
-import entity.Modelo;
 import entity.Reparacion;
 import entity.TipoReparacion;
 import java.math.BigDecimal;
@@ -39,7 +38,7 @@ public class CrearReparacion extends javax.swing.JPanel {
         direccionTextField.setText(cliente.getDireccion().toUpperCase());
         entradaTextField.setText(fechaActual);
 
-         // Cargar marcas disponibles en el combo marcaComboBox
+         // Cargar marcas disponibles en marcaComboBox
          List<String> marcas = DispositivoDao.getMarcas();
          for (String marca : marcas) {
              marcaComboBox.addItem(marca);
@@ -49,17 +48,6 @@ public class CrearReparacion extends javax.swing.JPanel {
         for (TipoReparacion tipo : TipoReparacion.values()) {
             reparacionComboBox.addItem(tipo.toString());
         }
-
-        // Añadir ActionListener para cuando se seleccione una marca
-        /*marcaComboBox.addActionListener(e -> {
-            String marcaSeleccionada = (String) marcaComboBox.getSelectedItem();
-            modeloComboBox.removeAllItems();  // Vaciar los modelos actuales
-            List<Modelo> modelos = DispositivoDao.getModelosPorMarca(marcaSeleccionada);
-            for (Modelo d : modelos) {
-                String modelo = d.getModelo();
-                modeloComboBox.addItem(modelo); // Cargar dispositivos, mostrará el modelo en el combo
-            }
-        });*/
     }
 
     /**
@@ -327,35 +315,33 @@ public class CrearReparacion extends javax.swing.JPanel {
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
         
         String fechaEntradaStr = entradaTextField.getText();
-        Date fechaEntrada = Utils.stringToDate(fechaActual);
-        
+        Date fechaEntrada = Utils.stringToDate(fechaActual); 
         String fechaSalidaStr = salidaTextField.getText();
         Date fechaSalida = Utils.stringToDate(fechaEntradaStr);
-        
-         // Compruebo si la marca y modelo seleccionado existen
         String marcaSeleccionada = (String) marcaComboBox.getSelectedItem();
-        int idMarca = ReparacionDao.getMarcaId(marcaSeleccionada);
-        int idModelo = 0;
-        
-        // Comprueblo si el nombre del modelo introducido por el USR existe
         String modelo = modeloTextField.getText();
-        Modelo m = DispositivoDao.checkModelo(idMarca, modelo);
+        String tipoReparacion = ((String) reparacionComboBox.getSelectedItem()).toUpperCase();
+        String textoImporte = importeTextField.getText();
+        System.out.println("Tipo reparación seleccionado: '" + tipoReparacion + "'");
+
+        // Compruebo si la marca seleccionada por el USR ya existe
+        int idMarca = ReparacionDao.getMarcaId(marcaSeleccionada); 
+        // Compruebo si el modelo introducido por el USR ya existe
+        int idModelo = DispositivoDao.checkModelo(modelo);
         
-        // Compruebo si el modelo introducido por el USR existe
-        if(m != null){
-            idModelo = m.getId(); // si el modelo esiste, le asigno su id original
-        } else{
-            idMarca = 4; // 4 es el id de la marca "Otros"
-            idModelo = DispositivoDao.modeloMaxId() +1; // si el modelo no existe, le asigno un nuevo id
+        if(idModelo < 0){
+            DispositivoDao.crearModelo(modelo, idMarca);
+            idModelo = DispositivoDao.checkModelo(modelo);
         }
        
-        String tipoReparacion = modeloTextField.getSelectedText();
-        BigDecimal importe = new BigDecimal(importeTextField.getText().trim());
+        int idTipoReparacion = ReparacionDao.getTipoReparacionId(tipoReparacion.toUpperCase());
+        BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
         boolean garantia = garantiaCheckBox.isSelected();
         String comentarios = comentariosTextArea.getText();
         int idCliente = cliente.getId();
 
-        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, tipoReparacion, importe, garantia, comentarios, idCliente);
+        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
+        System.out.println("Reparacion: " + nuevaReparacion.toString());
         ReparacionController.crearReparacion(nuevaReparacion);
     }//GEN-LAST:event_guardarButtonActionPerformed
 

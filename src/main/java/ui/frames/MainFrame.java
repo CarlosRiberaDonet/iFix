@@ -4,6 +4,8 @@
  */
 package ui.frames;
 
+import dao.ReparacionDao;
+
 /**
  *
  * @author Carlos Ribera
@@ -16,7 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         setLocationRelativeTo(null);
-        setResizable(false);  
+        setResizable(false);
     }
 
     /**
@@ -82,7 +84,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         setBounds(0, 0, 416, 308);
     }// </editor-fold>//GEN-END:initComponents
-
+ 
     private void clienteFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteFrameButtonActionPerformed
         ClienteFrame clienteFrame = new ClienteFrame();
         clienteFrame.setVisible(true);    

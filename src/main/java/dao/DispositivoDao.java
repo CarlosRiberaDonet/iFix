@@ -4,7 +4,6 @@
  */
 package dao;
 
-import entity.Modelo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,8 +18,9 @@ import java.util.List;
 public class DispositivoDao {
     
     private static final String SELECT_MARCA = "SELECT marca FROM marca ";
-    private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE modelo = ? AND id_marca = ?";
+    private static final String SELECT_MODELO = "SELECT * FROM modelo WHERE modelo = ?";
     private static final String MAX_ID_MODELO = "SELECT MAX(id) FROM modelo";
+    private static final String INSERT_MODELO = "INSERT INTO MODELO (modelo, id_marca) VALUES (?, ?)";
 
     public static List<String> getMarcas(){
         List<String> marcas = new ArrayList<>();
@@ -41,32 +41,26 @@ public class DispositivoDao {
         return marcas;
     }
 
-    public static Modelo checkModelo(int idMarca, String modelo){
+    public static int checkModelo(String modelo){
         
+        int idModelo = -1;
         Connection conn = ConexionBD.connect();
-        
         
         try{
             PreparedStatement stmt = conn.prepareStatement(SELECT_MODELO);
-            stmt.setInt(1, idMarca);
-            stmt.setString(2, modelo);
+            stmt.setString(1, modelo);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){          
-                int idModelo = rs.getInt("id");
-                modelo = rs.getString("modelo");
-                idMarca = rs.getInt("id_marca");
-                Modelo modeloExistente = new Modelo(idModelo, modelo, idMarca);
-                return modeloExistente;
+                idModelo = rs.getInt("id");
+                return idModelo;
             }
-            
             
         } catch(SQLException e){
             System.out.println("Error al obtener el modelo: " + e.getMessage());
-            e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
         }
-        return null;
+        return -1;
     }
     
     public static int modeloMaxId(){
@@ -87,5 +81,20 @@ public class DispositivoDao {
             ConexionBD.close(conn);
         }
         return maxId;
+    }
+    
+     public static void crearModelo(String modelo, int idMarca){
+        
+        Connection conn = ConexionBD.connect();
+        try{
+            PreparedStatement stmt = conn.prepareStatement(INSERT_MODELO );
+            stmt.setString(1, modelo);
+            stmt.setInt(2, idMarca);
+            stmt.executeUpdate();
+        } catch(SQLException e){
+            System.out.println("Error al crear nuevo modelo: " + e.getMessage());
+        } finally{
+            ConexionBD.close(conn);
+        }
     }
 }

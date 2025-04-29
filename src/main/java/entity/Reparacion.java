@@ -20,17 +20,17 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private int idMarca;
-    private int idModelo;
     private String marca;
+    private int idModelo;
     private String modelo;
+    private int idTipoReparacion;
     private String tipoReparacion;
     private int idCliente;
     private String nombreCliente;
     
     // CONSTRUCTOR
-    public Reparacion(Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, String tipoReparacion, BigDecimal precioReparacion,
+    public Reparacion(Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion,
         boolean garantia, String comentarios, int idCliente){
-        this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.idMarca = idMarca;
@@ -126,6 +126,14 @@ public class Reparacion {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
+    
+    public int getIdTipoReparacion(){
+        return idTipoReparacion;
+    }
+    
+    public void setIdTipoReparacion(int idTipoReparacion){
+        this.idTipoReparacion = idTipoReparacion;
+    }
 
     public String getTipoReparacion() {
         return tipoReparacion;
@@ -150,4 +158,19 @@ public class Reparacion {
     public void setNombreCliente(String nombreCliente) {
         this.nombreCliente = nombreCliente;
     }
+
+    @Override
+    public String toString() {
+        return "Reparacion{fechaEntrada=" + fechaEntrada + 
+                ", fechaSalida=" + fechaSalida + 
+                ", precioReparacion=" + precioReparacion + 
+                ", garantia=" + garantia + 
+                ", comentarios=" + comentarios + 
+                ", idMarca=" + idMarca + 
+                ", idModelo=" + idModelo + 
+                ", idTipoReparacion=" + idTipoReparacion +
+                ", idCliente=" + idCliente +'}';
+    }
+    
+    
 }

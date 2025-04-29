@@ -4,6 +4,7 @@
  */
 package utils;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.sql.Date;
@@ -57,4 +58,14 @@ public class Utils {
         Date fechaDate = Date.valueOf(localDate);
         return fechaDate;
     }
+   
+  public static BigDecimal stringToBigDecimal(String valor) {
+    try {
+        return new BigDecimal(valor.trim());
+    } catch (NumberFormatException e) {
+        System.out.println("Error: formato de número no válido -> " + valor);
+        return null; // o puedes lanzar una excepción personalizada
+    }
+}
+
 }

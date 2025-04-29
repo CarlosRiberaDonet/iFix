@@ -40,7 +40,7 @@ public class ReparacionController {
         return ReparacionDao.getReparacionById(idReparacion);
     }
     
-    public static int getIdReparacion(String tipoReparacion){
+    /*public static int getIdReparacion(String tipoReparacion){
         
         int idTipoReparacion = -1;
         
@@ -79,5 +79,5 @@ public class ReparacionController {
             }
         }
         return idTipoReparacion;
-    }
+    }*/
 }
