@@ -23,7 +23,7 @@ public class ModeloController {
         return modelosList;
     }
     
-    public static List<Modelo> filterModelosByMarca(int idMarca){
+    public List<Modelo> filterModelosByMarca(int idMarca){
         
         List<Modelo> modelosList = getModelosList();       
         List<Modelo> modelosFiltrados = new ArrayList<>();

@@ -63,7 +63,7 @@ public class ReparacionDao {
             + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
     private static final String GET_ID_MARCA = "SELECT id FROM marca WHERE marca = ?";
-    private static final String GET_ID_TIPO_REPARACION = "SELECT id FROM tipo_reparacion WHERE reparacion = ?";
+    private static final String GET_ID_TIPO_REPARACION = "SELECT id FROM tipo_reparacion WHERE UPPER(reparacion) = ?";
     
     
     public static List<Reparacion> getReparacionesList(int idCliente){
@@ -228,6 +228,8 @@ public class ReparacionDao {
             stmt.setBoolean(7, r.isGarantia());
             stmt.setString(8, r.getComentarios());
             stmt.setInt(9, r.getIdCliente());
+            // System.out.println("Insertando con id_tipo_reparacion: " + r.getIdTipoReparacion());
+
             
             int filasAfectadas = stmt.executeUpdate();
             
@@ -270,20 +272,22 @@ public class ReparacionDao {
         int idTipo = -1;
         
         Connection conn = ConexionBD.connect();
-        try{
-            PreparedStatement stmt = conn.prepareStatement(GET_ID_TIPO_REPARACION);
-            stmt.setString(1, tipo);
+        try( PreparedStatement stmt = conn.prepareStatement(GET_ID_TIPO_REPARACION)){
+           
+            stmt.setString(1, tipo.toUpperCase());
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 idTipo = rs.getInt("id");
             }
+            stmt.close();
         } catch(SQLException e){
             System.out.println("Error al obtener el id de la tabla tipo_reparacion: " + e.getMessage());
         } finally{
            ConexionBD.close(conn);
         }
+        if (idTipo == -1) {
+            throw new IllegalArgumentException("No se encontró el tipo de reparación: " + tipo);
+        }
         return idTipo;
     }
-    
-   
 }

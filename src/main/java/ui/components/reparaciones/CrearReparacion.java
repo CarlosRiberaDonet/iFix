@@ -17,6 +17,8 @@ import entity.TipoReparacion;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import listeners.MarcaComboBoxListener;
 import utils.Utils;
 
 /**
@@ -43,30 +45,33 @@ public class CrearReparacion extends javax.swing.JPanel {
         telefonoTextField.setText(cliente.getTelefono().toUpperCase());
         direccionTextField.setText(cliente.getDireccion().toUpperCase());
         entradaTextField.setText(fechaActual);
-
-        int idMarca = llenarComboBoxMarca();
-        llenarComboBoxModelo(idMarca);
+        
+        marcaComboBox.setEditable(false);
+        // Limpieza de valores por defecto del combo
+        modeloComboBox.removeAllItems();
+        // Cargar datos iniciales
+        llenarComboBoxMarca();
+        llenarComboBoxReparacion();    
         llenarComboBoxReparacion();
-  
+        
+        // Registrar listener externo
+        marcaComboBox.addActionListener(new MarcaComboBoxListener(marcaComboBox, modeloComboBox));  
     }
     
     // Cargar marcas disponibles en marcaComboBox
-    private int llenarComboBoxMarca(){
-
-        int idMarca = 0;
+    private void llenarComboBoxMarca(){
                 
         List<Marca> marcasList = DispositivoDao.getMarcas();
         for (Marca m : marcasList) {
-            idMarca = m.getIdMarca();
             marcaComboBox.addItem(m.getMarca().toUpperCase()); 
         }
-        return idMarca;
     }
     
     // Cargar modelos disponibles en modeloComboBox
     public void llenarComboBoxModelo(int idMarca){
         
-        List<Modelo> modelosList = ModeloController.filterModelosByMarca(idMarca);
+        ModeloController modeloController = new ModeloController(); 
+        List<Modelo> modelosList = modeloController.filterModelosByMarca(idMarca);
         for(Modelo m : modelosList){
             modeloComboBox.addItem(m.getModelo().toUpperCase());
         }
@@ -367,14 +372,21 @@ public class CrearReparacion extends javax.swing.JPanel {
             idModelo = DispositivoDao.checkModeloId(modelo);
         }
        
-        int idTipoReparacion = ReparacionDao.getTipoReparacionId(tipoReparacion.toUpperCase());
+        int idTipoReparacion = ReparacionDao.getTipoReparacionId(tipoReparacion);
         BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
         boolean garantia = garantiaCheckBox.isSelected();
         String comentarios = comentariosTextArea.getText();
         int idCliente = cliente.getId();
 
+        System.out.println("Tipo reparacion seleccionado: " + tipoReparacion);
+        System.out.println("ID tipo reparacion encontrado: " + idTipoReparacion);
+
         Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
-        ReparacionController.crearReparacion(nuevaReparacion);
+        if (ReparacionController.crearReparacion(nuevaReparacion)) {
+            JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al guardar la reparación.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     private void entradaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaTextFieldActionPerformed

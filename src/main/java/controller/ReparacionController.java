@@ -15,9 +15,9 @@ import java.util.List;
  */
 public class ReparacionController {
     
-    public static void crearReparacion(Reparacion reparacion){
+    public static boolean crearReparacion(Reparacion reparacion){
         
-       ReparacionDao.insertarReparacion(reparacion);
+       return ReparacionDao.insertarReparacion(reparacion);
     }
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){

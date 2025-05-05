@@ -35,6 +35,7 @@ public class Reparacion {
         this.fechaSalida = fechaSalida;
         this.idMarca = idMarca;
         this.idModelo = idModelo;
+        this.idTipoReparacion = idTipoReparacion;
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
@@ -126,15 +127,15 @@ public class Reparacion {
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
-    
-    public int getIdTipoReparacion(){
+
+    public int getIdTipoReparacion() {
         return idTipoReparacion;
     }
-    
-    public void setIdTipoReparacion(int idTipoReparacion){
+
+    public void setIdTipoReparacion(int idTipoReparacion) {
         this.idTipoReparacion = idTipoReparacion;
     }
-
+    
     public String getTipoReparacion() {
         return tipoReparacion;
     }
