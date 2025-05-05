@@ -17,6 +17,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -85,7 +86,12 @@ public class ReparacionFrame extends JFrame {
         LocalDate fechaSalida = dateToLocalDate(fechaSalidaChooser.getDate());
         
         List<Reparacion> reparacionesList = ReparacionController.findReparaciones(telefono, fechaEntrada, fechaSalida);
-        tablePanel.cargarReparaciones(reparacionesList);
+        if(reparacionesList != null && !reparacionesList.isEmpty()){
+            tablePanel.cargarReparaciones(reparacionesList);
+        } else{
+             JOptionPane.showMessageDialog(null, "No hay reparaciones en la base de datos.", "INFO", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
     }
      
      public static LocalDate dateToLocalDate(Date fechaDate) {

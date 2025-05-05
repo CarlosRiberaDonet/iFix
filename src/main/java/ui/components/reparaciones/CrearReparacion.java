@@ -322,7 +322,6 @@ public class CrearReparacion extends javax.swing.JPanel {
         String modelo = modeloTextField.getText();
         String tipoReparacion = ((String) reparacionComboBox.getSelectedItem()).toUpperCase();
         String textoImporte = importeTextField.getText();
-        System.out.println("Tipo reparación seleccionado: '" + tipoReparacion + "'");
 
         // Compruebo si la marca seleccionada por el USR ya existe
         int idMarca = ReparacionDao.getMarcaId(marcaSeleccionada); 
@@ -341,7 +340,6 @@ public class CrearReparacion extends javax.swing.JPanel {
         int idCliente = cliente.getId();
 
         Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
-        System.out.println("Reparacion: " + nuevaReparacion.toString());
         ReparacionController.crearReparacion(nuevaReparacion);
     }//GEN-LAST:event_guardarButtonActionPerformed
 
