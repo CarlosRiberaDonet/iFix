@@ -19,6 +19,10 @@ public class Modelo {
         this.modelo = modelo;
         this.id_marca = id_marca;
     }
+    
+    public Modelo(){
+        
+    }
 
     public int getId() {
         return id;

@@ -60,7 +60,7 @@ public class ClientePanel extends JPanel{
     
     private void abrirCrearReparacion() {
         JDialog crearDialog = new JDialog(mainFrame, "Crear Reparación", true);
-        crearDialog.setSize(700, 600);
+        crearDialog.setSize(700, 720);
         crearDialog.setLocationRelativeTo(mainFrame);
         crearDialog.setLayout(new BorderLayout());
 

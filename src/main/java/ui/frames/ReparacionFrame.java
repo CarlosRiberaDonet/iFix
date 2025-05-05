@@ -33,12 +33,13 @@ public class ReparacionFrame extends JFrame {
     private ReparacionesTable tablePanel;
     private JTextField telefonoTextField;
     private JButton buscarButton;
+    private JButton volverButton;
     private JDateChooser fechaEntradaChooser;
     private JDateChooser fechaSalidaChooser;
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
-        setSize(800, 600);
+        setSize(900, 900);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
@@ -54,6 +55,7 @@ public class ReparacionFrame extends JFrame {
         telefonoTextField = new JTextField(10);
         
         buscarButton = new JButton("Buscar");
+        volverButton = new JButton("Volver");
         
         fechaEntradaChooser = new JDateChooser();
         fechaEntradaChooser.setDateFormatString("dd/MM/yyyy");
@@ -67,6 +69,7 @@ public class ReparacionFrame extends JFrame {
         topPanel.add(new JLabel("Fecha Fin"));
         topPanel.add(fechaSalidaChooser);
         topPanel.add(buscarButton);
+        topPanel.add(volverButton);
         
         add(topPanel, BorderLayout.NORTH);
         
@@ -74,6 +77,7 @@ public class ReparacionFrame extends JFrame {
         add(tablePanel, BorderLayout.CENTER);
         
        buscarButton.addActionListener( e -> buscarReparacionButton());
+       volverButton.addActionListener( e -> dispose());
        
        tablePanel.getTablaReparaciones().addMouseListener(
        new ReparacionTableMouseListener(tablePanel.getTablaReparaciones()));
