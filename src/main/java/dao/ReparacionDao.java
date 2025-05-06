@@ -46,14 +46,15 @@ public class ReparacionDao {
             + "c.nombre AS cliente, "
             + "r.fecha_entrada, "
             + "r.fecha_salida, "
-            + "d.marca AS fabricante, "
-            + "d.modelo AS dispositivo, "
-            + "t.tipo AS reparacion, "
-            + "r.precio_reparacion AS importe, "
+            + "m.marca AS marca, "
+            + "mo.modelo AS modelo, "
+            + "t.reparacion, "
+            + "r.precio AS importe, "
             + "r.garantia, "
             + "r.comentarios AS comentarios "
             + "FROM reparacion r "
-            + "JOIN dispositivo d ON r.id_dispositivo = d.id "
+            + "JOIN marca m ON r.id_marca = m.id "
+            + "JOIN modelo mo ON r.id_modelo = mo.id "
             + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
             + "JOIN cliente c ON r.id_cliente = c.id "
             + "WHERE r.id = ?";
@@ -129,6 +130,9 @@ public class ReparacionDao {
                 + "r.garantia, "
                 + "r.comentarios, "
                 + "c.nombre AS cliente, "
+                + "c.apellidos, "
+                + "c.telefono, "
+                + "c.direccion, "
                 + "m.marca, "
                 + "mo.modelo, "
                 + "t.reparacion "
@@ -184,8 +188,7 @@ public class ReparacionDao {
         Reparacion reparacion = null;
         Connection conn = ConexionBD.connect();
         
-        try{
-            PreparedStatement stmt = conn.prepareStatement(SELECT_ID_REPARACION);
+        try(PreparedStatement stmt = conn.prepareStatement(SELECT_ID_REPARACION)){
             stmt.setInt(1, id);
             System.out.println("ID reparacion: " + id);
             ResultSet rs = stmt.executeQuery();
@@ -197,12 +200,13 @@ public class ReparacionDao {
                 reparacion.setNombreCliente(rs.getString("cliente"));
                 reparacion.setFechaEntrada(rs.getDate("fecha_entrada"));
                 reparacion.setFechaSalida(rs.getDate("fecha_salida"));
-                reparacion.setMarca(rs.getString("fabricante"));
-                reparacion.setModelo(rs.getString("dispositivo"));
+                reparacion.setMarca(rs.getString("marca"));
+                reparacion.setModelo(rs.getString("modelo"));
                 reparacion.setTipoReparacion(rs.getString("reparacion"));
                 reparacion.setPrecioReparacion(rs.getBigDecimal("importe"));
                 reparacion.setGarantia(rs.getBoolean("garantia"));
                 reparacion.setComentarios(rs.getString("comentarios"));
+                
             }    
         } catch(SQLException e){
             System.out.println("Error al buscar la reparacion: " + e.getMessage());

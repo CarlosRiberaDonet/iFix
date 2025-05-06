@@ -40,44 +40,8 @@ public class ReparacionController {
         return ReparacionDao.getReparacionById(idReparacion);
     }
     
-    /*public static int getIdReparacion(String tipoReparacion){
+    public static Reparacion saveReparacion(Reparacion r){
         
-        int idTipoReparacion = -1;
-        
-        switch(tipoReparacion){
-            case "ALTAVOZ":{
-                idTipoReparacion = 1;
-                break;
-            }
-            case "BATERIA":{
-                 idTipoReparacion = 2;
-                break;
-            }
-            case "CAMARA":{
-                idTipoReparacion = 3;
-                break;
-            }
-            case "MICROFONO":{
-                 idTipoReparacion = 4;
-                break;
-            }
-            case "PANTALLA":{
-                idTipoReparacion = 5;
-                break;
-            }
-            case "PC":{
-                 idTipoReparacion = 6;
-                break;
-            }
-            case "SOFTWARE":{
-                 idTipoReparacion = 7;
-                break;
-            }
-            case "SOLDADURA":{
-                 idTipoReparacion = 8;
-                break;
-            }
-        }
-        return idTipoReparacion;
-    }*/
+        return null;
+    }
 }

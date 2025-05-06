@@ -378,9 +378,6 @@ public class CrearReparacion extends javax.swing.JPanel {
         String comentarios = comentariosTextArea.getText();
         int idCliente = cliente.getId();
 
-        System.out.println("Tipo reparacion seleccionado: " + tipoReparacion);
-        System.out.println("ID tipo reparacion encontrado: " + idTipoReparacion);
-
         Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
             JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");

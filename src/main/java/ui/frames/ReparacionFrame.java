@@ -21,7 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import ui.components.reparaciones.ReparacionTableMouseListener;
+import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.ReparacionesTable;
 
 /**
