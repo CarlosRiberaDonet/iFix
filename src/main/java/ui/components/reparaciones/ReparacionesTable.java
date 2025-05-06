@@ -59,6 +59,7 @@ public class ReparacionesTable extends JPanel{
                     r.getFechaSalida(),        
                     r.getModelo(),
                     r.getPrecioReparacion(),
+                    r.getNombreCliente()
                 });
             } else {
                 modelo.addRow(new Object[]{

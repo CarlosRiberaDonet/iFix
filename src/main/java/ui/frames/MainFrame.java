@@ -87,7 +87,9 @@ public class MainFrame extends javax.swing.JFrame {
  
     private void clienteFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteFrameButtonActionPerformed
         ClienteFrame clienteFrame = new ClienteFrame();
-        clienteFrame.setVisible(true);    
+        clienteFrame.setVisible(true);
+        ReparacionDao dao = new ReparacionDao();
+        dao.getAllReparacionesList();
     }//GEN-LAST:event_clienteFrameButtonActionPerformed
 
     private void salirButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salirButtonActionPerformed

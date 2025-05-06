@@ -16,21 +16,22 @@ public class Reparacion {
     private int id;
     private Date fechaEntrada;
     private Date fechaSalida;
+    private int idMarca;
+    private Marca marca;
+    private int idModelo;
+    private Modelo modelo;
+    private int idTipoReparacion;
+    private TipoReparacion tipoReparacion;
     private BigDecimal precioReparacion;
     private boolean garantia;
     private String comentarios;
-    private int idMarca;
-    private String marca;
-    private int idModelo;
-    private String modelo;
-    private int idTipoReparacion;
-    private String tipoReparacion;
     private int idCliente;
-    private String nombreCliente;
+    private Cliente cliente;
     
-    // CONSTRUCTOR
-    public Reparacion(Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion,
-        boolean garantia, String comentarios, int idCliente){
+   // CONSTRUCTOR 
+    
+    public Reparacion(int id, Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
+        this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.idMarca = idMarca;
@@ -72,6 +73,54 @@ public class Reparacion {
         this.fechaSalida = fechaSalida;
     }
 
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public int getIdModelo() {
+        return idModelo;
+    }
+
+    public void setIdModelo(int idModelo) {
+        this.idModelo = idModelo;
+    }
+
+    public Modelo getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(Modelo modelo) {
+        this.modelo = modelo;
+    }
+
+    public int getIdTipoReparacion() {
+        return idTipoReparacion;
+    }
+
+    public void setIdTipoReparacion(int idTipoReparacion) {
+        this.idTipoReparacion = idTipoReparacion;
+    }
+
+    public TipoReparacion getTipoReparacion() {
+        return tipoReparacion;
+    }
+
+    public void setTipoReparacion(TipoReparacion tipoReparacion) {
+        this.tipoReparacion = tipoReparacion;
+    }
+
     public BigDecimal getPrecioReparacion() {
         return precioReparacion;
     }
@@ -96,54 +145,6 @@ public class Reparacion {
         this.comentarios = comentarios;
     }
 
-    public int getIdMarca() {
-        return idMarca;
-    }
-
-    public void setIdMarca(int idMarca) {
-        this.idMarca = idMarca;
-    }
-
-    public int getIdModelo() {
-        return idModelo;
-    }
-
-    public void setIdModelo(int idModelo) {
-        this.idModelo = idModelo;
-    }
-
-    public String getMarca() {
-        return marca;
-    }
-
-    public void setMarca(String marca) {
-        this.marca = marca;
-    }
-
-    public String getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
-    }
-
-    public int getIdTipoReparacion() {
-        return idTipoReparacion;
-    }
-
-    public void setIdTipoReparacion(int idTipoReparacion) {
-        this.idTipoReparacion = idTipoReparacion;
-    }
-    
-    public String getTipoReparacion() {
-        return tipoReparacion;
-    }
-
-    public void setTipoReparacion(String tipoReparacion) {
-        this.tipoReparacion = tipoReparacion;
-    }
-
     public int getIdCliente() {
         return idCliente;
     }
@@ -152,22 +153,23 @@ public class Reparacion {
         this.idCliente = idCliente;
     }
 
-    public String getNombreCliente() {
-        return nombreCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setNombreCliente(String nombreCliente) {
-        this.nombreCliente = nombreCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
+    
 
     @Override
     public String toString() {
-        return "Reparacion{fechaEntrada=" + fechaEntrada + 
-                ", fechaSalida=" + fechaSalida + 
-                ", precioReparacion=" + precioReparacion + 
-                ", garantia=" + garantia + 
-                ", comentarios=" + comentarios + 
-                ", idMarca=" + idMarca + 
+        return "Reparacion{fechaEntrada=" + fechaEntrada +
+                ", fechaSalida=" + fechaSalida +
+                ", precioReparacion=" + precioReparacion +
+                ", garantia=" + garantia +
+                ", comentarios=" + comentarios +
+                ", idMarca=" + idMarca +
                 ", idModelo=" + idModelo + 
                 ", idTipoReparacion=" + idTipoReparacion +
                 ", idCliente=" + idCliente +'}';

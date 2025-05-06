@@ -22,7 +22,7 @@ public class ReparacionController {
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
         
-        List<Reparacion> reparacionesList = ReparacionDao.getReparacionesList(clienteId);
+        List<Reparacion> reparacionesList = ReparacionDao.getReparacionesByClienteId(clienteId);
         return reparacionesList;
     }
     

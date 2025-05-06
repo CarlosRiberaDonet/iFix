@@ -12,12 +12,12 @@ public class Modelo {
     
     private int id;
     private String modelo;
-    private int id_marca;
+    private int idMarca;
 
     public Modelo(int id, String modelo, int id_marca) {
         this.id = id;
         this.modelo = modelo;
-        this.id_marca = id_marca;
+        this.idMarca = id_marca;
     }
     
     public Modelo(){
@@ -40,11 +40,11 @@ public class Modelo {
         this.modelo = modelo;
     }
 
-    public int getId_marca() {
-        return id_marca;
+    public int getIdMarca() {
+        return idMarca;
     }
 
-    public void setId_marca(int id_marca) {
-        this.id_marca = id_marca;
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
     }
 }

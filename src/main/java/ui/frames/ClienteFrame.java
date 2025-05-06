@@ -40,7 +40,7 @@ import ui.components.clientes.ClientesTable;
 
         public ClienteFrame(){
             setTitle("CLIENTES");
-            setSize(800, 500);
+            setSize(800, 600);
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setLocationRelativeTo(null);
             initUI();

@@ -39,7 +39,7 @@ public class ReparacionFrame extends JFrame {
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
-        setSize(900, 900);
+        setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();

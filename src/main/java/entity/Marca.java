@@ -17,6 +17,10 @@ public class Marca {
         this.idMarca = idMarca;
         this.marca = marca;
     }
+    
+    public Marca(){
+        
+    }
 
     public int getIdMarca() {
         return idMarca;
