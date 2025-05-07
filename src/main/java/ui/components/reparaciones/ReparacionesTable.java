@@ -20,26 +20,17 @@ public class ReparacionesTable extends JPanel{
     
     private JTable tablaReparaciones;
     private DefaultTableModel modelo;
-    private boolean mostrarNombreCliente;
 
     // booleano que identifica si la tabla es llamada desde ReparacionFrame
-    public ReparacionesTable(boolean tableReparaciones) {
-        this.mostrarNombreCliente = tableReparaciones;
+    public ReparacionesTable() {
         setLayout(new BorderLayout());
         // Si la tabla se llama desde ReparacionFrame, muestro estas columnas
-        if (tableReparaciones) {
             modelo = new DefaultTableModel(new String[]{"ID", " Entrada", "Salida", "Cliente", "Dispositivo", "Importe"}, 0) {
                 public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
-        }else{
-            modelo = new DefaultTableModel(new String[]{"Entrada", "Salida", "Dispositivo", "Importe"}, 0) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
-            };
-        }
+        
         
         tablaReparaciones = new JTable(modelo);
         tablaReparaciones.getTableHeader().setReorderingAllowed(false);
@@ -49,26 +40,17 @@ public class ReparacionesTable extends JPanel{
         add(scroll, BorderLayout.CENTER);
     }
 
-     public void cargarReparaciones(List<Reparacion> lista) {
+    public void cargarReparaciones(List<Reparacion> lista) {
         modelo.setRowCount(0);
         for (Reparacion r : lista) {
-            if (mostrarNombreCliente) {
                 modelo.addRow(new Object[]{
                     r.getId(),
                     r.getFechaEntrada(),
-                    r.getFechaSalida(),        
-                    r.getModelo(),
-                    r.getPrecioReparacion(),
-                    r.getNombreCliente()
-                });
-            } else {
-                modelo.addRow(new Object[]{
-                    r.getFechaEntrada(),
                     r.getFechaSalida(),
-                    r.getModelo(),
-                    r.getPrecioReparacion()
+                    r.getCliente().getNombre() + " " + r.getCliente().getApellidos(),
+                    r.getModelo().getModelo(),
+                    r.getPrecioReparacion(),
                 });
-            }
         }
     }
      

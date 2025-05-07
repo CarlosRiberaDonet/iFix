@@ -42,6 +42,20 @@ public class Reparacion {
         this.comentarios = comentarios;
         this.idCliente = idCliente;
     }
+
+    public Reparacion(Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+        this.idMarca = idMarca;
+        this.idModelo = idModelo;
+        this.idTipoReparacion = idTipoReparacion;
+        this.precioReparacion = precioReparacion;
+        this.garantia = garantia;
+        this.comentarios = comentarios;
+        this.idCliente = idCliente;
+    }
+    
+    
     
     public Reparacion(){
         

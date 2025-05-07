@@ -362,7 +362,7 @@ public class CrearReparacion extends javax.swing.JPanel {
         String textoImporte = importeTextField.getText();
 
         // Obtengo el id de la marca seleccionada
-        int idMarca = ReparacionDao.getMarcaId(marcaSeleccionada);
+        int idMarca = DispositivoDao.getMarcaId(marcaSeleccionada);
         
         // Compruebo si el modelo introducido por el USR ya existe
         int idModelo = DispositivoDao.checkModeloId(modelo);
@@ -384,6 +384,7 @@ public class CrearReparacion extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Error al guardar la reparación.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        // dispose();
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     private void entradaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaTextFieldActionPerformed

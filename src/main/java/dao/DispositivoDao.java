@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class DispositivoDao {
     
+    private static final String GET_ID_MARCA = "SELECT id FROM marca WHERE marca = ?";
     private static final String SELECT_MARCA = "SELECT * FROM marca ";
     private static final String SELECT_MODELO_BY_ID = "SELECT * FROM modelo WHERE modelo = ?";
     private static final String SELECT_MODELO = "SELECT * FROM modelo";
@@ -129,5 +130,23 @@ public class DispositivoDao {
             ConexionBD.close(conn);
         }
         return modelosList;
+    }
+
+    public static int getMarcaId(String marca) {
+        int idMarca = -1;
+        Connection conn = ConexionBD.connect();
+        try {
+            PreparedStatement stmt = conn.prepareStatement(GET_ID_MARCA);
+            stmt.setString(1, marca);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                idMarca = rs.getInt("id");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener el id de la marca: " + e.getMessage());
+        } finally {
+            ConexionBD.close(conn);
+        }
+        return idMarca;
     }
 }

@@ -32,7 +32,7 @@ public class ClientePanel extends JPanel{
         cliente = clienteSelect;
         List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSelect.getId());
 
-        ReparacionesTable panel = new ReparacionesTable(false);
+        ReparacionesTable panel = new ReparacionesTable();
         panel.cargarReparaciones(reparacionesList);
 
         // Crear botones

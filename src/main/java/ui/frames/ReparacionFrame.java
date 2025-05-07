@@ -73,29 +73,19 @@ public class ReparacionFrame extends JFrame {
         
         add(topPanel, BorderLayout.NORTH);
         
-        tablePanel = new ReparacionesTable(true);
+        tablePanel = new ReparacionesTable();
         add(tablePanel, BorderLayout.CENTER);
         
-       buscarButton.addActionListener( e -> buscarReparacionButton());
+       buscarButton.addActionListener( e -> listarReparacionButton());
        volverButton.addActionListener( e -> dispose());
        
        tablePanel.getTablaReparaciones().addMouseListener(
        new ReparacionTableMouseListener(tablePanel.getTablaReparaciones()));
     }
     
-     private void buscarReparacionButton(){
-          
-        String telefono = telefonoTextField.getText().trim();
-        LocalDate fechaEntrada = dateToLocalDate(fechaEntradaChooser.getDate());
-        LocalDate fechaSalida = dateToLocalDate(fechaSalidaChooser.getDate());
+     private void listarReparacionButton(){
         
-        List<Reparacion> reparacionesList = ReparacionController.findReparaciones(telefono, fechaEntrada, fechaSalida);
-        if(reparacionesList != null && !reparacionesList.isEmpty()){
-            tablePanel.cargarReparaciones(reparacionesList);
-        } else{
-             JOptionPane.showMessageDialog(null, "No hay reparaciones en la base de datos.", "INFO", JOptionPane.INFORMATION_MESSAGE);
-        }
-        
+        List<Reparacion> reparacionesList = ReparacionController.getAllReparaciones();
     }
      
      public static LocalDate dateToLocalDate(Date fechaDate) {

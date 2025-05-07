@@ -15,6 +15,10 @@ import java.util.List;
  */
 public class ReparacionController {
     
+    public static List<Reparacion> getAllReparaciones(){
+        return ReparacionDao.getAllReparacionesList();
+    }
+    
     public static boolean crearReparacion(Reparacion reparacion){
         
        return ReparacionDao.insertarReparacion(reparacion);
@@ -32,9 +36,9 @@ public class ReparacionController {
         return reparacionesList;
     }
     
-    public static List<Reparacion> findReparaciones(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
+    /*public static List<Reparacion> findReparaciones(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
         return ReparacionDao.buscarReparaciones(telefono, fechaEntrada, fechaSalida);
-    }
+    }*/
     
     public static Reparacion getReparacionById(int idReparacion){
         return ReparacionDao.getReparacionById(idReparacion);
