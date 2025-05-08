@@ -41,15 +41,14 @@ public class ReparacionTableMouseListener extends MouseAdapter {
             }
 
             // Crear y mostrar panel de detalles
-            ReparacionDetails detallePanel = new ReparacionDetails();
-            detallePanel.cargarReparaciones(reparacion);
+            ReparacionDetails detallePanel = new ReparacionDetails(reparacion);
 
-            JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(reparacionestable), "Detalle de Reparación", true);
+            /*JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(reparacionestable), "Detalle de Reparación", true);
             dialog.setSize(800, 600);
             dialog.setLocationRelativeTo(reparacionestable);
             dialog.setLayout(new BorderLayout());
             dialog.add(detallePanel, BorderLayout.CENTER);
-            dialog.setVisible(true);
+            dialog.setVisible(true);*/
         }
     }
 }

@@ -47,4 +47,9 @@ public class Modelo {
     public void setIdMarca(int idMarca) {
         this.idMarca = idMarca;
     }
+    
+    @Override
+    public String toString(){
+        return this.modelo.toUpperCase();
+    }
 }

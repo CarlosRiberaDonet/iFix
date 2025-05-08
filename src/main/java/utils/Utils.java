@@ -59,13 +59,19 @@ public class Utils {
         return fechaDate;
     }
    
-  public static BigDecimal stringToBigDecimal(String valor) {
-    try {
-        return new BigDecimal(valor.trim());
-    } catch (NumberFormatException e) {
-        System.out.println("Error: formato de número no válido -> " + valor);
-        return null; // o puedes lanzar una excepción personalizada
+   public static String dateToString(Date fecha) {
+        LocalDate localDate = fecha.toLocalDate();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        return localDate.format(formato);
     }
-}
+   
+  public static BigDecimal stringToBigDecimal(String valor) {
+        try {
+            return new BigDecimal(valor.trim());
+        } catch (NumberFormatException e) {
+            System.out.println("Error: formato de número no válido -> " + valor);
+            return null; // o puedes lanzar una excepción personalizada
+        }
+    }
 
 }

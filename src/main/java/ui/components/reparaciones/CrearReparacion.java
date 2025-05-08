@@ -45,6 +45,7 @@ public class CrearReparacion extends javax.swing.JPanel {
         telefonoTextField.setText(cliente.getTelefono().toUpperCase());
         direccionTextField.setText(cliente.getDireccion().toUpperCase());
         entradaTextField.setText(fechaActual);
+        salidaTextField.setText(fechaActual);
         
         marcaComboBox.setEditable(false);
         // Limpieza de valores por defecto del combo
@@ -353,9 +354,9 @@ public class CrearReparacion extends javax.swing.JPanel {
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
         
         String fechaEntradaStr = entradaTextField.getText();
-        Date fechaEntrada = Utils.stringToDate(fechaActual); 
+        Date fechaEntrada = Utils.stringToDate(fechaEntradaStr); 
         String fechaSalidaStr = salidaTextField.getText();
-        Date fechaSalida = Utils.stringToDate(fechaEntradaStr);
+        Date fechaSalida = Utils.stringToDate(fechaSalidaStr);
         String marcaSeleccionada = (String) marcaComboBox.getSelectedItem();
         String modelo = (String) modeloComboBox.getSelectedItem();
         String tipoReparacion = ((String) reparacionComboBox.getSelectedItem()).toUpperCase();

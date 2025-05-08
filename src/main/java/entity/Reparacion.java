@@ -5,7 +5,7 @@
 package entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 /**
  *

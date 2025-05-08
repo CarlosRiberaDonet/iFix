@@ -5,12 +5,13 @@
 package ui.components.reparaciones;
 
 import entity.Reparacion;
-import java.awt.BorderLayout;
 import java.util.List;
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import listeners.ReparacionTableMouseListener;
 
 /**
  *
@@ -19,43 +20,42 @@ import javax.swing.table.DefaultTableModel;
 public class ReparacionesTable extends JPanel{
     
     private JTable tablaReparaciones;
-    private DefaultTableModel modelo;
+    private DefaultTableModel reparacionesTable;
 
-    // booleano que identifica si la tabla es llamada desde ReparacionFrame
-    public ReparacionesTable() {
-        setLayout(new BorderLayout());
-        // Si la tabla se llama desde ReparacionFrame, muestro estas columnas
-            modelo = new DefaultTableModel(new String[]{"ID", " Entrada", "Salida", "Cliente", "Dispositivo", "Importe"}, 0) {
-                public boolean isCellEditable(int row, int column) {
-                    return false;
-                }
+    public ReparacionesTable(List<Reparacion> reparacionesList) {
+        
+        String[] columnas = {"ID", "Entrada", "Salida", "Cliente", "Dispositivo", "Reparación", "Importe", "Garantía"};
+        reparacionesTable = new DefaultTableModel(columnas, 0){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                return false;
+            }
+        };
+        tablaReparaciones = new JTable(reparacionesTable);
+        JScrollPane scrollPane = new JScrollPane(tablaReparaciones);
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(scrollPane);
+
+        tablaReparaciones.addMouseListener(new ReparacionTableMouseListener(tablaReparaciones));
+        setReparaciones(reparacionesList);
+    }
+    
+   public void setReparaciones(List<Reparacion> reparacionesList){
+        reparacionesTable.setRowCount(0);
+        for (Reparacion r : reparacionesList) {
+            Object[] fila = {
+                r.getId(),
+                r.getFechaEntrada(),
+                r.getFechaSalida(),
+                r.getCliente().getNombre() + " " + r.getCliente().getApellidos(),
+                r.getModelo().getModelo(),
+                r.getTipoReparacion().getReparacion(),
+                r.getPrecioReparacion(),
+                r.isGarantia()
             };
-        
-        
-        tablaReparaciones = new JTable(modelo);
-        tablaReparaciones.getTableHeader().setReorderingAllowed(false);
-        tablaReparaciones.setAutoCreateRowSorter(false);
-
-        JScrollPane scroll = new JScrollPane(tablaReparaciones);
-        add(scroll, BorderLayout.CENTER);
-    }
-
-    public void cargarReparaciones(List<Reparacion> lista) {
-        modelo.setRowCount(0);
-        for (Reparacion r : lista) {
-                modelo.addRow(new Object[]{
-                    r.getId(),
-                    r.getFechaEntrada(),
-                    r.getFechaSalida(),
-                    r.getCliente().getNombre() + " " + r.getCliente().getApellidos(),
-                    r.getModelo().getModelo(),
-                    r.getPrecioReparacion(),
-                });
+            reparacionesTable.addRow(fila);
         }
-    }
-     
-     public JTable getTablaReparaciones(){
-         return tablaReparaciones;
-     }
+   }
 }
 

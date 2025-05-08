@@ -11,13 +11,13 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -36,6 +36,7 @@ public class ReparacionFrame extends JFrame {
     private JButton volverButton;
     private JDateChooser fechaEntradaChooser;
     private JDateChooser fechaSalidaChooser;
+    private static List<Reparacion> reparacionesList  = new ArrayList<>();
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
@@ -73,19 +74,19 @@ public class ReparacionFrame extends JFrame {
         
         add(topPanel, BorderLayout.NORTH);
         
-        tablePanel = new ReparacionesTable();
+        tablePanel = new ReparacionesTable(reparacionesList);
         add(tablePanel, BorderLayout.CENTER);
         
        buscarButton.addActionListener( e -> listarReparacionButton());
        volverButton.addActionListener( e -> dispose());
        
-       tablePanel.getTablaReparaciones().addMouseListener(
-       new ReparacionTableMouseListener(tablePanel.getTablaReparaciones()));
+       
     }
     
      private void listarReparacionButton(){
         
-        List<Reparacion> reparacionesList = ReparacionController.getAllReparaciones();
+        reparacionesList = ReparacionController.getAllReparaciones();
+        tablePanel.setReparaciones(reparacionesList);
     }
      
      public static LocalDate dateToLocalDate(Date fechaDate) {

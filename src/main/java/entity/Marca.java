@@ -36,5 +36,10 @@ public class Marca {
 
     public void setMarca(String marca) {
         this.marca = marca;
-    }    
+    }
+    
+    @Override
+    public String toString(){
+        return this.marca.toUpperCase();
+    }
 }

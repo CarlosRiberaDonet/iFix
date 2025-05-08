@@ -27,13 +27,13 @@ public class ClientePanel extends JPanel{
     
     private JFrame mainFrame;
     private Cliente cliente;
+    
     public void mostrarReparacionesCliente(Cliente clienteSelect){
 
         cliente = clienteSelect;
         List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSelect.getId());
 
-        ReparacionesTable panel = new ReparacionesTable();
-        panel.cargarReparaciones(reparacionesList);
+        ReparacionesTable tablePanel = new ReparacionesTable(reparacionesList);
 
         // Crear botones
         JPanel menuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -53,7 +53,7 @@ public class ClientePanel extends JPanel{
         dialog.setLocationRelativeTo(mainFrame);
         dialog.setLayout(new BorderLayout());
         dialog.add(menuPanel, BorderLayout.NORTH);
-        dialog.add(panel, BorderLayout.CENTER);
+        dialog.add(tablePanel, BorderLayout.CENTER);
         btnAñadir.addActionListener( e -> abrirCrearReparacion());
         dialog.setVisible(true);
     }
