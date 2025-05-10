@@ -187,7 +187,10 @@ public class ReparacionDao {
         
         try(PreparedStatement stmt = conn.prepareStatement(SELECT_REPARACION_BY_ID)){
             stmt.setInt(1, id);
+            
+            // MENSAJE DE DEPURACIÓN
             System.out.println("ID reparacion: " + id);
+            
             ResultSet rs = stmt.executeQuery();
                       
             if(rs.next()){

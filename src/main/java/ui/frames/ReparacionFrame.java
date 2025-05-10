@@ -20,8 +20,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
-import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.ReparacionesTable;
 
 /**

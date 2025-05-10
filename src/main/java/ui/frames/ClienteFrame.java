@@ -8,6 +8,8 @@ import controller.ClienteController;
 import entity.Cliente;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,9 +17,10 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import ui.components.clientes.CrearClientePanel;
-import ui.components.clientes.ClienteTableMouseListener;
+import listeners.ClienteTableMouseListener;
 import ui.components.clientes.ClientesTable;
 
 /**
@@ -25,87 +28,77 @@ import ui.components.clientes.ClientesTable;
  * @author Carlos Ribera
  */
 
-    public class ClienteFrame extends JFrame{
-        
-        private ClientesTable tablePanel;
-        private JTextField nombreTextField;
-        private JTextField apellidosTextField;
-        private JTextField telefonoTextField;
-        private JButton buscarButton;
-        private JButton crearClienteButton;
-        private JButton salirButton;
-        private String nombre;
-        private String apellidos;
-        private String telefono;
+public class ClienteFrame extends JFrame {
 
-        public ClienteFrame(){
-            setTitle("CLIENTES");
-            setSize(800, 600);
-            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            setLocationRelativeTo(null);
-            initUI();
-        }
+    private ClientesTable tablePanel;
+    private JTextField nombreTextField;
+    private JTextField apellidosTextField;
+    private JTextField telefonoTextField;
+    private List<Cliente> clientesList = new ArrayList<>();
+    private JTable tablaClientes;
 
-       private void initUI() {
+    public ClienteFrame() {
+        setTitle("CLIENTES");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        initUI();
+    }
+
+    private void initUI() {
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel nombreLabel = new JLabel("Nombre:");
         nombreTextField = new JTextField(10);
-
-        JLabel apellidosLabel = new JLabel("Apellidos:");
         apellidosTextField = new JTextField(10);
-
-        JLabel telefonoLabel = new JLabel("Teléfono:");
         telefonoTextField = new JTextField(10);
 
-        buscarButton = new JButton("Buscar");
-        crearClienteButton = new JButton("Crear");
-        salirButton = new JButton("Atrás");
+        JButton buscarButton = new JButton("Buscar");
+        JButton crearClienteButton = new JButton("Crear");
+        JButton salirButton = new JButton("Atrás");
 
-        topPanel.add(nombreLabel);
+        buscarButton.addActionListener(e -> buscarCliente());
+        crearClienteButton.addActionListener(e -> abrirCrearCliente());
+        salirButton.addActionListener(e -> dispose());
+
+        topPanel.add(new JLabel("Nombre:"));
         topPanel.add(nombreTextField);
-        topPanel.add(apellidosLabel);
+        topPanel.add(new JLabel("Apellidos:"));
         topPanel.add(apellidosTextField);
-        topPanel.add(telefonoLabel);
+        topPanel.add(new JLabel("Teléfono:"));
         topPanel.add(telefonoTextField);
         topPanel.add(buscarButton);
         topPanel.add(crearClienteButton);
         topPanel.add(salirButton);
 
         add(topPanel, BorderLayout.NORTH);
-        
+
         tablePanel = new ClientesTable();
+        tablaClientes = tablePanel.getTablaClientes();
+        tablaClientes.addMouseListener(new ClienteTableMouseListener(clientesList, tablaClientes));
         add(tablePanel, BorderLayout.CENTER);
-        
-        buscarButton.addActionListener( e -> buscarClienteButton());
-        crearClienteButton.addActionListener( e -> crearClienteButton());
-        salirButton.addActionListener( e -> dispose());
     }
-       
-    private void buscarClienteButton(){
-        
-        nombre = nombreTextField.getText();
-        apellidos = apellidosTextField.getText();
-        telefono = telefonoTextField.getText();
-        
-        List<Cliente> clientesList = ClienteController.findClientes(nombre, apellidos, telefono);
-        tablePanel.cargarClientes(clientesList);
-        
-        tablePanel.getTablaClientes().addMouseListener(new ClienteTableMouseListener(clientesList, tablePanel.getTablaClientes())
+
+    private void buscarCliente() {
+        clientesList.clear();
+        clientesList.addAll(
+            ClienteController.findClientes(
+                nombreTextField.getText(),
+                apellidosTextField.getText(),
+                telefonoTextField.getText()
+            )
         );
+        tablePanel.cargarClientes(clientesList);
     }
-    
-    private void crearClienteButton(){
+
+    private void abrirCrearCliente() {
         JDialog dialog = new JDialog(this, "CREAR CLIENTE", true);
         dialog.setSize(400, 300);
         dialog.setLocationRelativeTo(this);
         dialog.setLayout(new BorderLayout());
-        
-        CrearClientePanel panel = new CrearClientePanel();
-        dialog.add(panel, BorderLayout.CENTER);
+        dialog.add(new CrearClientePanel(), BorderLayout.CENTER);
         dialog.setVisible(true);
     }
 }

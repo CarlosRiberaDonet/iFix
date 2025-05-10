@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package ui.components.clientes;
+package listeners;
 
 import entity.Cliente;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.function.Consumer;
 import javax.swing.JTable;
+import ui.components.clientes.ClientePanel;
 
 
 /**
@@ -19,7 +21,6 @@ public class ClienteTableMouseListener extends MouseAdapter {
 
     private List<Cliente> clientesList;
     private JTable clienteTable;
-    ClientePanel clientePanel = new ClientePanel();
 
     public ClienteTableMouseListener(List<Cliente> clientesList, JTable clienteTable) {
         this.clientesList = clientesList;
@@ -28,11 +29,13 @@ public class ClienteTableMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
-        if (e.getClickCount() == 2 && clienteTable.getSelectedRow() != -1) {  
+        if (e.getClickCount() == 2 && clienteTable.getSelectedRow() != -1) {
             int fila = clienteTable.getSelectedRow();
-            Cliente clienteSeleccionado = clientesList.get(fila);
-            clientePanel.mostrarReparacionesCliente(clienteSeleccionado);    
+            if (fila >= 0 && fila < clientesList.size()) {
+                Cliente clienteSeleccionado = clientesList.get(fila);
+                ClientePanel panel = new ClientePanel();
+                panel.mostrarReparacionesCliente(clienteSeleccionado);
+            }
         }
     }
 }

@@ -9,33 +9,56 @@ import entity.Cliente;
 import entity.Reparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import ui.components.reparaciones.ReparacionesTable;
 import ui.components.reparaciones.CrearReparacion;
+import ui.components.reparaciones.ReparacionDetails;
 
 
 /**
  *
  * @author Carlos Ribera
  */
-public class ClientePanel extends JPanel{
-    
+public class ClientePanel extends JPanel {
+
     private JFrame mainFrame;
     private Cliente cliente;
-    
-    public void mostrarReparacionesCliente(Cliente clienteSelect){
+    private List<Reparacion> reparacionesList = new ArrayList<>();
 
-        cliente = clienteSelect;
-        List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSelect.getId());
+    public void mostrarReparacionesCliente(Cliente clienteSelect) {
+        this.cliente = clienteSelect;
+        this.reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSelect.getId());
 
         ReparacionesTable tablePanel = new ReparacionesTable(reparacionesList);
+        JTable tablaReparaciones = tablePanel.getTablaReparaciones();
 
-        // Crear botones
+        // MouseListener configurado para abrir detalles desde esta lista
+        tablaReparaciones.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2 && tablaReparaciones.getSelectedRow() != -1) {
+                    int fila = tablaReparaciones.getSelectedRow();
+                    Reparacion reparacion = reparacionesList.get(fila);
+
+                    // Cargar detalle con instancia actualizada desde DB
+                    Reparacion recargada = ReparacionController.getReparacionById(reparacion.getId());
+                    if (recargada == null) return;
+
+                    ReparacionDetails detalle = new ReparacionDetails(recargada);
+                    detalle.setVisible(true);
+                }
+            }
+        });
+
         JPanel menuPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JButton btnAñadir = new JButton("Añadir");
         JButton btnEliminar = new JButton("Eliminar");
@@ -43,21 +66,18 @@ public class ClientePanel extends JPanel{
         menuPanel.add(btnAñadir);
         menuPanel.add(btnEliminar);
         menuPanel.add(btnBuscar);
-        
-        // Añadir espaciado interno
         menuPanel.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
 
-        // Crear y mostrar dialog
         JDialog dialog = new JDialog(mainFrame, "Reparaciones de " + clienteSelect.getNombre(), true);
         dialog.setSize(800, 600);
         dialog.setLocationRelativeTo(mainFrame);
         dialog.setLayout(new BorderLayout());
         dialog.add(menuPanel, BorderLayout.NORTH);
         dialog.add(tablePanel, BorderLayout.CENTER);
-        btnAñadir.addActionListener( e -> abrirCrearReparacion());
+        btnAñadir.addActionListener(e -> abrirCrearReparacion());
         dialog.setVisible(true);
     }
-    
+
     private void abrirCrearReparacion() {
         JDialog crearDialog = new JDialog(mainFrame, "Crear Reparación", true);
         crearDialog.setSize(700, 720);

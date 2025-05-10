@@ -263,7 +263,6 @@ public class ReparacionDetails extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_modificarButtonActionPerformed
     
-    
     private void modificarCampos(){
         
         modoEdicion = true;

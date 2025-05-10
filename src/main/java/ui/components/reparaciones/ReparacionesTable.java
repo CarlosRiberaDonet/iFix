@@ -57,5 +57,9 @@ public class ReparacionesTable extends JPanel{
             reparacionesTable.addRow(fila);
         }
    }
+   
+   public JTable getTablaReparaciones(){
+       return tablaReparaciones;
+   }
 }
 
