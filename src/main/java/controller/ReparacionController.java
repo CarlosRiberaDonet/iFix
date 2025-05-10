@@ -4,9 +4,13 @@
  */
 package controller;
 
+import dao.DispositivoDao;
 import dao.ReparacionDao;
+import entity.Marca;
+import entity.Modelo;
 import entity.Reparacion;
 import java.util.List;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -46,5 +50,28 @@ public class ReparacionController {
     public static Reparacion saveReparacion(Reparacion r){
         
         return null;
+    }
+    
+    public static boolean modificarReparacion(Reparacion r){
+        return ReparacionDao.updateReparacion(r);
+    }
+    
+     // Cargar marcas disponibles en marcaComboBox
+    public void llenarComboBoxMarca(JComboBox marcaComboBox){
+                
+        List<Marca> marcasList = DispositivoDao.getMarcas();
+        for (Marca m : marcasList) {
+            marcaComboBox.addItem(m.getMarca().toUpperCase()); 
+        }
+    }
+    
+     // Cargar modelos disponibles en modeloComboBox
+    public void llenarComboBoxModelo(int idMarca, JComboBox modeloComboBox){
+        
+        ModeloController modeloController = new ModeloController(); 
+        List<Modelo> modelosList = modeloController.filterModelosByMarca(idMarca);
+        for(Modelo m : modelosList){
+            modeloComboBox.addItem(m.getModelo().toUpperCase());
+        }
     }
 }

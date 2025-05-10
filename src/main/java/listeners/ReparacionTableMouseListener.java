@@ -4,15 +4,15 @@
  */
 package listeners;
 
+import ui.components.reparaciones.ReparacionDetallesDialog;
 import entity.Reparacion;
 import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import ui.components.reparaciones.ReparacionDetails;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -47,6 +47,11 @@ public class ReparacionTableMouseListener extends MouseAdapter {
                 return;
             }
             
+            // Obtener el Frame principal
+            Frame parent = (Frame) SwingUtilities.getWindowAncestor(reparacionesTable);
+            ReparacionDetallesDialog dialog = new ReparacionDetallesDialog(parent, reparacion, true);
+            dialog.setLocationRelativeTo(parent);
+            dialog.setVisible(true);
        
         }
     }

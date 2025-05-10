@@ -107,6 +107,16 @@ public class ReparacionDao {
             + "JOIN cliente c ON r.id_cliente = c.id "
             + "WHERE r.id = ?";
     
+    private static final String MODIFICAR_REPARACION = "UPDATE reparacion SET fecha_entrada = ?, "
+            + "fecha_salida = ?, "
+            + "precio = ?, "
+            + "garantia = ?, "
+            + "comentarios = ?, "
+            + "id_marca = ?, "
+            + "id_modelo = ?, "
+            + "id_tipo_reparacion = ? "
+            + "WHERE id = ?";
+    
     
     private static final String INSERT_REPARACION = " INSERT INTO reparacion (fecha_entrada, fecha_salida, id_marca, id_modelo, id_tipo_reparacion, "
             + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -334,7 +344,6 @@ public class ReparacionDao {
         return reparacionesList;
     }
 
-    
     public static boolean insertarReparacion(Reparacion r){
         
         Connection conn = ConexionBD.connect();
@@ -390,5 +399,36 @@ public class ReparacionDao {
             throw new IllegalArgumentException("No se encontró el tipo de reparación: " + tipo);
         }
         return idTipo;
+    }
+    
+    public static boolean updateReparacion(Reparacion r){
+        
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(MODIFICAR_REPARACION)){
+            
+            System.out.println("ID REPARACION: " + r.getId());
+            stmt.setDate(1, r.getFechaEntrada());
+            stmt.setDate(2, r.getFechaSalida());
+            stmt.setBigDecimal(3, r.getPrecioReparacion());
+            stmt.setBoolean(4, r.isGarantia());
+            stmt.setString(5, r.getComentarios());
+            stmt.setInt(6, r.getIdMarca());
+            stmt.setInt(7, r.getIdModelo());
+            stmt.setInt(8, r.getIdTipoReparacion());
+            stmt.setInt(9, r.getId());
+            
+            int filasAfectadas = stmt.executeUpdate();
+            if(filasAfectadas > 0){
+                System.out.println("Reparación actualizada correctamente.");
+            }
+            
+        } catch(SQLException e){
+            System.out.println("Error al modificar la reparacion" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return true;
     }
 }

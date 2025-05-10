@@ -33,6 +33,7 @@ public class CrearReparacion extends javax.swing.JPanel {
     private static Cliente cliente;  // Cliente actual que se está usando en la creación
     private String fechaActual = Utils.fechaActualToString();
     TipoReparacionDao trd = new TipoReparacionDao();
+    ReparacionController rc = new ReparacionController();
     
     
     public CrearReparacion(Cliente cliente) {
@@ -51,22 +52,15 @@ public class CrearReparacion extends javax.swing.JPanel {
         // Limpieza de valores por defecto del combo
         modeloComboBox.removeAllItems();
         // Cargar datos iniciales
-        llenarComboBoxMarca();
-        llenarComboBoxReparacion();    
+        rc.llenarComboBoxMarca(marcaComboBox);
+ 
         llenarComboBoxReparacion();
         
         // Registrar listener externo
         marcaComboBox.addActionListener(new MarcaComboBoxListener(marcaComboBox, modeloComboBox));  
     }
     
-    // Cargar marcas disponibles en marcaComboBox
-    private void llenarComboBoxMarca(){
-                
-        List<Marca> marcasList = DispositivoDao.getMarcas();
-        for (Marca m : marcasList) {
-            marcaComboBox.addItem(m.getMarca().toUpperCase()); 
-        }
-    }
+   
     
     // Cargar modelos disponibles en modeloComboBox
     public void llenarComboBoxModelo(int idMarca){

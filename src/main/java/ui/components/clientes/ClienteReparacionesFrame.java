@@ -54,16 +54,6 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         reparacionesTable.addMouseListener(new ReparacionTableMouseListener(reparacionesTable, reparacionesList));
     }
     
-    // Método que delega la creación del JDialog
-    public void mostrarDetallesReparacion(Reparacion reparacion) {
-        JDialog dialog = new JDialog(this, "Detalle de Reparación", true);
-        dialog.setContentPane(new ReparacionDetails(reparacion));
-        dialog.setSize(600, 800);
-        dialog.setLocationRelativeTo(null);
-        dialog.setModal(true);
-        dialog.setVisible(true);
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
