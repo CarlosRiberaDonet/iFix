@@ -4,11 +4,12 @@
  */
 package listeners;
 
-import controller.ReparacionController;
 import entity.Reparacion;
+import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import ui.components.reparaciones.ReparacionDetails;
@@ -33,19 +34,20 @@ public class ReparacionTableMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
+
         if (e.getClickCount() == 2 && reparacionesTable.getSelectedRow() != -1) {
             int fila = reparacionesTable.getSelectedRow();
 
             if (fila < 0 || fila >= reparacionesList.size()) return;
 
             Reparacion reparacion = reparacionesList.get(fila);
+            System.out.println("reparacion seleccionada: " + reparacion.getId());
             if (reparacion == null) {
                 JOptionPane.showMessageDialog(reparacionesTable, "No se pudo cargar la reparación", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-
-            ReparacionDetails reparacionDetails = new ReparacionDetails(reparacion);
-            reparacionDetails.setVisible(true);
+            
+       
         }
     }
 }

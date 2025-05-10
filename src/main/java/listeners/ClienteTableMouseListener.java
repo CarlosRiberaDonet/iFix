@@ -4,13 +4,14 @@
  */
 package listeners;
 
+import controller.ReparacionController;
 import entity.Cliente;
+import entity.Reparacion;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import java.util.function.Consumer;
 import javax.swing.JTable;
-import ui.components.clientes.ClientePanel;
+import ui.components.clientes.ClienteReparacionesFrame;
 
 
 /**
@@ -33,8 +34,10 @@ public class ClienteTableMouseListener extends MouseAdapter {
             int fila = clienteTable.getSelectedRow();
             if (fila >= 0 && fila < clientesList.size()) {
                 Cliente clienteSeleccionado = clientesList.get(fila);
-                ClientePanel panel = new ClientePanel();
-                panel.mostrarReparacionesCliente(clienteSeleccionado);
+                List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(clienteSeleccionado.getId());
+                ClienteReparacionesFrame frame = new ClienteReparacionesFrame(clienteSeleccionado, reparacionesList);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         }
     }

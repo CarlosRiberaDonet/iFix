@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import listeners.ReparacionTableMouseListener;
 
 /**
  *
@@ -37,8 +36,8 @@ public class ReparacionesTable extends JPanel{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(scrollPane);
 
-        tablaReparaciones.addMouseListener(new ReparacionTableMouseListener(tablaReparaciones));
-        setReparaciones(reparacionesList);
+//        tablaReparaciones.addMouseListener(new ReparacionTableMouseListener(tablaReparaciones));
+//        setReparaciones(reparacionesList);
     }
     
    public void setReparaciones(List<Reparacion> reparacionesList){

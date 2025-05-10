@@ -86,8 +86,8 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
  
     private void clienteFrameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clienteFrameButtonActionPerformed
-        ReparacionDao dao = new ReparacionDao();
-        dao.getAllReparacionesList();
+        /*ReparacionDao dao = new ReparacionDao();
+        dao.getAllReparacionesList();*/
         ClienteFrame clienteFrame = new ClienteFrame();
         clienteFrame.setVisible(true);
     }//GEN-LAST:event_clienteFrameButtonActionPerformed

@@ -8,7 +8,6 @@ import controller.ClienteController;
 import entity.Cliente;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
