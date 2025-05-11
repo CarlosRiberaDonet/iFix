@@ -4,8 +4,8 @@
  */
 package listeners;
 
-import controller.ModeloController;
-import dao.DispositivoDao;
+import controller.MarcaModeloController;
+import dao.MarcaModeloDao;
 import entity.Marca;
 import entity.Modelo;
 import java.awt.event.ActionEvent;
@@ -38,7 +38,7 @@ public class MarcaComboBoxListener implements ActionListener{
             modeloComboBox.setEditable(false);
             modeloComboBox.removeAllItems();
 
-            List<Marca> marcas = DispositivoDao.getMarcas();
+            List<Marca> marcas = MarcaModeloDao.getMarcas();
             int idMarca = 0;
             for (Marca m : marcas) {
                 if (m.getMarca().equalsIgnoreCase(seleccion)) {
@@ -47,7 +47,7 @@ public class MarcaComboBoxListener implements ActionListener{
                 }
             }
 
-            ModeloController modeloController = new ModeloController();
+            MarcaModeloController modeloController = new MarcaModeloController();
             List<Modelo> modelos = modeloController.filterModelosByMarca(idMarca);
             for (Modelo m : modelos) {
                 modeloComboBox.addItem(m.getModelo().toUpperCase());

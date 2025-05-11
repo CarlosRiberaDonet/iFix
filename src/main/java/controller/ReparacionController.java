@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dao.DispositivoDao;
+import dao.MarcaModeloDao;
 import dao.ReparacionDao;
 import dao.TipoReparacionDao;
 import entity.Marca;
@@ -42,17 +42,8 @@ public class ReparacionController {
         return reparacionesList;
     }
     
-    /*public static List<Reparacion> findReparaciones(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
-        return ReparacionDao.buscarReparaciones(telefono, fechaEntrada, fechaSalida);
-    }*/
-    
     public static Reparacion getReparacionById(int idReparacion){
         return ReparacionDao.getReparacionById(idReparacion);
-    }
-    
-    public static Reparacion saveReparacion(Reparacion r){
-        
-        return null;
     }
     
     public static boolean modificarReparacion(Reparacion r){
@@ -62,7 +53,7 @@ public class ReparacionController {
      // Cargar marcas disponibles en marcaComboBox
     public JComboBox llenarComboBoxMarca(JComboBox marcaComboBox){
                 
-        List<Marca> marcasList = DispositivoDao.getMarcas();
+        List<Marca> marcasList = MarcaModeloDao.getMarcas();
         
         DefaultComboBoxModel<Marca> model = new DefaultComboBoxModel<>();
         for (Marca m : marcasList) {
@@ -76,7 +67,7 @@ public class ReparacionController {
     public JComboBox llenarComboBoxModelo(int idMarca, JComboBox modeloComboBox){
         modeloComboBox.removeAllItems();
         
-        ModeloController modeloController = new ModeloController(); 
+        MarcaModeloController modeloController = new MarcaModeloController(); 
         List<Modelo> modelosList = modeloController.filterModelosByMarca(idMarca);
         
         DefaultComboBoxModel<Modelo> model = new DefaultComboBoxModel<>();

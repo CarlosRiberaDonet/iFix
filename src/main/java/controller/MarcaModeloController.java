@@ -4,7 +4,7 @@
  */
 package controller;
 
-import dao.DispositivoDao;
+import dao.MarcaModeloDao;
 import entity.Modelo;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,12 +13,12 @@ import java.util.List;
  *
  * @author Carlos
  */
-public class ModeloController {
+public class MarcaModeloController {
     
     
     public static List<Modelo> getModelosList(){
         
-        List<Modelo> modelosList = DispositivoDao.getModelos();
+        List<Modelo> modelosList = MarcaModeloDao.getModelos();
         
         return modelosList;
     }
@@ -36,4 +36,13 @@ public class ModeloController {
         return modelosFiltrados;
     }
     
+    // Inserta la nueva marca en la BD y obtengo el id 
+    public static int addMarca(String nuevaMarca){
+        return MarcaModeloDao.insertMarcaByString(nuevaMarca);
+    }   
+    
+    // Inserta el nuevo modelo en la BD y obtengo el id 
+    public static int addModelo(String nuevoModelo, int idMarca){
+        return MarcaModeloDao.insertModeloByString(nuevoModelo, idMarca);
+    } 
 }

@@ -19,6 +19,8 @@ import java.util.List;
 public class TipoReparacionDao {
     
     private static final String SELECT_TIPO_REPARACION = "SELECT * FROM tipo_reparacion";
+    private static final String GET_ID_TIPO_REPARACION = "SELECT id FROM tipo_reparacion WHERE reparacion = ?";
+    private static final String INSERT_TIPO_REPARACION = "INSERT INTO tipo_reparacion (reparacion) VALUES(?)";
     
     public List<TipoReparacion> getTipoReparacionList(){
         
@@ -39,5 +41,49 @@ public class TipoReparacionDao {
         } catch (SQLException e){ 
      }
         return tipoReparacionesList;
+    }
+    
+    public static int insertTipoReparacion(String nuevoTipoReparacion){
+        
+        int idTipoReparacion = -1;
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(INSERT_TIPO_REPARACION)){
+            stmt.setString(1, nuevoTipoReparacion);
+           int insert = stmt.executeUpdate();
+            if(insert > 0){
+                idTipoReparacion = getTipoReparacionId(nuevoTipoReparacion);
+            }
+        } catch(SQLException e){
+            System.out.println("Error al agregar el tipo de reparacion en la BD: " + e.getMessage());
+            e.printStackTrace();
+        }finally{
+            ConexionBD.close(conn);
+        }
+        return idTipoReparacion;
+    }
+    
+    
+      public static int getTipoReparacionId(String tipo){
+        
+        int idTipo = -1;
+        
+        Connection conn = ConexionBD.connect();
+        try( PreparedStatement stmt = conn.prepareStatement(GET_ID_TIPO_REPARACION)){
+           
+            stmt.setString(1, tipo.toUpperCase());
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                idTipo = rs.getInt("id");
+            }
+            stmt.close();
+        } catch(SQLException e){
+            System.out.println("Error al obtener el id de la tabla tipo_reparacion: " + e.getMessage());
+        } finally{
+           ConexionBD.close(conn);
+        }
+        if (idTipo == -1) {
+            throw new IllegalArgumentException("No se encontró el tipo de reparación: " + tipo);
+        }
+        return idTipo;
     }
 }
