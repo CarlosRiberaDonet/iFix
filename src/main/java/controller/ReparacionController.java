@@ -6,10 +6,13 @@ package controller;
 
 import dao.DispositivoDao;
 import dao.ReparacionDao;
+import dao.TipoReparacionDao;
 import entity.Marca;
 import entity.Modelo;
 import entity.Reparacion;
+import entity.TipoReparacion;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 
 /**
@@ -57,21 +60,45 @@ public class ReparacionController {
     }
     
      // Cargar marcas disponibles en marcaComboBox
-    public void llenarComboBoxMarca(JComboBox marcaComboBox){
+    public JComboBox llenarComboBoxMarca(JComboBox marcaComboBox){
                 
         List<Marca> marcasList = DispositivoDao.getMarcas();
+        
+        DefaultComboBoxModel<Marca> model = new DefaultComboBoxModel<>();
         for (Marca m : marcasList) {
-            marcaComboBox.addItem(m.getMarca().toUpperCase()); 
+            model.addElement(m);
         }
+        marcaComboBox.setModel(model);
+        return marcaComboBox;
     }
     
-     // Cargar modelos disponibles en modeloComboBox
-    public void llenarComboBoxModelo(int idMarca, JComboBox modeloComboBox){
+    // Cargar modelos disponibles en modeloComboBox
+    public JComboBox llenarComboBoxModelo(int idMarca, JComboBox modeloComboBox){
+        modeloComboBox.removeAllItems();
         
         ModeloController modeloController = new ModeloController(); 
         List<Modelo> modelosList = modeloController.filterModelosByMarca(idMarca);
+        
+        DefaultComboBoxModel<Modelo> model = new DefaultComboBoxModel<>();
         for(Modelo m : modelosList){
-            modeloComboBox.addItem(m.getModelo().toUpperCase());
+            model.addElement(m);
         }
+        modeloComboBox.setModel(model);
+        return modeloComboBox;  
+    }
+    
+    // Cargar reparaciones disponibles en reparacionComboBox
+    public JComboBox llenarComboBoxReparacion(JComboBox reparacionComboBox){
+        
+        TipoReparacionDao tr = new TipoReparacionDao();
+        List<TipoReparacion> tipoReparacionList = tr.getTipoReparacionList();
+         
+        DefaultComboBoxModel<TipoReparacion> model = new DefaultComboBoxModel<>();
+        for (TipoReparacion t : tipoReparacionList) {
+           model.addElement(t);
+        }
+        
+        reparacionComboBox.setModel(model);
+        return reparacionComboBox;
     }
 }

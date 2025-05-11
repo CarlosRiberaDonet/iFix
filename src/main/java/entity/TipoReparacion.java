@@ -41,4 +41,8 @@ public class TipoReparacion {
         this.reparacion = reparacion;
     }
     
+    @Override
+    public String toString(){
+        return reparacion.toUpperCase();
+    }
 }

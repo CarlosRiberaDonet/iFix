@@ -11,14 +11,11 @@ import dao.ReparacionDao;
 import dao.TipoReparacionDao;
 import entity.Cliente;
 import entity.Marca;
-import entity.Modelo;
 import entity.Reparacion;
-import entity.TipoReparacion;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
-import listeners.MarcaComboBoxListener;
 import utils.Utils;
 
 /**
@@ -47,38 +44,25 @@ public class CrearReparacion extends javax.swing.JPanel {
         direccionTextField.setText(cliente.getDireccion().toUpperCase());
         entradaTextField.setText(fechaActual);
         salidaTextField.setText(fechaActual);
-        
-        marcaComboBox.setEditable(false);
-        // Limpieza de valores por defecto del combo
-        modeloComboBox.removeAllItems();
-        // Cargar datos iniciales
+        startComboBoxMarca();
+        rc.llenarComboBoxReparacion(reparacionComboBox);
+    }
+
+    // Cargar Marcas disponibles en marcaComboBox
+    public void startComboBoxMarca(){
+        // Llenar el ComboBox de marcas
         rc.llenarComboBoxMarca(marcaComboBox);
- 
-        llenarComboBoxReparacion();
         
-        // Registrar listener externo
-        marcaComboBox.addActionListener(new MarcaComboBoxListener(marcaComboBox, modeloComboBox));  
-    }
-    
-   
-    
-    // Cargar modelos disponibles en modeloComboBox
-    public void llenarComboBoxModelo(int idMarca){
-        
-        ModeloController modeloController = new ModeloController(); 
-        List<Modelo> modelosList = modeloController.filterModelosByMarca(idMarca);
-        for(Modelo m : modelosList){
-            modeloComboBox.addItem(m.getModelo().toUpperCase());
-        }
-    }
-    
-    // Cargar reparaciones disponibles en reparacionComboBox
-    public void llenarComboBoxReparacion(){
-        
-        List<TipoReparacion> tipoReparacionList = trd.getTipoReparacionList();
-        for (TipoReparacion t : tipoReparacionList) {
-            reparacionComboBox.addItem(t.getReparacion().toUpperCase());
-        }
+         // Añadir el ActionListener para escuchar los cambios en la selección de marca
+         marcaComboBox.addActionListener( e -> {
+            // Obtengo la Marca seleccionada
+            Marca marcaSelect = (Marca) marcaComboBox.getSelectedItem();
+            int idMarca = marcaSelect.getIdMarca();
+           
+            rc.llenarComboBoxModelo(idMarca, modeloComboBox);
+            modeloComboBox.setEnabled(true);
+
+         });
     }
     
     /**
@@ -155,7 +139,6 @@ public class CrearReparacion extends javax.swing.JPanel {
 
         marcaLabel.setText("Marca");
 
-        marcaComboBox.setEditable(true);
         marcaComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
         modeloLabel.setText("Modelo");
@@ -189,7 +172,7 @@ public class CrearReparacion extends javax.swing.JPanel {
 
         salidaLabel.setText("F.Salida:");
 
-        modeloComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        modeloComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
         javax.swing.GroupLayout reparacionPanelLayout = new javax.swing.GroupLayout(reparacionPanel);
         reparacionPanel.setLayout(reparacionPanelLayout);
@@ -379,7 +362,6 @@ public class CrearReparacion extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Error al guardar la reparación.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        // dispose();
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     private void entradaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaTextFieldActionPerformed

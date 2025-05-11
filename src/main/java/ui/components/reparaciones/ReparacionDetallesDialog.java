@@ -25,7 +25,7 @@ public class ReparacionDetallesDialog extends javax.swing.JDialog {
     /**
      * Creates new form ReparacionDetallesDialog
      */
-    private static boolean modoEdicion = false;
+    private static boolean modoEdicion;
     
     public ReparacionDetallesDialog(java.awt.Frame parent, Reparacion reparacion, boolean modal) {
         super(parent, modal);
@@ -33,10 +33,7 @@ public class ReparacionDetallesDialog extends javax.swing.JDialog {
         //this.reparacion = reparacion;
         cargarReparaciones(reparacion);
         setCamposEditable(false);
-        if(modoEdicion){
-            CrearReparacion
-        }
-      
+        modoEdicion = false;
     }
     
     private void setCamposEditable(boolean editable) {
@@ -70,7 +67,7 @@ public class ReparacionDetallesDialog extends javax.swing.JDialog {
         int idReparacion = reparacion.getId();
         Date fechaEntrada = Utils.stringToDate(fechaEntradaTextField.getText());
         Date fechaSalida =  Utils.stringToDate(fechaSalidaTextField.getText());
-        int idMarca = marcaComboBox.getSelectedItem();
+        /*int idMarca = marcaComboBox.getSelectedItem();
         int idModelo = modeloComboBox
         int idTipoReparacion = reparacionComboBox
         BigDecimal importe = Utils.stringToBigDecimal(importeTextField.getText());
@@ -78,7 +75,7 @@ public class ReparacionDetallesDialog extends javax.swing.JDialog {
         String comentarios = comentariosTextArea.getText();
         
         Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
-        ReparacionController.modificarReparacion(r);
+        ReparacionController.modificarReparacion(r);*/
     }
 
     /**
@@ -299,7 +296,7 @@ public class ReparacionDetallesDialog extends javax.swing.JDialog {
         } else{
             modoEdicion = false;
             setCamposEditable(false);
-            guardarReparacion(reparacion);
+            //guardarReparacion(reparacion);
             modificarButton.setText("MODIFICAR");
         }
     }//GEN-LAST:event_modificarButtonActionPerformed
