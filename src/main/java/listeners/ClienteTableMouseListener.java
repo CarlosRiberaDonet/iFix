@@ -23,7 +23,7 @@ public class ClienteTableMouseListener extends MouseAdapter {
     private List<Cliente> clientesList;
     private JTable clienteTable;
 
-    public ClienteTableMouseListener(List<Cliente> clientesList, JTable clienteTable) {
+    public ClienteTableMouseListener(JTable clienteTable, List<Cliente> clientesList) {
         this.clientesList = clientesList;
         this.clienteTable = clienteTable;
     }

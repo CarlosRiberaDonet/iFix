@@ -4,15 +4,12 @@
  */
 package listeners;
 
-import ui.components.reparaciones.ReparacionDetallesDialog;
 import entity.Reparacion;
-import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.SwingUtilities;
+import ui.components.reparaciones.ReparacionDetallesFrame;
 
 /**
  *
@@ -22,6 +19,8 @@ public class ReparacionTableMouseListener extends MouseAdapter {
 
     private JTable reparacionesTable;
     private List<Reparacion> reparacionesList;
+    private static ReparacionDetallesFrame reparacionDetallesFrame;  // Variable estática para controlar la instancia
+
 
     public ReparacionTableMouseListener(JTable reparacionesTable, List<Reparacion> reparacionesList) {
         this.reparacionesTable = reparacionesTable;
@@ -34,25 +33,19 @@ public class ReparacionTableMouseListener extends MouseAdapter {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
         if (e.getClickCount() == 2 && reparacionesTable.getSelectedRow() != -1) {
             int fila = reparacionesTable.getSelectedRow();
-
-            if (fila < 0 || fila >= reparacionesList.size()) return;
-
-            Reparacion reparacion = reparacionesList.get(fila);
-            System.out.println("reparacion seleccionada: " + reparacion.getId());
-            if (reparacion == null) {
-                JOptionPane.showMessageDialog(reparacionesTable, "No se pudo cargar la reparación", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
+            if (fila >= 0 && fila < reparacionesList.size()){
+                Reparacion reparacionSelect = reparacionesList.get(fila);
+                
+                 // Verificar si ya existe la ventana abierta
+                if (reparacionDetallesFrame == null || !reparacionDetallesFrame.isDisplayable()) {
+                    // Crear y mostrar el dialogo de detalles de la reparación
+                    ReparacionDetallesFrame frame = new ReparacionDetallesFrame(reparacionSelect);
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
+                }  
             }
-            
-            // Obtener el Frame principal
-            Frame parent = (Frame) SwingUtilities.getWindowAncestor(reparacionesTable);
-            ReparacionDetallesDialog dialog = new ReparacionDetallesDialog(parent, reparacion, true);
-            dialog.setLocationRelativeTo(parent);
-            dialog.setVisible(true);
-       
         }
     }
 }

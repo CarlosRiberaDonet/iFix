@@ -19,7 +19,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.ReparacionesTable;
 
 /**
@@ -28,6 +30,7 @@ import ui.components.reparaciones.ReparacionesTable;
  */
 public class ReparacionFrame extends JFrame {
     
+    private JTable tablaReparaciones;
     private ReparacionesTable tablePanel;
     private JTextField telefonoTextField;
     private JButton buscarButton;
@@ -73,18 +76,20 @@ public class ReparacionFrame extends JFrame {
         add(topPanel, BorderLayout.NORTH);
         
         tablePanel = new ReparacionesTable(reparacionesList);
+        tablaReparaciones = tablePanel.getTablaReparaciones();
+        tablaReparaciones.addMouseListener(new ReparacionTableMouseListener(tablaReparaciones, reparacionesList));
         add(tablePanel, BorderLayout.CENTER);
         
        buscarButton.addActionListener( e -> listarReparacionButton());
        volverButton.addActionListener( e -> dispose());
-       
-       
     }
     
      private void listarReparacionButton(){
         
-        reparacionesList = ReparacionController.getAllReparaciones();
+        reparacionesList.clear();
+        reparacionesList.addAll(ReparacionController.getAllReparaciones());
         tablePanel.setReparaciones(reparacionesList);
+
     }
      
      public static LocalDate dateToLocalDate(Date fechaDate) {

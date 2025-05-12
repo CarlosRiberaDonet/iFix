@@ -29,12 +29,13 @@ import ui.components.clientes.ClientesTable;
 
 public class ClienteFrame extends JFrame {
 
+    private JTable tablaClientes;
     private ClientesTable tablePanel;
     private JTextField nombreTextField;
     private JTextField apellidosTextField;
     private JTextField telefonoTextField;
     private List<Cliente> clientesList = new ArrayList<>();
-    private JTable tablaClientes;
+    
 
     public ClienteFrame() {
         setTitle("CLIENTES");
@@ -76,7 +77,7 @@ public class ClienteFrame extends JFrame {
 
         tablePanel = new ClientesTable();
         tablaClientes = tablePanel.getTablaClientes();
-        tablaClientes.addMouseListener(new ClienteTableMouseListener(clientesList, tablaClientes));
+        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
         add(tablePanel, BorderLayout.CENTER);
     }
 
