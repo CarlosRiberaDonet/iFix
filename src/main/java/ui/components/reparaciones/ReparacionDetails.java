@@ -303,7 +303,7 @@ public class ReparacionDetails extends javax.swing.JPanel {
         nombreMarca = reparacion.getMarca().getMarca();
         idMarca = reparacion.getMarca().getIdMarca();
         nombreModelo = reparacion.getModelo().getModelo();
-        idModelo = reparacion.getModelo().getId();
+        idModelo = reparacion.getModelo().getIdModelo();
         nombreTipoReparacion = reparacion.getTipoReparacion().getReparacion();
         idTipoReparacion = reparacion.getTipoReparacion().getId();
         importe = reparacion.getPrecioReparacion();

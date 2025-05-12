@@ -40,8 +40,6 @@ public class CrearReparacion extends javax.swing.JPanel {
     public CrearReparacion(Cliente cliente) {
         this.cliente = cliente;
         initComponents();
-        modeloComboBox.setEnabled(false);
-        tipoReparacionComboBox.setEnabled(false);
 
         // Establecer datos del cliente en los campos de texto
         nombreTextField.setText(cliente.getNombre().toUpperCase());
@@ -50,33 +48,45 @@ public class CrearReparacion extends javax.swing.JPanel {
         direccionTextField.setText(cliente.getDireccion().toUpperCase());
         entradaTextField.setText(fechaActual);
         salidaTextField.setText(fechaActual);
-        listenerComboBoxMarca();
-        listenerComboBoxModelo();
-        listenerComboBoxModelo();
+        rc.llenarComboBoxMarca(marcaComboBox);
         rc.llenarComboBoxReparacion(tipoReparacionComboBox);
+        listenerComboBoxMarca();
+        listenerComboBoxModelo();   
+        listenerTipoReparacionComboBox();
     }
 
     // Cargar Marcas disponibles en marcaComboBox
     public void listenerComboBoxMarca(){
-        // Llenar el ComboBox de marcas
-        rc.llenarComboBoxMarca(marcaComboBox);
-        
          // Añadir el ActionListener para escuchar los cambios en la selección de marca
          marcaComboBox.addActionListener( e -> {
             // Obtengo la Marca seleccionada
-            marcaSelect = (Marca) marcaComboBox.getSelectedItem();
-            int idMarca = marcaSelect.getIdMarca();
-           
-            rc.llenarComboBoxModelo(idMarca, modeloComboBox);
-            modeloComboBox.setEnabled(true);
+            Object item = marcaComboBox.getSelectedItem();
+            if(item instanceof Marca){
+                marcaSelect = (Marca) item;
+                int idMarca = marcaSelect.getIdMarca();
+                // Cargo modeloComboBox
+                rc.llenarComboBoxModelo(idMarca, modeloComboBox); 
+            } else{
+                // Preparo instancia para crear un nuevo tipo Modelo en la BD
+                marcaSelect = new Marca();
+                marcaSelect.setIdMarca(-1);
+            }          
          });
     }
     
     public void listenerComboBoxModelo(){
         modeloComboBox.addActionListener( e -> {
-            // Obtengo el modelo seleccionado
-            modeloSelect = (Modelo) modeloComboBox.getSelectedItem();
-            tipoReparacionComboBox.setEnabled(true);
+            
+            /// Obtengo el modelo seleccionado
+            Object item = modeloComboBox.getSelectedItem();
+            // Si se ha seleccionado un item del comboBox (No se ha añadido un modelo nuevo manualmente)
+            if(item instanceof Modelo){
+                modeloSelect = (Modelo) item;
+            } else{
+                // Preparo instancia para crear un nuevo tipo Modelo en la BD
+                modeloSelect = new Modelo();
+                modeloSelect.setIdModelo(-1);
+            }
         });
     }
     
@@ -364,11 +374,15 @@ public class CrearReparacion extends javax.swing.JPanel {
         int idMarca = marcaSelect.getIdMarca();
         // Si la marca seleccionada ha sido introducida manualmente por el USR
         if(idMarca < 1){
-           idMarca = MarcaModeloController.addMarca(marcaSelect.getMarca()); // Agrego la nueva marca a la BD y obtengo su id
+            System.out.println("ID NUEVA MARCA: " + idMarca);
+            System.out.println("NOMBRE NUEVA MARCA: "+ marcaSelect.getMarca());
+            String nuevaMarcaStr = (String) marcaComboBox.getEditor().getItem();
+            marcaSelect.setMarca(nuevaMarcaStr);
+            idMarca = MarcaModeloController.addMarca(marcaSelect.getMarca()); // Agrego la nueva marca a la BD y obtengo su id
         }
         
         // Obtengo el id del modelo seleccionado
-        int idModelo = modeloSelect.getId();
+        int idModelo = modeloSelect.getIdModelo();
         // Si el modelo seleccionado ha sido introducida manualmente por el USR
         if(idModelo < 1){
             idModelo = MarcaModeloController.addModelo(modeloSelect.getModelo(), idMarca); // Agrego el nuevo modelo a la BD y obtengo su id

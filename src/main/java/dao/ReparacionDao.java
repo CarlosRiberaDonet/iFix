@@ -147,7 +147,7 @@ public class ReparacionDao {
                 
                 // Creo el objeto Modelo con los datos obtenidos
                 Modelo mo = new Modelo();
-                mo.setId(rs.getInt("idModelo"));
+                mo.setIdModelo(rs.getInt("idModelo"));
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
@@ -162,7 +162,7 @@ public class ReparacionDao {
                 r.setFechaEntrada(rs.getDate("fecha_entrada"));
                 r.setFechaSalida(rs.getDate("fecha_salida"));
                 r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getId());
+                r.setIdModelo(mo.getIdModelo());
                 r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
@@ -216,7 +216,7 @@ public class ReparacionDao {
                 
                 // Creo el objeto Modelo con los datos obtenidos
                 Modelo mo = new Modelo();
-                mo.setId(rs.getInt("idModelo"));
+                mo.setIdModelo(rs.getInt("idModelo"));
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
@@ -231,7 +231,7 @@ public class ReparacionDao {
                 r.setFechaEntrada(rs.getDate("fecha_entrada"));
                 r.setFechaSalida(rs.getDate("fecha_salida"));
                 r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getId());
+                r.setIdModelo(mo.getIdModelo());
                 r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
@@ -279,7 +279,7 @@ public class ReparacionDao {
                 
                 // Creo el objeto Modelo con los datos obtenidos
                 Modelo mo = new Modelo();
-                mo.setId(rs.getInt("idModelo"));
+                mo.setIdModelo(rs.getInt("idModelo"));
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
@@ -294,7 +294,7 @@ public class ReparacionDao {
                 r.setFechaEntrada(rs.getDate("fecha_entrada"));
                 r.setFechaSalida(rs.getDate("fecha_salida"));
                 r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getId());
+                r.setIdModelo(mo.getIdModelo());
                 r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));

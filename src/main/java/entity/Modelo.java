@@ -10,12 +10,12 @@ package entity;
  */
 public class Modelo {
     
-    private int id;
+    private int idModelo;
     private String modelo;
     private int idMarca;
 
     public Modelo(int id, String modelo, int id_marca) {
-        this.id = id;
+        this.idModelo = id;
         this.modelo = modelo;
         this.idMarca = id_marca;
     }
@@ -24,12 +24,12 @@ public class Modelo {
         
     }
 
-    public int getId() {
-        return id;
+    public int getIdModelo() {
+        return idModelo;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdModelo(int id) {
+        this.idModelo = id;
     }
 
     public String getModelo() {
