@@ -53,7 +53,7 @@ public class ReparacionDetallesDialog extends javax.swing.JDialog {
         fechaSalidaTextField.setText(Utils.dateToString( reparacion.getFechaSalida()));
         marcaComboBox.addItem(reparacion.getMarca().getMarca());
         modeloComboBox.addItem(reparacion.getModelo().getModelo());
-        reparacionComboBox.addItem(reparacion.getTipoReparacion().getReparacion());
+        reparacionComboBox.addItem(reparacion.getTipoReparacion().getTipoReparacion());
         importeTextField.setText(reparacion.getPrecioReparacion().toString());
         garantiaCheckBox.setSelected(reparacion.isGarantia());
         comentariosTextArea.setText(reparacion.getComentarios());

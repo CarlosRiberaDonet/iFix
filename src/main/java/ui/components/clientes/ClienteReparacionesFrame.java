@@ -44,7 +44,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         };
         
         for(Reparacion r : reparacionesList){
-            modelo.addRow(new Object[]{r.getFechaEntrada(), r.getModelo().getModelo(), r.getTipoReparacion().getReparacion(), r.getPrecioReparacion(), r.isGarantia()});
+            modelo.addRow(new Object[]{r.getFechaEntrada(), r.getModelo().getModelo(), r.getTipoReparacion().getTipoReparacion(), r.getPrecioReparacion(), r.isGarantia()});
         }
         
         // Asignar el modelo a la tabla

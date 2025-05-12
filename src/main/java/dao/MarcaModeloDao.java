@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,15 +71,21 @@ public class MarcaModeloDao {
         return marcas;
     }
     
-    public static int insertMarcaByString(String nuevaMarca){
+    public static Marca insertMarcaByString(String nombreNuevaMarca){
         
-        int idMarca = -1;
+        Marca nuevaMarca = null;
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(INSERT_MARCA)){
-            stmt.setString(1, nuevaMarca);
+        try(PreparedStatement stmt = conn.prepareStatement(INSERT_MARCA, Statement.RETURN_GENERATED_KEYS)){
+            stmt.setString(1, nombreNuevaMarca);
             int insert = stmt.executeUpdate();
             if(insert > 0){
-                idMarca = getMarcaId(nuevaMarca);
+                try(ResultSet rs = stmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        nuevaMarca = new Marca();
+                        nuevaMarca.setIdMarca(rs.getInt(1));
+                        nuevaMarca.setMarca(nombreNuevaMarca);
+                    }   
+                }  
             }
             
         } catch(SQLException e){
@@ -87,7 +94,7 @@ public class MarcaModeloDao {
         }finally{
             ConexionBD.close(conn);
         }
-        return idMarca;
+        return nuevaMarca;
     }
     
      public static int getModeloId(String modelo){
@@ -137,16 +144,22 @@ public class MarcaModeloDao {
         return modelosList;
     }
     
-    public static int insertModeloByString(String nuevoModelo, int idMarca){
+    public static Modelo insertModeloByString(String nuevoModeloStr, int idNuevaMarca){
         
-        int idModelo = -1;
+        Modelo nuevoModelo = null;
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(INSERT_MODELO)){
-            stmt.setString(1, nuevoModelo);
-            stmt.setInt(2, idMarca);
+        try(PreparedStatement stmt = conn.prepareStatement(INSERT_MODELO,Statement.RETURN_GENERATED_KEYS)){
+            stmt.setString(1, nuevoModeloStr);
+            stmt.setInt(2, idNuevaMarca);
             int insert = stmt.executeUpdate();
             if(insert > 0){
-                idModelo = getModeloId(nuevoModelo);
+                try(ResultSet rs = stmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        nuevoModelo = new Modelo();
+                        nuevoModelo.setIdModelo(rs.getInt(1));
+                        nuevoModelo.setModelo(nuevoModeloStr);
+                    }
+                }
             }
         } catch(SQLException e){
             System.out.println("Eror al agregar el modelo a la BD: " + e.getMessage());
@@ -154,7 +167,7 @@ public class MarcaModeloDao {
         }finally{
             ConexionBD.close(conn);
         }
-        return idModelo;
+        return nuevoModelo;
     }
      
     

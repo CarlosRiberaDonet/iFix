@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class TipoReparacionDao {
             while(rs.next()){
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("id"));
-                t.setReparacion(rs.getString("reparacion"));             
+                t.setTipoReparacion(rs.getString("reparacion"));             
                 tipoReparacionesList.add(t);
             }
         } catch (SQLException e){ 
@@ -43,23 +44,30 @@ public class TipoReparacionDao {
         return tipoReparacionesList;
     }
     
-    public static int insertTipoReparacion(String nuevoTipoReparacion){
+    public static TipoReparacion insertTipoReparacion(String nuevotipoReparacionStr){
         
-        int idTipoReparacion = -1;
+        TipoReparacion nuevoTipoReparacion = null;
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(INSERT_TIPO_REPARACION)){
-            stmt.setString(1, nuevoTipoReparacion);
-           int insert = stmt.executeUpdate();
+        try(PreparedStatement stmt = conn.prepareStatement(INSERT_TIPO_REPARACION, Statement.RETURN_GENERATED_KEYS)){
+            stmt.setString(1, nuevotipoReparacionStr);
+            int insert = stmt.executeUpdate();
             if(insert > 0){
-                idTipoReparacion = getTipoReparacionId(nuevoTipoReparacion);
+                try(ResultSet rs = stmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        nuevoTipoReparacion = new TipoReparacion();
+                        nuevoTipoReparacion.setId(rs.getInt(1));
+                        nuevoTipoReparacion.setTipoReparacion(nuevotipoReparacionStr);
+                    }
+                }
             }
+            
         } catch(SQLException e){
             System.out.println("Error al agregar el tipo de reparacion en la BD: " + e.getMessage());
             e.printStackTrace();
         }finally{
             ConexionBD.close(conn);
         }
-        return idTipoReparacion;
+        return nuevoTipoReparacion;
     }
     
     

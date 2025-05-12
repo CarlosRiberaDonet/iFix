@@ -12,7 +12,6 @@ import entity.Marca;
 import entity.Modelo;
 import entity.Reparacion;
 import entity.TipoReparacion;
-import static java.awt.SystemColor.window;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -32,7 +31,7 @@ public class CrearReparacion extends javax.swing.JPanel {
     private static Cliente cliente;
     private static Marca marcaSelect;
     private static Modelo modeloSelect;
-    private static TipoReparacion tipoReparacion;
+    private static TipoReparacion tipoReparacionSelect;
     private String fechaActual = Utils.fechaActualToString();
     ReparacionController rc = new ReparacionController();
     
@@ -91,8 +90,15 @@ public class CrearReparacion extends javax.swing.JPanel {
     }
     
     public void listenerTipoReparacionComboBox(){
-        tipoReparacionComboBox.addActionListener( e -> {
-            tipoReparacion = (TipoReparacion) tipoReparacionComboBox.getSelectedItem();
+        tipoReparacionComboBox.addActionListener(e -> {
+            
+            Object item = tipoReparacionComboBox.getSelectedItem();
+            if(item instanceof TipoReparacion){
+                tipoReparacionSelect = (TipoReparacion) item;
+            } else{
+                tipoReparacionSelect = new TipoReparacion();
+                tipoReparacionSelect.setId(-1);
+            }
         });
     }
     
@@ -364,47 +370,58 @@ public class CrearReparacion extends javax.swing.JPanel {
 
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
         
-        // Obtengo las fechas
+        // Obtengo los datos de la reparación
         String fechaEntradaStr = entradaTextField.getText();
         Date fechaEntrada = Utils.stringToDate(fechaEntradaStr); 
         String fechaSalidaStr = salidaTextField.getText();
         Date fechaSalida = Utils.stringToDate(fechaSalidaStr);
+         // Obtengo el importe
+        String textoImporte = importeTextField.getText();
+        BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
+        boolean garantia = garantiaCheckBox.isSelected();
+        String comentarios = comentariosTextArea.getText();
+        int idCliente = cliente.getId();
         
         // Obtengo el id de la marca seleccionada
         int idMarca = marcaSelect.getIdMarca();
-        // Si la marca seleccionada ha sido introducida manualmente por el USR
+        // Si la marca seleccionada ha sido introducida manualmente por el USR, (idMarca = -1)
         if(idMarca < 1){
-            System.out.println("ID NUEVA MARCA: " + idMarca);
+            // Casteo a String el dato introducido por el USR en marcaCombobox
+            String nuevaMarcaStr = (String) marcaComboBox.getEditor().getItem();  
+           // Creo la nueva Marca en la BD y la instancio en marcaSelect
+            marcaSelect = MarcaModeloController.addMarca(nuevaMarcaStr);  
+            // Obtengo el id de la nueva marca
+            idMarca = marcaSelect.getIdMarca();
+            // DEPURACIÒN
+            System.out.println("ID NUEVA MARCA: " + marcaSelect.getIdMarca());
             System.out.println("NOMBRE NUEVA MARCA: "+ marcaSelect.getMarca());
-            String nuevaMarcaStr = (String) marcaComboBox.getEditor().getItem();
-            marcaSelect.setMarca(nuevaMarcaStr);
-            idMarca = MarcaModeloController.addMarca(marcaSelect.getMarca()); // Agrego la nueva marca a la BD y obtengo su id
         }
         
         // Obtengo el id del modelo seleccionado
         int idModelo = modeloSelect.getIdModelo();
-        // Si el modelo seleccionado ha sido introducida manualmente por el USR
+        // Si el modelo seleccionado ha sido introducido manualmente por el USR, (idModelo = -1)
         if(idModelo < 1){
-            idModelo = MarcaModeloController.addModelo(modeloSelect.getModelo(), idMarca); // Agrego el nuevo modelo a la BD y obtengo su id
+            // Casteo a String el dato introducido por el USR en modeloCombobox
+            String nuevoModeloStr = (String) modeloComboBox.getEditor().getItem();
+            // Creo el nuevo Modelo en la BD y lo instancio en modeloSelect
+            modeloSelect = MarcaModeloController.addModelo(nuevoModeloStr, idMarca);
+            // Obtengo el id del nuevo modelo
+            idModelo = modeloSelect.getIdModelo();
+            // DEPURACIÒN
+            System.out.println("ID NUEVA MARCA: " + modeloSelect.getIdModelo());
+            System.out.println("NOMBRE NUEVA MARCA: " + modeloSelect.getModelo());
         }
         
-        // Obtengo el tipoReparación
-        tipoReparacion = (TipoReparacion) tipoReparacionComboBox.getSelectedItem();
-        int idTipoReparacion = tipoReparacion.getId();      
-        // Si el tipo de reparación ha sido introducida manualmente por el USR
+        // Obtengo el id del tipoReparacion
+        int idTipoReparacion = tipoReparacionSelect.getId();
         if(idTipoReparacion < 1){
-            TipoReparacionController.addTipoReparacion(tipoReparacion.getReparacion());// Agrego el nuevo tipo de reparación a la BD y obtengo su id
+            String nuevotipoReparacionStr = (String) tipoReparacionComboBox.getEditor().getItem();
+            tipoReparacionSelect = TipoReparacionController.addTipoReparacion(nuevotipoReparacionStr);
+            idTipoReparacion = tipoReparacionSelect.getId();
+             // DEPURACIÒN
+            System.out.println("ID NUEVA MARCA: " + tipoReparacionSelect.getId());
+            System.out.println("NOMBRE NUEVA MARCA: " + tipoReparacionSelect.getTipoReparacion());
         }
-        
-        // Obtengo el importe
-        String textoImporte = importeTextField.getText();
-        BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
-        
-         // Obtengo el resto de datos de la reparación
-        boolean garantia = garantiaCheckBox.isSelected();
-        String comentarios = comentariosTextArea.getText();
-        int idCliente = cliente.getId();
-
         Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
             JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");

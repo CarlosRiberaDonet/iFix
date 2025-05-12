@@ -11,13 +11,13 @@ package entity;
 public class TipoReparacion {
     
     private int id;
-    private String reparacion;
+    private String tipoReparacion;
     
     // CONSTRUCTOR
 
     public TipoReparacion(int id, String reparacion) {
         this.id = id;
-        this.reparacion = reparacion;
+        this.tipoReparacion = reparacion;
     }
     
     public TipoReparacion(){
@@ -33,16 +33,16 @@ public class TipoReparacion {
         this.id = id;
     }
 
-    public String getReparacion() {
-        return reparacion;
+    public String getTipoReparacion() {
+        return tipoReparacion;
     }
 
-    public void setReparacion(String reparacion) {
-        this.reparacion = reparacion;
+    public void setTipoReparacion(String reparacion) {
+        this.tipoReparacion = reparacion;
     }
     
     @Override
     public String toString(){
-        return reparacion.toUpperCase();
+        return tipoReparacion.toUpperCase();
     }
 }

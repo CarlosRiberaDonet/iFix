@@ -5,6 +5,7 @@
 package controller;
 
 import dao.TipoReparacionDao;
+import entity.TipoReparacion;
 
 /**
  *
@@ -13,8 +14,8 @@ import dao.TipoReparacionDao;
 public class TipoReparacionController {
     
     
-    // Inserta nuevo tipo de reparación en la BD y obtengo el id 
-    public static int addTipoReparacion(String nuevoTipoReparacion){  
-       return TipoReparacionDao.insertTipoReparacion(nuevoTipoReparacion);
+     // Inserta una nuevo tipo de reparación en la BD y devuelve el objeto TipoReparacion con el ID generado
+    public static TipoReparacion addTipoReparacion(String nuevotipoReparacionStr){  
+       return TipoReparacionDao.insertTipoReparacion(nuevotipoReparacionStr);
     }
 }

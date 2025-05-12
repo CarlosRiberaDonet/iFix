@@ -304,7 +304,7 @@ public class ReparacionDetails extends javax.swing.JPanel {
         idMarca = reparacion.getMarca().getIdMarca();
         nombreModelo = reparacion.getModelo().getModelo();
         idModelo = reparacion.getModelo().getIdModelo();
-        nombreTipoReparacion = reparacion.getTipoReparacion().getReparacion();
+        nombreTipoReparacion = reparacion.getTipoReparacion().getTipoReparacion();
         idTipoReparacion = reparacion.getTipoReparacion().getId();
         importe = reparacion.getPrecioReparacion();
         garantia = reparacion.isGarantia();
@@ -319,7 +319,7 @@ public class ReparacionDetails extends javax.swing.JPanel {
         fechaSalidaTextField.setText(Utils.dateToString(fechaSalida));
         marcaComboBox.addItem(nombreMarca);
         modeloComboBox.addItem(nombreModelo);
-        reparacionComboBox.addItem(reparacion.getTipoReparacion().getReparacion());
+        reparacionComboBox.addItem(reparacion.getTipoReparacion().getTipoReparacion());
         importeTextField.setText(importe.toString());
         garantiaCheckBox.setSelected(garantia);
         comentariosTextArea.setText(comentarios);

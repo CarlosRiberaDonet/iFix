@@ -154,7 +154,7 @@ public class ReparacionDao {
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
-                t.setReparacion(rs.getString("reparacion"));
+                t.setTipoReparacion(rs.getString("reparacion"));
                 
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
@@ -223,7 +223,7 @@ public class ReparacionDao {
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
-                t.setReparacion(rs.getString("reparacion"));
+                t.setTipoReparacion(rs.getString("reparacion"));
                 
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
@@ -286,7 +286,7 @@ public class ReparacionDao {
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
-                t.setReparacion(rs.getString("reparacion"));
+                t.setTipoReparacion(rs.getString("reparacion"));
                 
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();

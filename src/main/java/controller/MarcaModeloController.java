@@ -5,6 +5,7 @@
 package controller;
 
 import dao.MarcaModeloDao;
+import entity.Marca;
 import entity.Modelo;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +37,13 @@ public class MarcaModeloController {
         return modelosFiltrados;
     }
     
-    // Inserta la nueva marca en la BD y obtengo el id 
-    public static int addMarca(String nuevaMarca){
-        return MarcaModeloDao.insertMarcaByString(nuevaMarca);
-    }   
+    // Inserta la nueva marca en la BD y devuelve el objeto Marca con el ID generado
+    public static Marca addMarca(String nuevaMarca){
+        return MarcaModeloDao.insertMarcaByString(nuevaMarca); 
+    }
     
-    // Inserta el nuevo modelo en la BD y obtengo el id 
-    public static int addModelo(String nuevoModelo, int idMarca){
-        return MarcaModeloDao.insertModeloByString(nuevoModelo, idMarca);
+    // Inserta el nuevo modelo en la BD y devuelve el objeto Modelo con el ID generado
+    public static Modelo addModelo(String nuevoModeloStr, int idNuevaMarca){
+        return MarcaModeloDao.insertModeloByString(nuevoModeloStr, idNuevaMarca);
     } 
 }
