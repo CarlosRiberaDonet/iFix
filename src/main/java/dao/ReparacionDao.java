@@ -121,6 +121,8 @@ public class ReparacionDao {
     private static final String INSERT_REPARACION = " INSERT INTO reparacion (fecha_entrada, fecha_salida, id_marca, id_modelo, id_tipo_reparacion, "
             + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
+    private static final String DELETE_REPARACION = "DELETE FROM reparacion WHERE id = ?";
+    
     // Obtener toda la lista de reparaciones
     public static List<Reparacion> getAllReparacionesList(){
         
