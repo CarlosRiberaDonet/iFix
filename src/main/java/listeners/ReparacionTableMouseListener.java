@@ -37,14 +37,10 @@ public class ReparacionTableMouseListener extends MouseAdapter {
             int fila = reparacionesTable.getSelectedRow();
             if (fila >= 0 && fila < reparacionesList.size()){
                 Reparacion reparacionSelect = reparacionesList.get(fila);
-                
-                 // Verificar si ya existe la ventana abierta
-                if (reparacionDetallesFrame == null || !reparacionDetallesFrame.isDisplayable()) {
-                    // Crear y mostrar el dialogo de detalles de la reparación
-                    ReparacionDetallesFrame frame = new ReparacionDetallesFrame(reparacionSelect);
-                    frame.setLocationRelativeTo(null);
-                    frame.setVisible(true);
-                }  
+                // Crear y mostrar el dialogo de detalles de la reparación
+                ReparacionDetallesFrame frame = new ReparacionDetallesFrame(reparacionSelect);
+                frame.setLocationRelativeTo(null);
+                frame.setVisible(true);
             }
         }
     }

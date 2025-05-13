@@ -381,7 +381,6 @@ public class ReparacionDao {
         Connection conn = ConexionBD.connect();
         try(PreparedStatement stmt = conn.prepareStatement(MODIFICAR_REPARACION)){
             
-            System.out.println("ID REPARACION: " + r.getId());
             stmt.setDate(1, r.getFechaEntrada());
             stmt.setDate(2, r.getFechaSalida());
             stmt.setBigDecimal(3, r.getPrecioReparacion());
@@ -405,5 +404,21 @@ public class ReparacionDao {
             ConexionBD.close(conn);
         }
         return true;
-    } 
+    }
+    
+    public static boolean deleteReparacion(int idReparacion){
+        
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(DELETE_REPARACION)){
+            stmt.setInt(1, idReparacion);
+            return stmt.executeUpdate() > 0;
+            
+        } catch(SQLException e){
+            System.out.println("Error al eliminar la reparacion con id: " + idReparacion + e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConexionBD.close(conn);
+        } 
+        return false;
+    }
 }

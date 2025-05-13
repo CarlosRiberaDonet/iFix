@@ -18,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -34,6 +35,7 @@ public class ReparacionFrame extends JFrame {
     private ReparacionesTable tablePanel;
     private JTextField telefonoTextField;
     private JButton buscarButton;
+    private JButton deleteButton;
     private JButton volverButton;
     private JDateChooser fechaEntradaChooser;
     private JDateChooser fechaSalidaChooser;
@@ -41,7 +43,7 @@ public class ReparacionFrame extends JFrame {
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
-        setSize(800, 600);
+        setSize(830, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
@@ -57,6 +59,7 @@ public class ReparacionFrame extends JFrame {
         telefonoTextField = new JTextField(10);
         
         buscarButton = new JButton("Buscar");
+        deleteButton = new JButton("Eliminar");
         volverButton = new JButton("Volver");
         
         fechaEntradaChooser = new JDateChooser();
@@ -71,26 +74,48 @@ public class ReparacionFrame extends JFrame {
         topPanel.add(new JLabel("Fecha Fin"));
         topPanel.add(fechaSalidaChooser);
         topPanel.add(buscarButton);
+        topPanel.add(deleteButton);
         topPanel.add(volverButton);
         
         add(topPanel, BorderLayout.NORTH);
-        
         tablePanel = new ReparacionesTable(reparacionesList);
         tablaReparaciones = tablePanel.getTablaReparaciones();
+        cargarTablaReparaciones();
+
         tablaReparaciones.addMouseListener(new ReparacionTableMouseListener(tablaReparaciones, reparacionesList));
         add(tablePanel, BorderLayout.CENTER);
         
-       buscarButton.addActionListener( e -> listarReparacionButton());
-       volverButton.addActionListener( e -> dispose());
+        buscarButton.addActionListener( e -> listarReparacionButton());
+        deleteButton.addActionListener( e -> eliminarReparacion());
+        volverButton.addActionListener( e -> dispose());
     }
     
-     private void listarReparacionButton(){
+    private void cargarTablaReparaciones(){
         
         reparacionesList.clear();
         reparacionesList.addAll(ReparacionController.getAllReparaciones());
         tablePanel.setReparaciones(reparacionesList);
+    }
+    
+     private void listarReparacionButton(){
+        
+        
 
     }
+     
+     private void eliminarReparacion(){
+         int filaSelect = tablaReparaciones.getSelectedRow();
+         if(filaSelect >= 0){
+             int idReparacion = (int) tablaReparaciones.getValueAt(filaSelect, 0);
+             if(ReparacionController.eliminarReparacion(idReparacion)){
+                 JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
+                 // Recargo la lista de reparaciones en la tabla
+                 cargarTablaReparaciones();
+             }else{
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
+             }
+         }
+     }
      
      public static LocalDate dateToLocalDate(Date fechaDate) {
         if (fechaDate != null) {

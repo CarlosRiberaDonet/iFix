@@ -50,7 +50,7 @@ public class ReparacionController {
         return ReparacionDao.updateReparacion(r);
     }
     
-     // Cargar marcas disponibles en marcaComboBox
+    // Cargar marcas disponibles en marcaComboBox
     public JComboBox llenarComboBoxMarca(JComboBox marcaComboBox){
                 
         List<Marca> marcasList = MarcaModeloDao.getMarcas();
@@ -90,5 +90,9 @@ public class ReparacionController {
         
         reparacionComboBox.setModel(model);
         return reparacionComboBox;
+    }
+    
+    public static boolean eliminarReparacion(int idReparacion){
+        return ReparacionDao.deleteReparacion(idReparacion);
     }
 }

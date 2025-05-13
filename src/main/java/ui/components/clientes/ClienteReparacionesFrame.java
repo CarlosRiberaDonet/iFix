@@ -4,10 +4,13 @@
  */
 package ui.components.clientes;
 
+import controller.ReparacionController;
 import entity.Cliente;
 import entity.Reparacion;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.CrearReparacion;
@@ -23,38 +26,46 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
      */
     
     private Cliente cliente;
+    private List<Reparacion> reparacionesList = new ArrayList<>();
+    
     public ClienteReparacionesFrame(Cliente cliente, List<Reparacion> reparacionesList) {
         initComponents();
+        this.reparacionesList = reparacionesList;
         setResizable(false);
         cargarTabla(reparacionesList);
         this.cliente = cliente;
         clienteLabel.setText(cliente.getNombre() + " " + cliente.getApellidos());
         telefonoLabel.setText(cliente.getTelefono());
-        direccionLabel.setText(cliente.getTelefono());
+        direccionLabel.setText(cliente.getDireccion());
         
     }
 
     private void cargarTabla(List<Reparacion> reparacionesList){
         // Crear el modelo de la tabla con las columnas
         DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {
-            "ENTRADA", "DISPOSITIVO", "REPARACION", "IMPORTE", "GARANTIA"
+            "ID", "ENTRADA", "DISPOSITIVO", "REPARACION", "IMPORTE", "GARANTIA"
         }) {
         // Sobrescribir el método isCellEditable para hacer que ninguna celda sea editable
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Ninguna celda será editable
             }
-        };
-        
+        };    
         for(Reparacion r : reparacionesList){
-            modelo.addRow(new Object[]{r.getFechaEntrada(), r.getModelo().getModelo(), r.getTipoReparacion().getTipoReparacion(), r.getPrecioReparacion(), r.isGarantia()});
+            modelo.addRow(new Object[]{r.getId(),r.getFechaEntrada(), r.getModelo().getModelo(), r.getTipoReparacion().getTipoReparacion(), r.getPrecioReparacion(), r.isGarantia()});
         }
         
         // Asignar el modelo a la tabla
         reparacionesTable.setModel(modelo);
+        // Oculto la columna ID
+        reparacionesTable.getColumnModel().getColumn(0).setMinWidth(0);
+        reparacionesTable.getColumnModel().getColumn(0).setMaxWidth(0);
+        reparacionesTable.getColumnModel().getColumn(0).setWidth(0);
     
         // Agregar el MouseListener a la tabla
         reparacionesTable.addMouseListener(new ReparacionTableMouseListener(reparacionesTable, reparacionesList));
+        
+        
     }
     
     /**
@@ -100,6 +111,11 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         });
 
         eliminarButton.setText("Eliminar Reparación");
+        eliminarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarButtonActionPerformed(evt);
+            }
+        });
 
         reparacionesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -212,6 +228,21 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     private void menuClientesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuClientesButtonActionPerformed
         dispose();
     }//GEN-LAST:event_menuClientesButtonActionPerformed
+
+    private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
+        int filaSelect = reparacionesTable.getSelectedRow();
+        System.out.println("FILA SELECCIONADA " + filaSelect);
+        if(filaSelect >= 0){
+            int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);    
+            if(ReparacionController.eliminarReparacion(idReparacion)){
+                JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE); 
+                reparacionesList.clear();
+                cargarTabla(reparacionesList);
+            }
+        } else{
+            JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_eliminarButtonActionPerformed
 
     /**
      * @param args the command line arguments
