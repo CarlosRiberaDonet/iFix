@@ -25,9 +25,8 @@ public class ReparacionController {
         return ReparacionDao.getAllReparacionesList();
     }
     
-    public static boolean crearReparacion(Reparacion reparacion){
-        
-       return ReparacionDao.insertarReparacion(reparacion);
+    public static boolean crearReparacion(Reparacion r){
+        return ReparacionDao.insertarReparacion(r);
     }
     
     public static List<Reparacion> findReparacionesByIdCliente(int clienteId){

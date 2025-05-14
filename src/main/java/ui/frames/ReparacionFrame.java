@@ -9,10 +9,7 @@ import controller.ReparacionController;
 import entity.Reparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -104,25 +101,25 @@ public class ReparacionFrame extends JFrame {
     }
      
      private void eliminarReparacion(){
-         int filaSelect = tablaReparaciones.getSelectedRow();
-         if(filaSelect >= 0){
-             int idReparacion = (int) tablaReparaciones.getValueAt(filaSelect, 0);
-             if(ReparacionController.eliminarReparacion(idReparacion)){
-                 JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
-                 // Recargo la lista de reparaciones en la tabla
-                 cargarTablaReparaciones();
-             }else{
-                JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
-             }
-         }
+        int filaSelect = tablaReparaciones.getSelectedRow();
+        if(filaSelect >= 0){
+            int idReparacion = (int) tablaReparaciones.getValueAt(filaSelect, 0);
+            if(ReparacionController.eliminarReparacion(idReparacion)){
+                JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
+                // Recargo la lista de reparaciones en la tabla
+                cargarTablaReparaciones();
+            }else{
+               JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
+            }
+        }
      }
      
-     public static LocalDate dateToLocalDate(Date fechaDate) {
+     /*public static LocalDate dateToLocalDate(Date fechaDate) {
         if (fechaDate != null) {
             return fechaDate.toInstant()
                             .atZone(ZoneId.systemDefault())
                             .toLocalDate();
         }
         return null;
-    }
+    }*/
 }

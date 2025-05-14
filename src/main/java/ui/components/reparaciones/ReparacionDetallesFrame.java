@@ -1,6 +1,8 @@
 package ui.components.reparaciones;
 
+import controller.ReparacionController;
 import entity.Reparacion;
+import java.math.BigDecimal;
 import java.sql.Date;
 import utils.Utils;
 
@@ -18,6 +20,8 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     /**
      * Creates new form ReparacionDetallesDialog
      */
+    
+    ReparacionController rc = new ReparacionController();
     private static boolean modoEdicion;
     
     public ReparacionDetallesFrame(Reparacion reparacion) {
@@ -33,8 +37,11 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         fechaSalidaTextField.setEditable(editable);
         importeTextField.setEditable(editable);
         marcaComboBox.setEnabled(editable);
+        rc.llenarComboBoxMarca(marcaComboBox);
         modeloComboBox.setEnabled(editable);
-        reparacionComboBox.setEnabled(editable);
+        rc.llenarComboBoxModelo(modeloComboBox);
+        tipoReparacionComboBox.setEnabled(editable);
+        rc.llenarComboBoxMarca(tipoReparacionComboBox);
         garantiaCheckBox.setEnabled(editable);
         comentariosTextArea.setEditable(editable);
     }
@@ -45,7 +52,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         fechaSalidaTextField.setText(Utils.dateToString( reparacion.getFechaSalida()));
         marcaComboBox.addItem(reparacion.getMarca().getMarca());
         modeloComboBox.addItem(reparacion.getModelo().getModelo());
-        reparacionComboBox.addItem(reparacion.getTipoReparacion().getTipoReparacion());
+        tipoReparacionComboBox.addItem(reparacion.getTipoReparacion().getTipoReparacion());
         importeTextField.setText(reparacion.getPrecioReparacion().toString());
         garantiaCheckBox.setSelected(reparacion.isGarantia());
         comentariosTextArea.setText(reparacion.getComentarios());
@@ -59,15 +66,15 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         int idReparacion = reparacion.getId();
         Date fechaEntrada = Utils.stringToDate(fechaEntradaTextField.getText());
         Date fechaSalida =  Utils.stringToDate(fechaSalidaTextField.getText());
-        /*int idMarca = marcaComboBox.getSelectedItem();
-        int idModelo = modeloComboBox
-        int idTipoReparacion = reparacionComboBox
+        int idMarca = (int) marcaComboBox.getSelectedItem();
+        int idModelo = (int) modeloComboBox.getSelectedItem();
+        int idTipoReparacion = (int) tipoReparacionComboBox.getSelectedItem();
         BigDecimal importe = Utils.stringToBigDecimal(importeTextField.getText());
         boolean garantia = garantiaCheckBox.isSelected();
         String comentarios = comentariosTextArea.getText();
         
-        Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
-        ReparacionController.modificarReparacion(r);*/
+        Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios);
+        ReparacionController.modificarReparacion(r);
     }
 
     /**
@@ -87,7 +94,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         modeloComboBox = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         comentariosTextArea = new javax.swing.JTextArea();
-        reparacionComboBox = new javax.swing.JComboBox<>();
+        tipoReparacionComboBox = new javax.swing.JComboBox<>();
         jSeparator2 = new javax.swing.JSeparator();
         modificarButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -129,7 +136,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         comentariosTextArea.setRows(5);
         jScrollPane1.setViewportView(comentariosTextArea);
 
-        reparacionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
+        tipoReparacionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {}));
 
         modificarButton.setText("Modificar Reparación");
         modificarButton.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +252,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(reparacionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(tipoReparacionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(importeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -283,7 +290,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
                     .addComponent(modeloLabel)
                     .addComponent(modeloComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(reparacionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tipoReparacionComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(comentariosLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -343,8 +350,8 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> modeloComboBox;
     private javax.swing.JLabel modeloLabel;
     private javax.swing.JButton modificarButton;
-    private javax.swing.JComboBox<String> reparacionComboBox;
     private javax.swing.JLabel salidaLabel;
     private javax.swing.JTextField telefonoTextField;
+    private javax.swing.JComboBox<String> tipoReparacionComboBox;
     // End of variables declaration//GEN-END:variables
 }

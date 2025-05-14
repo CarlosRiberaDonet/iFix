@@ -370,12 +370,11 @@ public class CrearReparacion extends javax.swing.JPanel {
 
     private void guardarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_guardarButtonActionPerformed
         
-        // Obtengo los datos de la reparación
+        // Obtengo los datos de la reparación y lso valido
         String fechaEntradaStr = entradaTextField.getText();
-        Date fechaEntrada = Utils.stringToDate(fechaEntradaStr); 
+        Date fechaEntrada = Utils.checkFecha(fechaEntradaStr);
         String fechaSalidaStr = salidaTextField.getText();
-        Date fechaSalida = Utils.stringToDate(fechaSalidaStr);
-         // Obtengo el importe
+        Date fechaSalida = Utils.checkFecha(fechaSalidaStr);
         String textoImporte = importeTextField.getText();
         BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
         boolean garantia = garantiaCheckBox.isSelected();
@@ -392,9 +391,6 @@ public class CrearReparacion extends javax.swing.JPanel {
             marcaSelect = MarcaModeloController.addMarca(nuevaMarcaStr);  
             // Obtengo el id de la nueva marca
             idMarca = marcaSelect.getIdMarca();
-            // DEPURACIÒN
-            System.out.println("ID NUEVA MARCA: " + marcaSelect.getIdMarca());
-            System.out.println("NOMBRE NUEVA MARCA: "+ marcaSelect.getMarca());
         }
         
         // Obtengo el id del modelo seleccionado
@@ -407,9 +403,6 @@ public class CrearReparacion extends javax.swing.JPanel {
             modeloSelect = MarcaModeloController.addModelo(nuevoModeloStr, idMarca);
             // Obtengo el id del nuevo modelo
             idModelo = modeloSelect.getIdModelo();
-            // DEPURACIÒN
-            System.out.println("ID NUEVA MARCA: " + modeloSelect.getIdModelo());
-            System.out.println("NOMBRE NUEVA MARCA: " + modeloSelect.getModelo());
         }
         
         // Obtengo el id del tipoReparacion
@@ -418,9 +411,6 @@ public class CrearReparacion extends javax.swing.JPanel {
             String nuevotipoReparacionStr = (String) tipoReparacionComboBox.getEditor().getItem();
             tipoReparacionSelect = TipoReparacionController.addTipoReparacion(nuevotipoReparacionStr);
             idTipoReparacion = tipoReparacionSelect.getId();
-             // DEPURACIÒN
-            System.out.println("ID NUEVA MARCA: " + tipoReparacionSelect.getId());
-            System.out.println("NOMBRE NUEVA MARCA: " + tipoReparacionSelect.getTipoReparacion());
         }
         Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
@@ -433,7 +423,7 @@ public class CrearReparacion extends javax.swing.JPanel {
         Window window = SwingUtilities.getWindowAncestor(this);
         if (window != null) {
             window.dispose();
-}
+        }
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     private void entradaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaTextFieldActionPerformed

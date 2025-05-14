@@ -19,8 +19,6 @@ public class ReparacionTableMouseListener extends MouseAdapter {
 
     private JTable reparacionesTable;
     private List<Reparacion> reparacionesList;
-    private static ReparacionDetallesFrame reparacionDetallesFrame;  // Variable estática para controlar la instancia
-
 
     public ReparacionTableMouseListener(JTable reparacionesTable, List<Reparacion> reparacionesList) {
         this.reparacionesTable = reparacionesTable;

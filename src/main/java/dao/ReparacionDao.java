@@ -107,7 +107,8 @@ public class ReparacionDao {
             + "JOIN cliente c ON r.id_cliente = c.id "
             + "WHERE r.id = ?";
     
-    private static final String MODIFICAR_REPARACION = "UPDATE reparacion SET fecha_entrada = ?, "
+    private static final String MODIFICAR_REPARACION = "UPDATE reparacion SET "
+            + "fecha_entrada = ?, "
             + "fecha_salida = ?, "
             + "precio = ?, "
             + "garantia = ?, "

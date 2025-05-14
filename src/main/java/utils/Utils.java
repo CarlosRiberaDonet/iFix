@@ -18,11 +18,11 @@ public class Utils {
     
    public static boolean checkNombre(String input){
        
-       if(input != null && !input.isBlank()){
-           return true;
-       } else{
+       if(input == null && !input.trim().isEmpty()){
            JOptionPane.showMessageDialog(null, "El campo nombre y/o apellidos no puede estar vacío.");
            return false;
+       } else{
+           return true;
        }
    }
    
@@ -52,26 +52,45 @@ public class Utils {
        return fechaFormateada;
    }
    
-   public static Date stringToDate(String fecha) {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate localDate = LocalDate.parse(fecha, formato);
-        Date fechaDate = Date.valueOf(localDate);
+   public static Date stringToDate(String fecha) {    
+       
+       Date fechaDate = null;
+       try{
+            DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate localDate = LocalDate.parse(fecha, formato);
+            fechaDate = Date.valueOf(localDate);
+       } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Formato fecha no válido. Formato correcto dd/MM/yyyy");
+       }
         return fechaDate;
     }
    
    public static String dateToString(Date fecha) {
+       if(fecha == null ){
+           return null;
+       }
         LocalDate localDate = fecha.toLocalDate();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return localDate.format(formato);
     }
    
   public static BigDecimal stringToBigDecimal(String valor) {
-        try {
+      if(valor != null && !valor.trim().isEmpty()){
+           try {
             return new BigDecimal(valor.trim());
         } catch (NumberFormatException e) {
-            System.out.println("Error: formato de número no válido -> " + valor);
-            return null; // o puedes lanzar una excepción personalizada
+            JOptionPane.showMessageDialog(null, "Formato importe incorrecto.");
+            return null;
         }
+      } 
+      return null;
     }
-
+    
+  public static Date checkFecha(String fechaStr){
+      if(fechaStr != null || fechaStr.trim().isEmpty()){
+        return stringToDate(fechaStr);
+      } else{
+          return null;
+      }      
+    }
 }
