@@ -50,16 +50,16 @@ public class ReparacionController {
     }
     
     // Cargar marcas disponibles en marcaComboBox
-    public JComboBox llenarComboBoxMarca(JComboBox marcaComboBox){
+    public void llenarComboBoxMarca(JComboBox marcaComboBox){
                 
         List<Marca> marcasList = MarcaModeloDao.getMarcas();
         
         DefaultComboBoxModel<Marca> model = new DefaultComboBoxModel<>();
         for (Marca m : marcasList) {
             model.addElement(m);
+            System.out.println("Marca: " + m.getMarca());
         }
         marcaComboBox.setModel(model);
-        return marcaComboBox;
     }
     
     // Cargar modelos disponibles en modeloComboBox

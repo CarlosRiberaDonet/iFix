@@ -87,7 +87,7 @@ public class ReparacionFrame extends JFrame {
         volverButton.addActionListener( e -> dispose());
     }
     
-    private void cargarTablaReparaciones(){
+    public void cargarTablaReparaciones(){
         
         reparacionesList.clear();
         reparacionesList.addAll(ReparacionController.getAllReparaciones());

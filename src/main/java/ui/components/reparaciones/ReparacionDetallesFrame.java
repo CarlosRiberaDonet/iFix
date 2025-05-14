@@ -21,14 +21,24 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
      * Creates new form ReparacionDetallesDialog
      */
     
-    ReparacionController rc = new ReparacionController();
+    Reparacion reparacion = new Reparacion();
+    private static int idReparacion;
     private static boolean modoEdicion;
+    Date fechaEntrada;
+    Date fechaSalida;
+    int idMarca;
+    int idModelo;
+    int idTipoReparacion;
+    BigDecimal importe;
+    boolean garantia;
+    String comentarios;
     
     public ReparacionDetallesFrame(Reparacion reparacion) {
         super("Detalles de Reparación");  // Título del frame
         initComponents();
+        this.reparacion = reparacion;
         cargarReparacion(reparacion);
-        setCamposEditable(false);  // Establecemos los campos como no editables por defecto
+        setCamposEditable(false);
         modoEdicion = false;
     }
     
@@ -36,20 +46,27 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         fechaEntradaTextField.setEditable(editable);
         fechaSalidaTextField.setEditable(editable);
         importeTextField.setEditable(editable);
-        marcaComboBox.setEnabled(editable);
-        rc.llenarComboBoxMarca(marcaComboBox);
-        modeloComboBox.setEnabled(editable);
-        rc.llenarComboBoxModelo(modeloComboBox);
-        tipoReparacionComboBox.setEnabled(editable);
-        rc.llenarComboBoxMarca(tipoReparacionComboBox);
         garantiaCheckBox.setEnabled(editable);
         comentariosTextArea.setEditable(editable);
+        marcaComboBox.setEnabled(editable);
+        modeloComboBox.setEnabled(editable);
+        tipoReparacionComboBox.setEnabled(editable);
+        if(editable){
+            ReparacionController rc = new ReparacionController();
+            rc.llenarComboBoxMarca(marcaComboBox);
+            marcaComboBox.addItem(reparacion.getMarca().getMarca());
+            rc.llenarComboBoxModelo(idMarca, modeloComboBox);   
+            modeloComboBox.addItem(reparacion.getModelo().getModelo());
+            rc.llenarComboBoxReparacion(tipoReparacionComboBox);
+            tipoReparacionComboBox.addItem(reparacion.getTipoReparacion().getTipoReparacion());
+        }
     }
+    
     
     public void cargarReparacion(Reparacion reparacion) {
               
         fechaEntradaTextField.setText(Utils.dateToString(reparacion.getFechaEntrada()));
-        fechaSalidaTextField.setText(Utils.dateToString( reparacion.getFechaSalida()));
+        fechaSalidaTextField.setText(Utils.dateToString(reparacion.getFechaSalida()));
         marcaComboBox.addItem(reparacion.getMarca().getMarca());
         modeloComboBox.addItem(reparacion.getModelo().getModelo());
         tipoReparacionComboBox.addItem(reparacion.getTipoReparacion().getTipoReparacion());
@@ -63,15 +80,15 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     
     public void guardarReparacion(Reparacion reparacion){
         
-        int idReparacion = reparacion.getId();
-        Date fechaEntrada = Utils.stringToDate(fechaEntradaTextField.getText());
-        Date fechaSalida =  Utils.stringToDate(fechaSalidaTextField.getText());
-        int idMarca = (int) marcaComboBox.getSelectedItem();
-        int idModelo = (int) modeloComboBox.getSelectedItem();
-        int idTipoReparacion = (int) tipoReparacionComboBox.getSelectedItem();
-        BigDecimal importe = Utils.stringToBigDecimal(importeTextField.getText());
-        boolean garantia = garantiaCheckBox.isSelected();
-        String comentarios = comentariosTextArea.getText();
+        idReparacion = reparacion.getId();
+        fechaEntrada = Utils.stringToDate(fechaEntradaTextField.getText());
+        fechaSalida =  Utils.stringToDate(fechaSalidaTextField.getText());
+        idMarca = (int) marcaComboBox.getSelectedItem();
+        idModelo = (int) modeloComboBox.getSelectedItem();
+        idTipoReparacion = (int) tipoReparacionComboBox.getSelectedItem();
+        importe = Utils.stringToBigDecimal(importeTextField.getText());
+        garantia = garantiaCheckBox.isSelected();
+        comentarios = comentariosTextArea.getText();
         
         Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios);
         ReparacionController.modificarReparacion(r);
