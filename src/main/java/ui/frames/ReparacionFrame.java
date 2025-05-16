@@ -36,7 +36,7 @@ public class ReparacionFrame extends JFrame {
     private JButton volverButton;
     private JDateChooser fechaEntradaChooser;
     private JDateChooser fechaSalidaChooser;
-    private static List<Reparacion> reparacionesList  = new ArrayList<>();
+    private static final List<Reparacion> reparacionesList  = new ArrayList<>();
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
@@ -113,13 +113,4 @@ public class ReparacionFrame extends JFrame {
             }
         }
      }
-     
-     /*public static LocalDate dateToLocalDate(Date fechaDate) {
-        if (fechaDate != null) {
-            return fechaDate.toInstant()
-                            .atZone(ZoneId.systemDefault())
-                            .toLocalDate();
-        }
-        return null;
-    }*/
 }

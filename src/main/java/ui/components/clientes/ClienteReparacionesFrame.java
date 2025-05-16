@@ -237,6 +237,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
             if(ReparacionController.eliminarReparacion(idReparacion)){
                 JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE); 
                 reparacionesList.clear();
+                reparacionesList = ReparacionController.findReparacionesByIdCliente(cliente.getId());
                 cargarTabla(reparacionesList);
             }
         } else{

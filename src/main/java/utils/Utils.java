@@ -75,15 +75,12 @@ public class Utils {
     }
    
   public static BigDecimal stringToBigDecimal(String valor) {
-      if(valor != null && !valor.trim().isEmpty()){
-           try {
-            return new BigDecimal(valor.trim());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Formato importe incorrecto.");
-            return null;
-        }
-      } 
-      return null;
+      try{
+          return new BigDecimal(valor.trim());
+      } catch(NumberFormatException e){
+          System.out.println("Error en el formato importe");
+          return null;
+      }
     }
     
   public static Date checkFecha(String fechaStr){

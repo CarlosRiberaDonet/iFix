@@ -359,8 +359,6 @@ public class ReparacionDao {
             stmt.setBoolean(7, r.isGarantia());
             stmt.setString(8, r.getComentarios());
             stmt.setInt(9, r.getIdCliente());
-            // System.out.println("Insertando con id_tipo_reparacion: " + r.getIdTipoReparacion());
-
             
             int filasAfectadas = stmt.executeUpdate();
             
