@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.CrearReparacion;
+import ui.components.reparaciones.ReparacionDetallesFrame;
 
 /**
  *
@@ -64,8 +65,6 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     
         // Agregar el MouseListener a la tabla
         reparacionesTable.addMouseListener(new ReparacionTableMouseListener(reparacionesTable, reparacionesList));
-        
-        
     }
     
     /**
@@ -80,7 +79,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         jLabel1 = new javax.swing.JLabel();
         clienteLabel = new javax.swing.JLabel();
-        buscarButton = new javax.swing.JButton();
+        modificarButton = new javax.swing.JButton();
         añadirButton = new javax.swing.JButton();
         eliminarButton = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
@@ -101,16 +100,21 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
 
         clienteLabel.setText("jLabel2");
 
-        buscarButton.setText("Buscar Reparación");
+        modificarButton.setText("Modificar");
+        modificarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modificarButtonActionPerformed(evt);
+            }
+        });
 
-        añadirButton.setText("Añadir reparación");
+        añadirButton.setText("Añadir");
         añadirButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 añadirButtonActionPerformed(evt);
             }
         });
 
-        eliminarButton.setText("Eliminar Reparación");
+        eliminarButton.setText("Eliminar");
         eliminarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 eliminarButtonActionPerformed(evt);
@@ -179,9 +183,9 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                         .addComponent(jLabel2))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(87, 87, 87)
-                        .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buscarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -208,9 +212,9 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(añadirButton)
-                    .addComponent(buscarButton)
                     .addComponent(eliminarButton)
-                    .addComponent(menuClientesButton))
+                    .addComponent(menuClientesButton)
+                    .addComponent(modificarButton))
                 .addContainerGap(54, Short.MAX_VALUE))
         );
 
@@ -231,7 +235,6 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
         int filaSelect = reparacionesTable.getSelectedRow();
-        System.out.println("FILA SELECCIONADA " + filaSelect);
         if(filaSelect >= 0){
             int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);    
             if(ReparacionController.eliminarReparacion(idReparacion)){
@@ -244,6 +247,19 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_eliminarButtonActionPerformed
+
+    private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
+        int filaSelect = reparacionesTable.getSelectedRow();
+        if(filaSelect >= 0){
+            int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);
+            Reparacion reparacionSelect = reparacionesList.get(filaSelect);
+            
+            // Crear y mostrar el dialogo de detalles de la reparación
+            ReparacionDetallesFrame frame = new ReparacionDetallesFrame(reparacionSelect);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        }
+    }//GEN-LAST:event_modificarButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,7 +291,6 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton añadirButton;
-    private javax.swing.JButton buscarButton;
     private javax.swing.JLabel clienteLabel;
     private javax.swing.JLabel direccionLabel;
     private javax.swing.JButton eliminarButton;
@@ -287,6 +302,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JButton menuClientesButton;
+    private javax.swing.JButton modificarButton;
     private javax.swing.JTable reparacionesTable;
     private javax.swing.JLabel telefonoLabel;
     // End of variables declaration//GEN-END:variables

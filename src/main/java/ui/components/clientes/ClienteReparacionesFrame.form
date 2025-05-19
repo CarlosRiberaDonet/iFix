@@ -62,9 +62,9 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="87" max="-2" attributes="0"/>
-                      <Component id="añadirButton" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="modificarButton" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="buscarButton" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Component id="añadirButton" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="eliminarButton" min="-2" pref="150" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -96,9 +96,9 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="añadirButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="buscarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="eliminarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="menuClientesButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="modificarButton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="54" max="32767" attributes="0"/>
           </Group>
@@ -116,14 +116,17 @@
         <Property name="text" type="java.lang.String" value="jLabel2"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="buscarButton">
+    <Component class="javax.swing.JButton" name="modificarButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Buscar Reparaci&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="Modificar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="modificarButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="a&#xf1;adirButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="A&#xf1;adir reparaci&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="A&#xf1;adir"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="a&#xf1;adirButtonActionPerformed"/>
@@ -131,7 +134,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="eliminarButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Eliminar Reparaci&#xf3;n"/>
+        <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarButtonActionPerformed"/>

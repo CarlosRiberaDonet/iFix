@@ -18,9 +18,36 @@ import java.util.ArrayList;
  */
 public class ClienteDao {
     
+    private static final String SELECT_ALL_CLIENTES = "SELECT * FROM cliente";
     private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?);";
    
     private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE telefono = ?";
+    
+    public static List<Cliente> selectAllClientes(){
+        
+        List<Cliente> clientesList = new ArrayList<>();
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(SELECT_ALL_CLIENTES)){
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Cliente c = new Cliente(
+                    rs.getInt("id"),
+                    rs.getString("nombre"),
+                    rs.getString("apellidos"),
+                    rs.getString("telefono"),
+                    rs.getString("direccion")
+                );
+                
+                clientesList.add(c);
+            }
+        } catch(SQLException e){
+            System.out.println("Error al obtener la lista de clientes" + e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return clientesList;
+    }
     
     public static boolean addCliente(Cliente cliente){
         

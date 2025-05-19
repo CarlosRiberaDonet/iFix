@@ -82,14 +82,23 @@ public class ClienteFrame extends JFrame {
     }
 
     private void buscarCliente() {
-        clientesList.clear();
-        clientesList.addAll(
-            ClienteController.findClientes(
-                nombreTextField.getText(),
-                apellidosTextField.getText(),
-                telefonoTextField.getText()
-            )
-        );
+        
+        if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
+           clientesList = ClienteController.getAllClientes();
+            for(Cliente c : clientesList){
+                System.out.println("Cliente: " + c);
+            }
+        }
+        
+        
+//        clientesList.clear();
+//        clientesList.addAll(
+//            ClienteController.findClientes(
+//                nombreTextField.getText(),
+//                apellidosTextField.getText(),
+//                telefonoTextField.getText()
+//            )
+//        );
         tablePanel.cargarClientes(clientesList);
     }
 

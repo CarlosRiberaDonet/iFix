@@ -177,7 +177,6 @@ public class ReparacionDao {
                 r.setTipoReparacion(t);
                 
                 reparacionesList.add(r);
-                System.out.println("Reparacion: " + r.toString());
             }
             
         } catch(SQLException e){
