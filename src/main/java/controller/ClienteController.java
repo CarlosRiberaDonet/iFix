@@ -30,6 +30,10 @@ public class ClienteController {
         return ClienteDao.selectAllClientes();
     }
     
+    public static List<Cliente> getClienteByNombre(){
+        return ClienteDao.selectClienteByName();
+    }
+    
     public static List<Cliente> findClientes(String nombre, String apellidos, String telefono){
         
         nombre = Utils.checkTextField(nombre);

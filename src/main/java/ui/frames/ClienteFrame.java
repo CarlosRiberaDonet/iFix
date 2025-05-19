@@ -43,6 +43,7 @@ public class ClienteFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
+        
     }
 
     private void initUI() {
@@ -74,24 +75,19 @@ public class ClienteFrame extends JFrame {
         topPanel.add(salirButton);
 
         add(topPanel, BorderLayout.NORTH);
-
         tablePanel = new ClientesTable();
         tablaClientes = tablePanel.getTablaClientes();
         tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
         add(tablePanel, BorderLayout.CENTER);
+        
     }
 
     private void buscarCliente() {
         
         if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
-           clientesList = ClienteController.getAllClientes();
-            for(Cliente c : clientesList){
-                System.out.println("Cliente: " + c);
-            }
+           clientesList.addAll(ClienteController.getAllClientes());
         }
-        
-        
-//        clientesList.clear();
+//        
 //        clientesList.addAll(
 //            ClienteController.findClientes(
 //                nombreTextField.getText(),
