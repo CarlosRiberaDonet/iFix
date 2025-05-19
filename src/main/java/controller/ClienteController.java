@@ -30,18 +30,10 @@ public class ClienteController {
         return ClienteDao.selectAllClientes();
     }
     
-    public static List<Cliente> getClienteByNombre(){
-        return ClienteDao.selectClienteByName();
+    public static List<Cliente> findCliente(String nombre, String apellidos, String telefono){
+        return ClienteDao.selectCliente(nombre, apellidos, telefono);
     }
-    
-    public static List<Cliente> findClientes(String nombre, String apellidos, String telefono){
-        
-        nombre = Utils.checkTextField(nombre);
-        apellidos = Utils.checkTextField(apellidos);
-        telefono = Utils.checkTextField(telefono);
-        return ClienteDao.findCliente(nombre, apellidos, telefono);
-    }
-    
+
     public static boolean eliminarCliente(String telefono){
         return ClienteDao.deleteCliente(telefono);
     }

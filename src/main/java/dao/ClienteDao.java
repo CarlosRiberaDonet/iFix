@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class ClienteDao {
     
     private static final String SELECT_ALL_CLIENTES = "SELECT * FROM cliente";
-    private static final String SELECT_CLIENTE_BY_NAME = "SELECT * FROM cliente WHERE nombre LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
+    private static final String SELECT_CLIENTE = "SELECT * FROM cliente WHERE nombre LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
     private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?);";
     private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE telefono = ?";
     
@@ -49,18 +49,24 @@ public class ClienteDao {
         return clientesList;
     }
     
-    public static List<Cliente> selectClienteByName(String nombre, String apellidos, String telefono){
+    public static List<Cliente> selectCliente(String nombre, String apellidos, String telefono){
         
         List<Cliente> clientesList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(SELECT_CLIENTE_BY_NAME)){
+        try(PreparedStatement stmt = conn.prepareStatement(SELECT_CLIENTE)){
             stmt.setString(1, "%" + nombre + "%");
             stmt.setString(2, "%" + apellidos + "%");
             stmt.setString(3, "%" + telefono + "%");
             
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
-                Cliente c = 
+                Cliente c = new Cliente();
+                c.setId(rs.getInt("id"));
+                c.setNombre(rs.getString("nombre"));
+                c.setApellidos(rs.getString("apellidos"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setDireccion(rs.getString("direccion"));
+                clientesList.add(c);
             }
         }catch(SQLException e){
             System.out.println("Error al buscar al cliente por nombre: " + e.getMessage());
