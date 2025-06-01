@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Objects;
+
 /**
  *
  * @author Carlos
@@ -49,7 +51,20 @@ public class Modelo {
     }
     
     @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Modelo modelo = (Modelo) obj;
+        return idModelo == modelo.getIdModelo();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idModelo); // usa el campo identificador
+    }
+
+    @Override
     public String toString(){
-        return this.modelo.toUpperCase();
+        return modelo;
     }
 }

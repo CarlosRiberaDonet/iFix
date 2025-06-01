@@ -198,7 +198,5 @@ public class Reparacion {
                 ", idModelo=" + idModelo + 
                 ", idTipoReparacion=" + idTipoReparacion +
                 ", idCliente=" + idCliente +'}';
-    }
-    
-    
+    }  
 }

@@ -129,7 +129,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         fechaEntradaTextField.setText(Utils.dateToString(reparacion.getFechaEntrada()));
         fechaSalidaTextField.setText(Utils.dateToString(reparacion.getFechaSalida()));
         cmbMarca.setSelectedItem(reparacion.getMarca());
-        cmbModelo.setSelectedItem(reparacion.getModelo());
+        ReparacionController.seleccionarModeloPorId(cmbModelo, reparacion.getIdModelo());
         cmbTipoReparacion.setSelectedItem(reparacion.getTipoReparacion());
         importeTextField.setText(reparacion.getPrecioReparacion().toString());
         garantiaCheckBox.setSelected(reparacion.isGarantia());

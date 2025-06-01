@@ -76,6 +76,17 @@ public class ReparacionController {
         return modeloComboBox;  
     }
     
+    public static void seleccionarModeloPorId(JComboBox<Modelo> modeloComboBox, int idModelo){
+        
+        for(int i = 0; i < modeloComboBox.getItemCount(); i++){
+            Modelo m = modeloComboBox.getItemAt(i);
+            if(m.getIdModelo() == idModelo){
+                modeloComboBox.setSelectedIndex(i);
+                break;
+            }
+        }
+    }
+    
     // Cargar reparaciones disponibles en reparacionComboBox
     public JComboBox llenarComboBoxReparacion(JComboBox reparacionComboBox){
         
