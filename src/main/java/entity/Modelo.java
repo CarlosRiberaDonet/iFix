@@ -60,7 +60,7 @@ public class Modelo {
 
     @Override
     public int hashCode() {
-        return Objects.hash(idModelo); // usa el campo identificador
+        return Objects.hash(idModelo);
     }
 
     @Override

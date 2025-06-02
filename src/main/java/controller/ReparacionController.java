@@ -76,7 +76,7 @@ public class ReparacionController {
         return modeloComboBox;  
     }
     
-    public static void seleccionarModeloPorId(JComboBox<Modelo> modeloComboBox, int idModelo){
+    public void seleccionarModeloPorId(JComboBox<Modelo> modeloComboBox, int idModelo){
         
         for(int i = 0; i < modeloComboBox.getItemCount(); i++){
             Modelo m = modeloComboBox.getItemAt(i);
@@ -100,6 +100,16 @@ public class ReparacionController {
         
         reparacionComboBox.setModel(model);
         return reparacionComboBox;
+    }
+    
+    public void seleccionarTipoReparacionPorId(JComboBox<TipoReparacion> tipoReparacionComboBox, int idTipo){
+       
+        for(int i = 0; i < tipoReparacionComboBox.getItemCount(); i++){
+            TipoReparacion tr = tipoReparacionComboBox.getItemAt(i);
+            if(tr.getId() == idTipo){
+                tipoReparacionComboBox.setSelectedItem(tr);
+            }
+        }      
     }
     
     public static boolean eliminarReparacion(int idReparacion){

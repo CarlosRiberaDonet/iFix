@@ -4,6 +4,8 @@
  */
 package entity;
 
+import java.util.Objects;
+
 /**
  *
  * @author Carlos
@@ -39,6 +41,19 @@ public class TipoReparacion {
 
     public void setTipoReparacion(String reparacion) {
         this.tipoReparacion = reparacion;
+    }
+    
+    @Override
+    public boolean equals(Object object){
+        if(this == object) return true;
+        if(object == null || getClass() != object.getClass()) return false;
+        TipoReparacion tipoReparacion = (TipoReparacion) object;
+        return id == tipoReparacion.getId();
+    }
+    
+    @Override
+    public int hashCode(){
+        return Objects.hash(id);
     }
     
     @Override
