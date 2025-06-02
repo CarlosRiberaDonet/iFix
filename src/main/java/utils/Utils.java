@@ -90,4 +90,17 @@ public class Utils {
           return null;
       }      
     }
+  
+  public static boolean confirmationMessage(String titulo, String texto){
+      
+      int option = JOptionPane.showConfirmDialog(
+              null,
+              texto,
+              titulo,
+              JOptionPane.YES_NO_OPTION,
+              JOptionPane.WARNING_MESSAGE
+      );
+      return option == JOptionPane.YES_OPTION; 
+  }
+  
 }

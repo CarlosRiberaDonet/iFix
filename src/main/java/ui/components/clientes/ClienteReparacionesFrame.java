@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.CrearReparacion;
 import ui.components.reparaciones.ReparacionDetallesFrame;
+import utils.Utils;
 
 /**
  *
@@ -234,18 +235,21 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_menuClientesButtonActionPerformed
 
     private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
-        int filaSelect = reparacionesTable.getSelectedRow();
-        if(filaSelect >= 0){
-            int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);    
-            if(ReparacionController.eliminarReparacion(idReparacion)){
-                JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE); 
-                reparacionesList.clear();
-                reparacionesList = ReparacionController.findReparacionesByIdCliente(cliente.getId());
-                cargarTabla(reparacionesList);
+        
+        if(Utils.confirmationMessage("ELIMINAR", "ELIMINAR REPARACIÓN")){
+             int filaSelect = reparacionesTable.getSelectedRow();
+            if(filaSelect >= 0){
+                int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);    
+                if(ReparacionController.eliminarReparacion(idReparacion)){
+                    JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE); 
+                    reparacionesList.clear();
+                    reparacionesList = ReparacionController.findReparacionesByIdCliente(cliente.getId());
+                    cargarTabla(reparacionesList);
+                }
+            } else{
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
             }
-        } else{
-            JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
-        }
+        }   
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
     private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed

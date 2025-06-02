@@ -8,6 +8,7 @@ import entity.TipoReparacion;
 import java.math.BigDecimal;
 import java.sql.Date;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import utils.Utils;
 
 /*
@@ -156,6 +157,9 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         
         Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios);
         ReparacionController.modificarReparacion(r);
+        
+        JOptionPane.showMessageDialog(null, "Reparación modificada", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
+        this.dispose();
     }
 
     /**
