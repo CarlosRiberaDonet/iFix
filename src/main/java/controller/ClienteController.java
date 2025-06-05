@@ -7,8 +7,6 @@ package controller;
 import dao.ClienteDao;
 import entity.Cliente;
 import java.util.List;
-import utils.Utils;
-
 /**
  *
  * @author Carlos Ribera
@@ -16,14 +14,8 @@ import utils.Utils;
 public class ClienteController {
     
     
-    public static boolean nuevoCliente(String nombre, String apellidos, String telefono, String direccion){
-        
-        if(Utils.checkNombre(nombre) && Utils.checkNombre(apellidos) && Utils.checkTelefono(telefono)){
-            Cliente nuevoCliente = new Cliente(nombre, apellidos, telefono, direccion);
-            return ClienteDao.addCliente(nuevoCliente);
-        } else{
-            return false;
-        } 
+    public static boolean nuevoCliente(Cliente nuevoCliente){
+        return ClienteDao.addCliente(nuevoCliente);
     }
     
     public static List<Cliente> getAllClientes(){

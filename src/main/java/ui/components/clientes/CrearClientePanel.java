@@ -5,9 +5,8 @@
 package ui.components.clientes;
 
 import controller.ClienteController;
-import java.awt.Window;
+import entity.Cliente;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -111,15 +110,18 @@ public class CrearClientePanel extends javax.swing.JPanel {
         String apellidos = apellidosTextField.getText().toLowerCase();
         String telefono = telefonoTextField.getText();
         String direccion = direccionTextField.getText().toLowerCase();
-        
-        if(ClienteController.nuevoCliente(nombre, apellidos, telefono, direccion)){
-            JOptionPane.showMessageDialog(this, "Cliente creado correctamente");
-            Window window = SwingUtilities.getWindowAncestor(this);
-            if (window != null) {
-                window.dispose();
+        System.out.println("Creando nuevo cliente...");
+        try{
+            Cliente nuevoCliente = new Cliente(nombre, apellidos, telefono, direccion);
+            if(ClienteController.nuevoCliente(nuevoCliente)){
+                JOptionPane.showMessageDialog(this, "Cliente creado correctamente");
             }
-        } else{
-            JOptionPane.showMessageDialog(this, "No se ha podido guardar el cliente");
+            
+            // Window window = SwingUtilities.getWindowAncestor(this);
+                
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(this, "No se ha podido guardar el cliente" + e.getMessage());
+            e.printStackTrace();
         }
     }//GEN-LAST:event_crearClienteButtonActionPerformed
 

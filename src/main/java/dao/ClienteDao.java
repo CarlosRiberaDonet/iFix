@@ -88,7 +88,8 @@ public class ClienteDao {
             stmt.setString(4, cliente.getDireccion());
             stmt.executeUpdate();
         }catch(SQLException e){
-            System.out.println("Error al añadir cliente a la BD");
+            System.out.println("Error al añadir cliente a la BD" + e.getMessage());
+            e.printStackTrace();
             return false;
         } finally{
             ConexionBD.close(conn);

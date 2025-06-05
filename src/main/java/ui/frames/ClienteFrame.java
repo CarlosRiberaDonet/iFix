@@ -43,6 +43,7 @@ public class ClienteFrame extends JFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
+        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
         
     }
 
@@ -76,8 +77,7 @@ public class ClienteFrame extends JFrame {
 
         add(topPanel, BorderLayout.NORTH);
         tablePanel = new ClientesTable();
-        tablaClientes = tablePanel.getTablaClientes();
-        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
+        tablaClientes = tablePanel.getTablaClientes(); 
         add(tablePanel, BorderLayout.CENTER);
         
     }
@@ -85,7 +85,7 @@ public class ClienteFrame extends JFrame {
     private void buscarCliente(){
             
         clientesList.clear();
-        
+        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
         if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
            clientesList.addAll(ClienteController.getAllClientes());
         }
