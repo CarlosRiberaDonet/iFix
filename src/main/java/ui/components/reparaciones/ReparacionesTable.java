@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import utils.Utils;
 
 /**
  *
@@ -18,8 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ReparacionesTable extends JPanel{
     
-    private JTable tablaReparaciones;
-    private DefaultTableModel reparacionesTable;
+    private JTable tablaReparaciones = new JTable();
+    private DefaultTableModel reparacionesTable = new DefaultTableModel();
 
     public ReparacionesTable(List<Reparacion> reparacionesList) {
         
@@ -41,10 +42,12 @@ public class ReparacionesTable extends JPanel{
    public void setReparaciones(List<Reparacion> reparacionesList){
         reparacionesTable.setRowCount(0);
         for (Reparacion r : reparacionesList) {
+            String fechaEntrada = Utils.localDateToString(r.getFechaEntrada());
+            String fechaSalida = Utils.localDateToString(r.getFechaEntrada());
             Object[] fila = {
                 r.getId(),
-                r.getFechaEntrada(),
-                r.getFechaSalida(),
+                fechaEntrada,
+                fechaSalida,
                 r.getCliente().getNombre() + " " + r.getCliente().getApellidos(),
                 r.getModelo().getModelo(),
                 r.getTipoReparacion().getTipoReparacion(),

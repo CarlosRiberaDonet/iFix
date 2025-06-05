@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -162,8 +163,10 @@ public class ReparacionDao {
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
                 r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_entrada"));
-                r.setFechaSalida(rs.getDate("fecha_salida"));
+                java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                r.setFechaEntrada(fechaEntradaSql.toLocalDate());
+                java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
+                r.setFechaSalida(fechaSalidaSql.toLocalDate());
                 r.setIdMarca(m.getIdMarca());
                 r.setIdModelo(mo.getIdModelo());
                 r.setIdTipoReparacion(t.getId());
@@ -230,8 +233,10 @@ public class ReparacionDao {
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
                 r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_entrada"));
-                r.setFechaSalida(rs.getDate("fecha_salida"));
+                java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                r.setFechaEntrada(fechaEntradaSql.toLocalDate());
+                java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
+                r.setFechaSalida(fechaSalidaSql.toLocalDate());
                 r.setIdMarca(m.getIdMarca());
                 r.setIdModelo(mo.getIdModelo());
                 r.setIdTipoReparacion(t.getId());
@@ -293,8 +298,10 @@ public class ReparacionDao {
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
                 r.setId(rs.getInt("id"));
-                r.setFechaEntrada(rs.getDate("fecha_entrada"));
-                r.setFechaSalida(rs.getDate("fecha_salida"));
+                java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                r.setFechaEntrada(fechaEntradaSql.toLocalDate());
+                java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
+                r.setFechaSalida(fechaSalidaSql.toLocalDate());
                 r.setIdMarca(m.getIdMarca());
                 r.setIdModelo(mo.getIdModelo());
                 r.setIdTipoReparacion(t.getId());
@@ -327,8 +334,10 @@ public class ReparacionDao {
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 Reparacion r = new Reparacion();
-                r.setFechaEntrada(rs.getDate("fecha_entrada"));
-                r.setFechaSalida(rs.getDate("fecha_salida"));
+                java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                r.setFechaEntrada(fechaEntradaSql.toLocalDate());
+                java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
+                r.setFechaSalida(fechaSalidaSql.toLocalDate());
                 r.setIdCliente(rs.getInt("idcliente"));
                 r.setIdModelo(rs.getInt("idModelo"));
                 r.setIdTipoReparacion(rs.getInt("id_tipo_reparacion"));
@@ -349,8 +358,9 @@ public class ReparacionDao {
         
         try{
             PreparedStatement stmt = conn.prepareStatement(INSERT_REPARACION );
-            stmt.setDate(1, new java.sql.Date(r.getFechaEntrada().getTime()));
-            stmt.setDate(2, new java.sql.Date(r.getFechaSalida().getTime()));
+            LocalDate hoy = LocalDate.now();
+            stmt.setDate(1, java.sql.Date.valueOf(hoy));
+            stmt.setDate(2, java.sql.Date.valueOf(hoy));
             stmt.setInt(3, r.getIdMarca());
             stmt.setInt(4, r.getIdModelo());          
             stmt.setInt(5, r.getIdTipoReparacion());
@@ -379,8 +389,9 @@ public class ReparacionDao {
         Connection conn = ConexionBD.connect();
         try(PreparedStatement stmt = conn.prepareStatement(MODIFICAR_REPARACION)){
             
-            stmt.setDate(1, r.getFechaEntrada());
-            stmt.setDate(2, r.getFechaSalida());
+            
+            stmt.setDate(1, java.sql.Date.valueOf(r.getFechaEntrada()));
+            stmt.setDate(2, java.sql.Date.valueOf(r.getFechaSalida()));
             stmt.setBigDecimal(3, r.getPrecioReparacion());
             stmt.setBoolean(4, r.isGarantia());
             stmt.setString(5, r.getComentarios());

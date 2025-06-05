@@ -5,7 +5,7 @@
 package entity;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  *
@@ -14,8 +14,8 @@ import java.sql.Date;
 public class Reparacion {
     
     private int id;
-    private Date fechaEntrada;
-    private Date fechaSalida;
+    private LocalDate fechaEntrada;
+    private LocalDate fechaSalida;
     private int idMarca;
     private Marca marca;
     private int idModelo;
@@ -29,7 +29,7 @@ public class Reparacion {
     private Cliente cliente;
     
    // CONSTRUCTOR  
-    public Reparacion(int id, Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -42,7 +42,7 @@ public class Reparacion {
         this.idCliente = idCliente;
     }
 
-    public Reparacion(Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.idMarca = idMarca;
@@ -54,7 +54,7 @@ public class Reparacion {
         this.idCliente = idCliente;
     }
 
-    public Reparacion(int id, Date fechaEntrada, Date fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -65,8 +65,6 @@ public class Reparacion {
         this.garantia = garantia;
         this.comentarios = comentarios;
     }
-    
-    
     
     public Reparacion(){
         
@@ -82,19 +80,19 @@ public class Reparacion {
         this.id = id;
     }
 
-    public Date getFechaEntrada() {
+    public LocalDate getFechaEntrada() {
         return fechaEntrada;
     }
 
-    public void setFechaEntrada(Date fechaEntrada) {
+    public void setFechaEntrada(LocalDate fechaEntrada) {
         this.fechaEntrada = fechaEntrada;
     }
 
-    public Date getFechaSalida() {
+    public LocalDate getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(Date fechaSalida) {
+    public void setFechaSalida(LocalDate fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 

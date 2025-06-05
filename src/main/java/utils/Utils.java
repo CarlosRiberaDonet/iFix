@@ -7,7 +7,6 @@ package utils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.sql.Date;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,7 +42,7 @@ public class Utils {
        }
        return textField;
    }
- 
+   
    public static String fechaActualToString(){  
        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
        LocalDate fechaActual = LocalDate.now();
@@ -52,26 +51,22 @@ public class Utils {
        return fechaFormateada;
    }
    
-   public static Date stringToDate(String fecha) {    
-       
-       Date fechaDate = null;
+   public static LocalDate stringToLocalDate(String fecha) {    
        try{
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate localDate = LocalDate.parse(fecha, formato);
-            fechaDate = Date.valueOf(localDate);
+            return LocalDate.parse(fecha, formato);
        } catch(Exception e){
             JOptionPane.showMessageDialog(null, "Formato fecha no válido. Formato correcto dd/MM/yyyy");
+            return null;
        }
-        return fechaDate;
     }
    
-   public static String dateToString(Date fecha) {
+   public static String localDateToString(LocalDate fecha) {
        if(fecha == null ){
            return null;
        }
-        LocalDate localDate = fecha.toLocalDate();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return localDate.format(formato);
+        return fecha.format(formato);
     }
    
   public static BigDecimal stringToBigDecimal(String valor) {
@@ -83,9 +78,9 @@ public class Utils {
       }
     }
     
-  public static Date checkFecha(String fechaStr){
+  public static LocalDate checkFecha(String fechaStr){
       if(fechaStr != null || fechaStr.trim().isEmpty()){
-        return stringToDate(fechaStr);
+        return stringToLocalDate(fechaStr);
       } else{
           return null;
       }      

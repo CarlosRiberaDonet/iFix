@@ -15,6 +15,7 @@ import entity.TipoReparacion;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -385,9 +386,9 @@ public class CrearReparacion extends javax.swing.JPanel {
         
         // Obtengo los datos de la reparación y lso valido
         String fechaEntradaStr = entradaTextField.getText();
-        Date fechaEntrada = Utils.checkFecha(fechaEntradaStr);
+        LocalDate fechaEntrada = Utils.checkFecha(fechaEntradaStr);
         String fechaSalidaStr = salidaTextField.getText();
-        Date fechaSalida = Utils.checkFecha(fechaSalidaStr);
+        LocalDate fechaSalida = Utils.checkFecha(fechaSalidaStr);
         String textoImporte = importeTextField.getText();
         BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
         if(importe == null){

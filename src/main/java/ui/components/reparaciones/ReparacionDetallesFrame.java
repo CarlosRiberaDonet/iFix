@@ -6,7 +6,7 @@ import entity.Modelo;
 import entity.Reparacion;
 import entity.TipoReparacion;
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import utils.Utils;
@@ -127,8 +127,8 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     
     private void cargarReparacion(Reparacion reparacion){
               
-        fechaEntradaTextField.setText(Utils.dateToString(reparacion.getFechaEntrada()));
-        fechaSalidaTextField.setText(Utils.dateToString(reparacion.getFechaSalida()));
+        fechaEntradaTextField.setText(Utils.localDateToString(reparacion.getFechaEntrada()));
+        fechaSalidaTextField.setText(Utils.localDateToString(reparacion.getFechaSalida()));
         cmbMarca.setSelectedItem(reparacion.getMarca());
         rc.seleccionarModeloPorId(cmbModelo, reparacion.getIdModelo());
         rc.seleccionarTipoReparacionPorId(cmbTipoReparacion, reparacion.getTipoReparacion().getId());
@@ -143,8 +143,8 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     public void guardarReparacion(Reparacion reparacion){
         
         int idReparacion = reparacion.getId();
-        Date fechaEntrada = Utils.stringToDate(fechaEntradaTextField.getText());
-        Date fechaSalida =  Utils.stringToDate(fechaSalidaTextField.getText());
+        LocalDate fechaEntrada = Utils.stringToLocalDate(fechaEntradaTextField.getText());
+        LocalDate fechaSalida =  Utils.stringToLocalDate(fechaSalidaTextField.getText());
         marca = (Marca) cmbMarca.getSelectedItem();
         int idMarca = marca.getIdMarca();
         modelo = (Modelo) cmbModelo.getSelectedItem();
