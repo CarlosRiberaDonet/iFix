@@ -39,12 +39,11 @@ public class ClienteFrame extends JFrame {
 
     public ClienteFrame() {
         setTitle("CLIENTES");
-        setSize(800, 600);
+        setSize(900, 800);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         initUI();
         tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
-        
     }
 
     private void initUI() {
@@ -84,16 +83,17 @@ public class ClienteFrame extends JFrame {
 
     private void buscarCliente(){
             
+        String nombre = nombreTextField.getText();
+        String apellidos = apellidosTextField.getText();
+        String telefono = telefonoTextField.getText();
+        
         clientesList.clear();
-        tablaClientes.addMouseListener(new ClienteTableMouseListener(tablaClientes, clientesList));
+
         if(nombreTextField.getText().isEmpty() && apellidosTextField.getText().isEmpty() && telefonoTextField.getText().isEmpty()){
            clientesList.addAll(ClienteController.getAllClientes());
         }
         else{
-            String nombre = nombreTextField.getText();
-            String apellidos = apellidosTextField.getText();
-            String telefono = telefonoTextField.getText();
-            clientesList = ClienteController.findCliente(nombre, apellidos, telefono);
+            clientesList.addAll(ClienteController.findCliente(nombre, apellidos, telefono)); 
         }
         tablePanel.cargarClientes(clientesList);
     }

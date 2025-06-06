@@ -7,6 +7,7 @@ package ui.components.clientes;
 import controller.ReparacionController;
 import entity.Cliente;
 import entity.Reparacion;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFrame;
@@ -43,9 +44,12 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     }
 
     private void cargarTabla(List<Reparacion> reparacionesList){
+        
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+        
         // Crear el modelo de la tabla con las columnas
         DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {
-            "ID", "ENTRADA", "DISPOSITIVO", "REPARACION", "IMPORTE", "GARANTIA"
+            "ID", "ENTRADA", "SALIDA", "DISPOSITIVO", "REPARACION", "IMPORTE", "GARANTIA"
         }) {
         // Sobrescribir el método isCellEditable para hacer que ninguna celda sea editable
             @Override
@@ -54,7 +58,18 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
             }
         };    
         for(Reparacion r : reparacionesList){
-            modelo.addRow(new Object[]{r.getId(),r.getFechaEntrada(), r.getModelo().getModelo(), r.getTipoReparacion().getTipoReparacion(), r.getPrecioReparacion(), r.isGarantia()});
+            String fechaEntrada = r.getFechaEntrada().format(formatter);
+            String fechaSalida = r.getFechaSalida().format(formatter);
+            modelo.addRow(new Object[]
+            {
+                r.getId(),
+                fechaEntrada,
+                fechaSalida,
+                r.getModelo().getModelo(),
+                r.getTipoReparacion(),
+                r.getPrecioReparacion(),
+                r.isGarantia()
+            });
         }
         
         // Asignar el modelo a la tabla
@@ -164,7 +179,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                     .addComponent(jScrollPane1))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 63, Short.MAX_VALUE)
+                .addGap(0, 54, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(clienteLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,15 +268,24 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_eliminarButtonActionPerformed
 
     private void modificarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modificarButtonActionPerformed
+        // Obtener el índice de la fila seleccionada en la vista de la tabla
         int filaSelect = reparacionesTable.getSelectedRow();
-        if(filaSelect >= 0){
-            int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);
-            Reparacion reparacionSelect = reparacionesList.get(filaSelect);
-            
-            // Crear y mostrar el dialogo de detalles de la reparación
+
+        // Verificar que se haya seleccionado alguna fila
+        if (filaSelect >= 0) {
+            // Convertir el índice de la vista al índice real del modelo de datos
+            int modelIndex = reparacionesTable.convertRowIndexToModel(filaSelect);
+
+            // Obtener el ID de la reparación seleccionada
+//            int idReparacion = (int) reparacionesTable.getValueAt(filaSelect, 0);
+
+            // Obtener el objeto Reparacion correspondiente de la lista de datos
+            Reparacion reparacionSelect = reparacionesList.get(modelIndex);
+
+            // Crear y mostrar la ventana de detalles para la reparación seleccionada
             ReparacionDetallesFrame frame = new ReparacionDetallesFrame(reparacionSelect);
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
+            frame.setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+            frame.setVisible(true);            // Mostrar la ventana
         }
     }//GEN-LAST:event_modificarButtonActionPerformed
 
