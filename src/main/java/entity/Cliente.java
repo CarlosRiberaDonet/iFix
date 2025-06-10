@@ -83,10 +83,10 @@ public class Cliente {
     public String toString(){
             return 
                 "ID: " + id + "\n" + 
-                "NOMBRE: " + nombre + "\n" +
-                "APELLIDOS: " + apellidos + "\n" +
+                "NOMBRE: " + nombre.toUpperCase() + "\n" +
+                "APELLIDOS: " + apellidos.toUpperCase() + "\n" +
                 "TELEFONO: " + telefono + "\n" +
-                "DIRECCION: " + direccion + "\n"
+                "DIRECCION: " + direccion.toUpperCase() + "\n"
                 ;
     }
 }

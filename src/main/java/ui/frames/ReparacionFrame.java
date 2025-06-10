@@ -9,6 +9,9 @@ import controller.ReparacionController;
 import entity.Reparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -30,12 +33,12 @@ public class ReparacionFrame extends JFrame {
     
     private JTable tablaReparaciones;
     private ReparacionesTable tablePanel;
-    private JTextField telefonoTextField;
+    private JTextField telefonoTextField = null;
     private JButton buscarButton;
     private JButton deleteButton;
     private JButton volverButton;
-    private JDateChooser fechaEntradaChooser;
-    private JDateChooser fechaSalidaChooser;
+    private JDateChooser fechaEntradaChooser = null;
+    private JDateChooser fechaSalidaChooser = null;
     private static final List<Reparacion> reparacionesList  = new ArrayList<>();
     
     public ReparacionFrame(){
@@ -95,9 +98,24 @@ public class ReparacionFrame extends JFrame {
     }
     
      private void listarReparacionButton(){
-        
-        
 
+        
+        Date dateEntrada = (Date) fechaEntradaChooser.getDate();
+        Date dateSalida = (Date) fechaSalidaChooser.getDate();
+        
+        if(telefonoTextField.getText().trim().isEmpty() && fechaEntradaChooser.getDate() == null && fechaSalidaChooser.getDate() == null){
+            JOptionPane.showMessageDialog(this, "Debe introducir un número de telefóno y/o un rango de fechas.","INFO",  JOptionPane.INFORMATION_MESSAGE);
+        }
+        if(dateEntrada != null && dateSalida != null || !telefonoTextField.getText().trim().isEmpty()){
+            String telefono = telefonoTextField.getText();
+            LocalDate fechaEntrada = null;
+            LocalDate fechaSalida = null;
+           fechaEntrada = dateEntrada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+           fechaSalida = dateSalida.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        }
+
+        
+         
     }
      
      private void eliminarReparacion(){

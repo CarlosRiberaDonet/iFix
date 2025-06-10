@@ -21,7 +21,7 @@ public class ClientesTable extends JPanel {
     public ClientesTable() {
         setLayout(new BorderLayout());
 
-        String[] columnas = {"ID", "Nombre", "Apellidos", "Teléfono", "Dirección"};
+        String[] columnas = {"ID", "APELLIDOS", "NOMBRE", "TELÉFONO", "DIRECCIÓN"};
         modelo = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -46,10 +46,10 @@ public class ClientesTable extends JPanel {
         for (Cliente c : lista) {
             modelo.addRow(new Object[]{
                 c.getId(),
-                c.getNombre(),
-                c.getApellidos(),
-                c.getTelefono(),
-                c.getDireccion()
+                c.getApellidos().toUpperCase(),
+                c.getNombre().toUpperCase(),
+                c.getTelefono().toUpperCase(),
+                c.getDireccion().toUpperCase()
             });
         }
     }
