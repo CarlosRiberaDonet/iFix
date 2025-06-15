@@ -6,13 +6,13 @@ package controller;
 
 import dao.ClienteDao;
 import entity.Cliente;
+import entity.Reparacion;
 import java.util.List;
 /**
  *
  * @author Carlos Ribera
  */
 public class ClienteController {
-    
     
     public static boolean nuevoCliente(Cliente nuevoCliente){
         return ClienteDao.addCliente(nuevoCliente);
@@ -29,6 +29,12 @@ public class ClienteController {
     public static boolean eliminarCliente(String telefono){
         return ClienteDao.deleteCliente(telefono);
     }
+    
+//    // Llenar List de reparaciones
+//    public static List<Reparacion> cargarReparacionesList(int idCliente){      
+//        List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(idCliente);
+//        return reparacionesList;
+//    }
 }
 
 

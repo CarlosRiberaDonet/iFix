@@ -188,6 +188,7 @@ public class Reparacion {
     @Override
     public String toString() {
         return "Reparacion{fechaEntrada=" + fechaEntrada +
+                ", id=" + id +
                 ", fechaSalida=" + fechaSalida +
                 ", precioReparacion=" + precioReparacion +
                 ", garantia=" + garantia +

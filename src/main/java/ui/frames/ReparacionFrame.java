@@ -9,7 +9,6 @@ import controller.ReparacionController;
 import entity.Reparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -24,6 +23,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import listeners.ReparacionTableMouseListener;
 import ui.components.reparaciones.ReparacionesTable;
+import utils.Utils;
 
 /**
  *
@@ -39,7 +39,7 @@ public class ReparacionFrame extends JFrame {
     private JButton volverButton;
     private JDateChooser fechaEntradaChooser = null;
     private JDateChooser fechaSalidaChooser = null;
-    private static final List<Reparacion> reparacionesList  = new ArrayList<>();
+    private List<Reparacion> reparacionesList  = new ArrayList<>();
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
@@ -85,40 +85,64 @@ public class ReparacionFrame extends JFrame {
         tablaReparaciones.addMouseListener(new ReparacionTableMouseListener(tablaReparaciones, reparacionesList));
         add(tablePanel, BorderLayout.CENTER);
         
-        buscarButton.addActionListener( e -> listarReparacionButton());
+        buscarButton.addActionListener( e -> cargarTablaReparaciones());
         deleteButton.addActionListener( e -> eliminarReparacion());
         volverButton.addActionListener( e -> dispose());
     }
     
-    public void cargarTablaReparaciones(){
-        
+    public void cargarTablaReparaciones(){      
         reparacionesList.clear();
-        reparacionesList.addAll(ReparacionController.getAllReparaciones());
+        
+        boolean buscarTelefono = !telefonoTextField.getText().isEmpty();
+        boolean buscarFecha = fechaEntradaChooser.getDate() != null && fechaSalidaChooser.getDate() != null;
+        
+        // Busqueda por teléfono y fecha
+        if(buscarTelefono && buscarFecha){
+            reparacionesList.addAll(findByPhoneAndDate());
+        }
+        
+        // Busqueda solo por teléfono
+        else if(buscarTelefono){
+            // Compruebo que el campo teléfono está rellenado correctamente
+            if(Utils.checkTelefono(telefonoTextField.getText())){
+                reparacionesList.addAll(findByPhone());
+            }
+        }
+        
+        // Busqueda solo por fecha
+        else if(buscarFecha){
+            reparacionesList.addAll(findByDate());
+        }
+        
+        // Si los campos de busqueda están en blanco, lista todas las reparaciones
+        else{
+            reparacionesList.addAll(ReparacionController.getAllReparaciones());
+        }
         tablePanel.setReparaciones(reparacionesList);
     }
     
-     private void listarReparacionButton(){
-
-        
-        Date dateEntrada = (Date) fechaEntradaChooser.getDate();
-        Date dateSalida = (Date) fechaSalidaChooser.getDate();
-        
-        if(telefonoTextField.getText().trim().isEmpty() && fechaEntradaChooser.getDate() == null && fechaSalidaChooser.getDate() == null){
-            JOptionPane.showMessageDialog(this, "Debe introducir un número de telefóno y/o un rango de fechas.","INFO",  JOptionPane.INFORMATION_MESSAGE);
-        }
-        if(dateEntrada != null && dateSalida != null || !telefonoTextField.getText().trim().isEmpty()){
-            String telefono = telefonoTextField.getText();
-            LocalDate fechaEntrada = null;
-            LocalDate fechaSalida = null;
-           fechaEntrada = dateEntrada.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-           fechaSalida = dateSalida.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        }
-
-        
-         
+    // Busqueda por teléfono
+    private List<Reparacion> findByPhone(){
+        String telefono = telefonoTextField.getText();   
+        return ReparacionController.findReparacionesByPhone(telefono);
+    }
+    
+    // Busqueda por fecha
+    private List<Reparacion> findByDate(){
+        // Si la busqueda es por rango de fechas
+        LocalDate fechaEntrada = fechaEntradaChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaSalida = fechaSalidaChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return ReparacionController.findReparacionByDate(fechaEntrada, fechaSalida);
+    }
+    
+    private List<Reparacion> findByPhoneAndDate(){
+        String telefono = telefonoTextField.getText();
+        LocalDate fechaEntrada = fechaEntradaChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        LocalDate fechaSalida = fechaSalidaChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        return ReparacionController.findReparacionByPhoneAndDate(telefono, fechaEntrada, fechaSalida);
     }
      
-     private void eliminarReparacion(){
+    private void eliminarReparacion(){
         int filaSelect = tablaReparaciones.getSelectedRow();
         if(filaSelect >= 0){
             int idReparacion = (int) tablaReparaciones.getValueAt(filaSelect, 0);

@@ -28,15 +28,17 @@ public class ReparacionTableMouseListener extends MouseAdapter {
     public void setReparacionesList(List<Reparacion> reparacionesList) {
         this.reparacionesList = reparacionesList;
     }
-
+    
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2 && reparacionesTable.getSelectedRow() != -1) {
-            int fila = reparacionesTable.getSelectedRow();
-            if (fila >= 0 && fila < reparacionesList.size()){
-                Reparacion reparacionSelect = reparacionesList.get(fila);
-                // Crear y mostrar el dialogo de detalles de la reparación
+        System.out.println("listener activado");
+        if (e.getClickCount() == 2) {
+            int filaVista = reparacionesTable.rowAtPoint(e.getPoint());
+            if (filaVista != -1) {
+                int filaModelo = reparacionesTable.convertRowIndexToModel(filaVista);
+                Reparacion reparacionSelect = reparacionesList.get(filaModelo);
                 ReparacionDetallesFrame frame = new ReparacionDetallesFrame(reparacionSelect);
+                frame.setSize(830, 650);
                 frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }

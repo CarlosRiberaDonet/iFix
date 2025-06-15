@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import utils.QuerySQL;
 
 /**
  *
@@ -23,107 +24,6 @@ import java.util.List;
  */
 public class ReparacionDao {
     
-    private static final String SELECT_ALL_REPARACIONES = "SELECT r.id, " 
-            + "r.fecha_entrada, "
-            + "r.fecha_salida, "
-            + "r.precio, "
-            + "r.garantia, "
-            + "r.comentarios, "
-            + "r.id_marca AS idMarca, "
-            + "r.id_modelo AS idModelo, "
-            + "r.id_tipo_reparacion AS idReparacion, "
-            + "r.id_cliente, "
-            + "m.marca, "
-            + "mo.modelo, "
-            + "t.reparacion, "
-            + "c.nombre, "
-            + "c.apellidos, "
-            + "c.telefono, "
-            + "c.direccion "
-            + "FROM reparacion r "
-            + "JOIN marca m ON r.id_marca = m.id "
-            + "JOIN modelo mo ON r.id_modelo = mo.id "
-            + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
-            + "JOIN cliente c ON r.id_cliente = c.id ";
-    
-    private static final String SELECT_REPARACIONES_BY_CLIENTE_ID = "SELECT r.id, " 
-            + "r.fecha_entrada, "
-            + "r.fecha_salida, "
-            + "r.precio, "
-            + "r.garantia, "
-            + "r.comentarios, "
-            + "r.id_marca AS idMarca, "
-            + "r.id_modelo AS idModelo, "
-            + "r.id_tipo_reparacion AS idReparacion, "
-            + "r.id_cliente, "
-            + "m.marca, "
-            + "mo.modelo, "
-            + "t.reparacion, "
-            + "c.nombre, "
-            + "c.apellidos, "
-            + "c.telefono, "
-            + "c.direccion "
-            + "FROM reparacion r "
-            + "JOIN marca m ON r.id_marca = m.id "
-            + "JOIN modelo mo ON r.id_modelo = mo.id "
-            + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
-            + "JOIN cliente c ON r.id_cliente = c.id "
-            + "WHERE r.id_cliente = ?";
-    
-    private static final String SELECT_REPARACIONES_BY_TELEFONO = "SELECT r.fecha_entrada, "
-            + "r.fecha_salida, "
-            + "c.nombre AS cliente, "
-            + "d.modelo AS dispositivo, "
-            + "t.tipo AS reparacion, "
-            + "r.precio_reparacion "
-            + "FROM reparacion r "
-            + "JOIN cliente c ON r.id_cliente = c.id "
-            + "JOIN dispositivo d ON r.id_dispositivo = d.id "
-            + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
-            + "WHERE telefono = ? AND "
-            + "fecha_salida = ? AND "
-            + "fecha_entrada = ?";
-    
-    private static final String SELECT_REPARACION_BY_ID = "SELECT r.id, " 
-            + "r.fecha_entrada, "
-            + "r.fecha_salida, "
-            + "r.precio, "
-            + "r.garantia, "
-            + "r.comentarios, "
-            + "r.id_marca AS idMarca, "
-            + "r.id_modelo AS idModelo, "
-            + "r.id_tipo_reparacion AS idReparacion, "
-            + "r.id_cliente, "
-            + "m.marca, "
-            + "mo.modelo, "
-            + "t.reparacion, "
-            + "c.nombre, "
-            + "c.apellidos, "
-            + "c.telefono, "
-            + "c.direccion "
-            + "FROM reparacion r "
-            + "JOIN marca m ON r.id_marca = m.id "
-            + "JOIN modelo mo ON r.id_modelo = mo.id "
-            + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id "
-            + "JOIN cliente c ON r.id_cliente = c.id "
-            + "WHERE r.id = ?";
-    
-    private static final String MODIFICAR_REPARACION = "UPDATE reparacion SET "
-            + "fecha_entrada = ?, "
-            + "fecha_salida = ?, "
-            + "precio = ?, "
-            + "garantia = ?, "
-            + "comentarios = ?, "
-            + "id_marca = ?, "
-            + "id_modelo = ?, "
-            + "id_tipo_reparacion = ? "
-            + "WHERE id = ?";
-    
-    
-    private static final String INSERT_REPARACION = " INSERT INTO reparacion (fecha_entrada, fecha_salida, id_marca, id_modelo, id_tipo_reparacion, "
-            + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-    private static final String DELETE_REPARACION = "DELETE FROM reparacion WHERE id = ?";
     
     // Obtener toda la lista de reparaciones
     public static List<Reparacion> getAllReparacionesList(){
@@ -131,7 +31,7 @@ public class ReparacionDao {
         List<Reparacion> reparacionesList = new ArrayList<>();
         
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(SELECT_ALL_REPARACIONES)){
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_ALL_REPARACIONES)){
             
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
@@ -197,7 +97,7 @@ public class ReparacionDao {
         Reparacion reparacion = null;
         Connection conn = ConexionBD.connect();
         
-        try(PreparedStatement stmt = conn.prepareStatement(SELECT_REPARACION_BY_ID)){
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_REPARACION_BY_ID)){
             stmt.setInt(1, id);
             
             // MENSAJE DE DEPURACIÓN
@@ -260,18 +160,82 @@ public class ReparacionDao {
         return reparacion;
     }
 
-    // Obtener reparación mediante idCliente
+    // Obtener reparaciones mediante idCliente
     public static List<Reparacion> getReparacionesByClienteId(int idCliente){
         
         List<Reparacion> reparacionesList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
         
-        try(PreparedStatement stmt = conn.prepareStatement(SELECT_REPARACIONES_BY_CLIENTE_ID)){
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_REPARACIONES_BY_CLIENTE_ID)){
             stmt.setInt(1, idCliente);
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
                   // Creo el objeto Cliente con los datos obtenidos
+                Cliente c = new Cliente();
+                c.setId(rs.getInt("id"));
+                c.setNombre(rs.getString("nombre"));
+                c.setApellidos(rs.getString("apellidos"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setDireccion(rs.getString("direccion"));
+                
+                // Creo el objeto Marca con los datos obtenidos
+                Marca m = new Marca();
+                m.setIdMarca(rs.getInt("idMarca"));
+                m.setMarca(rs.getString("marca"));
+                
+                // Creo el objeto Modelo con los datos obtenidos
+                Modelo mo = new Modelo();
+                mo.setIdModelo(rs.getInt("idModelo"));
+                mo.setModelo(rs.getString("modelo"));
+                mo.setIdMarca(m.getIdMarca());
+                
+                // Creo el objeto TipoReparacion con los datos obtenidos  
+                TipoReparacion t = new TipoReparacion();
+                t.setId(rs.getInt("idReparacion"));
+                t.setTipoReparacion(rs.getString("reparacion"));
+                
+                // Creo el objeto Reparacion con los datos obtenidos  
+                Reparacion r = new Reparacion();
+                r.setId(rs.getInt("id"));
+                java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                r.setFechaEntrada(fechaEntradaSql != null ? fechaEntradaSql.toLocalDate() : null);
+
+                java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
+                r.setFechaSalida(fechaSalidaSql != null ? fechaSalidaSql.toLocalDate() : null);
+                r.setIdMarca(m.getIdMarca());
+                r.setIdModelo(mo.getIdModelo());
+                r.setIdTipoReparacion(t.getId());
+                r.setPrecioReparacion(rs.getBigDecimal("precio"));
+                r.setGarantia(rs.getBoolean("garantia"));
+                r.setComentarios(rs.getString("comentarios"));
+                r.setIdCliente(c.getId());
+                r.setCliente(c);
+                r.setMarca(m);
+                r.setModelo(mo);
+                r.setTipoReparacion(t);
+                
+                reparacionesList.add(r);
+            }
+            
+        } catch(SQLException e){
+            System.out.println("Error al obtener las reparaciones: " + e.getMessage());
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return reparacionesList;
+    }
+    
+    // Obtener reparaciones mediante teléfono
+    public static List<Reparacion> getReparacionesbyTelefono(String telefono){
+        
+        List<Reparacion> reparacionesList = new ArrayList<>();
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_REPARACIONES)){
+            stmt.setString(1, telefono);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                // Creo el objeto Cliente con los datos obtenidos
                 Cliente c = new Cliente();
                 c.setId(rs.getInt("id"));
                 c.setNombre(rs.getString("nombre"));
@@ -316,7 +280,6 @@ public class ReparacionDao {
                 
                 reparacionesList.add(r);
             }
-            
         } catch(SQLException e){
             System.out.println("Error al obtener las reparaciones: " + e.getMessage());
         } finally{
@@ -325,39 +288,136 @@ public class ReparacionDao {
         return reparacionesList;
     }
     
-    public static List<Reparacion> getReparacionesbyTelefono(String telefono){
-        
+    // Obtener reparaciones mediante rango de fechas
+    public static List<Reparacion> getReparacionByDate(LocalDate fechaEntrada, LocalDate fechaSalida){
         List<Reparacion> reparacionesList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(SELECT_REPARACIONES_BY_TELEFONO)){
-            stmt.setString(1, telefono);
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_REPARACION_BY_DATE)){
+            stmt.setDate(1, java.sql.Date.valueOf(fechaEntrada));
+            stmt.setDate(2, java.sql.Date.valueOf(fechaSalida));
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
+                // Creo el objeto Cliente con los datos obtenidos
+                Cliente c = new Cliente();
+                c.setId(rs.getInt("idCliente"));
+                c.setNombre(rs.getString("nombre"));
+                c.setApellidos(rs.getString("apellidos"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setDireccion(rs.getString("direccion"));
+                
+                // Creo el objeto Marca con los datos obtenidos
+                Marca m = new Marca();
+                m.setIdMarca(rs.getInt("idMarca"));
+                m.setMarca(rs.getString("marca"));
+                
+                // Creo el objeto Modelo con los datos obtenidos
+                Modelo mo = new Modelo();
+                mo.setIdModelo(rs.getInt("idModelo"));
+                mo.setModelo(rs.getString("modelo"));
+                mo.setIdMarca(m.getIdMarca());
+                
+                // Creo el objeto TipoReparacion con los datos obtenidos  
+                TipoReparacion t = new TipoReparacion();
+                t.setId(rs.getInt("idReparacion"));
+                t.setTipoReparacion(rs.getString("reparacion"));
+                
+                // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
+                r.setId(rs.getInt("idReparacion"));
                 java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql.toLocalDate());
-                r.setIdCliente(rs.getInt("idcliente"));
-                r.setIdModelo(rs.getInt("idModelo"));
-                r.setIdTipoReparacion(rs.getInt("id_tipo_reparacion"));
-                r.setPrecioReparacion(rs.getBigDecimal("precio_reparacion"));
+                r.setIdMarca(m.getIdMarca());
+                r.setIdModelo(mo.getIdModelo());
+                r.setIdTipoReparacion(t.getId());
+                r.setPrecioReparacion(rs.getBigDecimal("precio"));
+                r.setGarantia(rs.getBoolean("garantia"));
+                r.setComentarios(rs.getString("comentarios"));
+                r.setIdCliente(c.getId());
+                r.setCliente(c);
+                r.setMarca(m);
+                r.setModelo(mo);
+                r.setTipoReparacion(t);
+                
                 reparacionesList.add(r);
             }
         } catch(SQLException e){
             System.out.println("Error al obtener las reparaciones: " + e.getMessage());
+        }finally{
+            ConexionBD.close(conn);
+        }
+        return reparacionesList;
+    }
+    
+    // Obtener reparaciones mediante combinación de teléfono y rango de fechas
+    public static List<Reparacion> getReparacionByPhoneAndDate(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
+        List<Reparacion> reparacionesList = new ArrayList<>();
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_REPARACION_BY_PHONE_DATE)){
+            stmt.setString(1, telefono);
+            stmt.setDate(2, java.sql.Date.valueOf(fechaSalida));
+            stmt.setDate(3, java.sql.Date.valueOf(fechaSalida));
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                Cliente c = new Cliente();
+                c.setId(rs.getInt("idCliente"));
+                c.setNombre(rs.getString("nombre"));
+                c.setApellidos(rs.getString("apellidos"));
+                c.setTelefono(rs.getString("telefono"));
+                c.setDireccion(rs.getString("direccion"));
+                // Creo el objeto Marca con los datos obtenidos
+                Marca m = new Marca();
+                m.setIdMarca(rs.getInt("idMarca"));
+                m.setMarca(rs.getString("marca"));
+                
+                // Creo el objeto Modelo con los datos obtenidos
+                Modelo mo = new Modelo();
+                mo.setIdModelo(rs.getInt("idModelo"));
+                mo.setModelo(rs.getString("modelo"));
+                mo.setIdMarca(m.getIdMarca());
+                
+                // Creo el objeto TipoReparacion con los datos obtenidos  
+                TipoReparacion t = new TipoReparacion();
+                t.setId(rs.getInt("idReparacion"));
+                t.setTipoReparacion(rs.getString("reparacion"));
+                
+                // Creo el objeto Reparacion con los datos obtenidos  
+                Reparacion r = new Reparacion();
+                r.setId(rs.getInt("idReparacion"));
+                java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
+                r.setFechaEntrada(fechaEntradaSql.toLocalDate());
+                java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
+                r.setFechaSalida(fechaSalidaSql.toLocalDate());
+                r.setIdMarca(m.getIdMarca());
+                r.setIdModelo(mo.getIdModelo());
+                r.setIdTipoReparacion(t.getId());
+                r.setPrecioReparacion(rs.getBigDecimal("precio"));
+                r.setGarantia(rs.getBoolean("garantia"));
+                r.setComentarios(rs.getString("comentarios"));
+                r.setIdCliente(c.getId());
+                r.setCliente(c);
+                r.setMarca(m);
+                r.setModelo(mo);
+                r.setTipoReparacion(t);
+                
+                reparacionesList.add(r);
+            }
+        } catch(SQLException e){
+             System.out.println("Error al obtener las reparaciones filtradas por telefono y fecha: " + e.getMessage());
         } finally{
             ConexionBD.close(conn);
         }
         return reparacionesList;
     }
 
+    // Crear nueva reparación
     public static boolean insertarReparacion(Reparacion r){
         
         Connection conn = ConexionBD.connect();
         
         try{
-            PreparedStatement stmt = conn.prepareStatement(INSERT_REPARACION );
+            PreparedStatement stmt = conn.prepareStatement(QuerySQL.INSERT_REPARACION);
             LocalDate hoy = LocalDate.now();
             stmt.setDate(1, java.sql.Date.valueOf(hoy));
             stmt.setDate(2, java.sql.Date.valueOf(hoy));
@@ -384,12 +444,11 @@ public class ReparacionDao {
         return false;
     }
     
+    // Actualizar reparación
     public static boolean updateReparacion(Reparacion r){
         
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(MODIFICAR_REPARACION)){
-            
-            
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.MODIFICAR_REPARACION)){
             stmt.setDate(1, java.sql.Date.valueOf(r.getFechaEntrada()));
             stmt.setDate(2, java.sql.Date.valueOf(r.getFechaSalida()));
             stmt.setBigDecimal(3, r.getPrecioReparacion());
@@ -415,10 +474,30 @@ public class ReparacionDao {
         return true;
     }
     
+    // Actualizar el estado garantía de las reparaciones
+    public static void updateGarantia(List<Reparacion> reparacionesModificadas){
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.UPDATE_GARANTIA_REPARACION)){
+            for(Reparacion r : reparacionesModificadas){
+                stmt.setBoolean(1, r.isGarantia());
+                stmt.setInt(2, r.getId());
+                int filasAfectadas = stmt.executeUpdate();
+                if(filasAfectadas > 0){
+                    System.out.println("Reparación actualizada correctamente.");
+                }
+            }
+        } catch(SQLException e){
+            System.out.println("Error al actulizar el estado garantia de la reparacion: " + e.getMessage());
+            e.printStackTrace();
+        } finally{
+            ConexionBD.close(conn);
+        }
+    }
+    // Eliminar reparación
     public static boolean deleteReparacion(int idReparacion){
         
         Connection conn = ConexionBD.connect();
-        try(PreparedStatement stmt = conn.prepareStatement(DELETE_REPARACION)){
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.DELETE_REPARACION)){
             stmt.setInt(1, idReparacion);
             return stmt.executeUpdate() > 0;
             

@@ -6,6 +6,7 @@ package ui.frames;
 
 import javax.swing.UIManager;
 import com.formdev.flatlaf.FlatLightLaf;
+import controller.ReparacionController;
 
 
 /**
@@ -18,6 +19,7 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        ReparacionController.checkGarantia();
         setLocationRelativeTo(null);
         setResizable(false);
         

@@ -4,6 +4,9 @@
  */
 package entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Carlos Ribera
@@ -15,6 +18,7 @@ public class Cliente {
     private String apellidos;
     private String telefono;
     private String direccion;
+    private List<Reparacion> reparacionesList = new ArrayList<>();
     
     
     // CONSTRUCTOR
@@ -32,6 +36,15 @@ public class Cliente {
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.direccion = direccion;
+    }
+    
+    public Cliente(int id, String nombre, String apellidos, String telefono, String direccion, List<Reparacion> reparacionesList){
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.reparacionesList = reparacionesList;
     }
 
     public Cliente() {
@@ -77,6 +90,14 @@ public class Cliente {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+    
+    private List<Reparacion> getReparacionesList(){
+        return reparacionesList;
+    }
+    
+    private void setReparacionesList(List<Reparacion> reparacionesList){
+        this.reparacionesList = reparacionesList;
     }
     
     @Override

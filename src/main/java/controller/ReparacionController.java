@@ -11,6 +11,8 @@ import entity.Marca;
 import entity.Modelo;
 import entity.Reparacion;
 import entity.TipoReparacion;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -29,15 +31,24 @@ public class ReparacionController {
         return ReparacionDao.insertarReparacion(r);
     }
     
-    public static List<Reparacion> findReparacionesByIdCliente(int clienteId){
-        
+    public static List<Reparacion> findReparacionesByIdCliente(int clienteId){ 
         List<Reparacion> reparacionesList = ReparacionDao.getReparacionesByClienteId(clienteId);
         return reparacionesList;
     }
     
-    public static List<Reparacion> findReparacionesByTelefono(String telefono){
-        
+    // Buscar reparación por número de teléfono
+    public static List<Reparacion> findReparacionesByPhone(String telefono){
         List<Reparacion> reparacionesList = ReparacionDao.getReparacionesbyTelefono(telefono);
+        return reparacionesList;
+    }
+    
+    public static List<Reparacion> findReparacionByDate(LocalDate fechaEntrada, LocalDate fechaSalida){
+        List<Reparacion> reparacionesList = ReparacionDao.getReparacionByDate(fechaEntrada, fechaSalida);
+        return reparacionesList;
+    }
+    
+    public static List<Reparacion> findReparacionByPhoneAndDate(String telefono, LocalDate fechaEntrada, LocalDate fechaSalida){
+        List<Reparacion> reparacionesList = ReparacionDao.getReparacionByPhoneAndDate(telefono, fechaEntrada, fechaSalida);
         return reparacionesList;
     }
     
@@ -114,5 +125,24 @@ public class ReparacionController {
     
     public static boolean eliminarReparacion(int idReparacion){
         return ReparacionDao.deleteReparacion(idReparacion);
+    }
+    
+    public static void checkGarantia(){
+        // Fecha actual
+        LocalDate fechaActual = LocalDate.now();
+        // Lista original de la BD
+        List<Reparacion> reparacionesList = ReparacionDao.getAllReparacionesList();
+        // Lista para guardar las reparaciones con el campo garantía modificado
+        List<Reparacion> reparacionesModificadas = new ArrayList<>();
+
+        for(Reparacion r : reparacionesList){
+            if(r.isGarantia() == true){
+                if(fechaActual.isAfter(r.getFechaSalida().plusMonths(3))){
+                    r.setGarantia(false);
+                    reparacionesModificadas.add(r);
+                }
+            }
+        } 
+        ReparacionDao.updateGarantia(reparacionesModificadas);
     }
 }

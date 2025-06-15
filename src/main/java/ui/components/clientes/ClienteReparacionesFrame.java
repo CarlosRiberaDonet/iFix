@@ -41,9 +41,14 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         telefonoLabel.setText(cliente.getTelefono());
         direccionLabel.setText(cliente.getDireccion().toUpperCase());
         
+        if(reparacionesList.isEmpty() || reparacionesList == null){
+            modificarButton.setEnabled(false);
+            eliminarButton.setEnabled(false);
+        }
+        
     }
 
-    private void cargarTabla(List<Reparacion> reparacionesList){
+    public void cargarTabla(List<Reparacion> reparacionesList){
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
         
@@ -108,6 +113,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         direccionLabel = new javax.swing.JLabel();
         menuClientesButton = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JSeparator();
+        actualizarButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("REPARACIONES");
@@ -169,28 +175,21 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
             }
         });
 
+        actualizarButton.setText("Actualizar Lista");
+        actualizarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                actualizarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator3)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(333, 333, 333)
-                                .addComponent(jLabel2))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(menuClientesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1)
                     .addComponent(jSeparator1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -206,9 +205,24 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(direccionLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)))
+                        .addGap(34, 34, 34))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(333, 333, 333)
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addComponent(jSeparator3)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(actualizarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(añadirButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(eliminarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(modificarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(menuClientesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,14 +242,15 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 370, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(actualizarButton)
                     .addComponent(añadirButton)
                     .addComponent(eliminarButton)
-                    .addComponent(menuClientesButton)
-                    .addComponent(modificarButton))
-                .addGap(19, 19, 19))
+                    .addComponent(modificarButton)
+                    .addComponent(menuClientesButton))
+                .addGap(76, 76, 76))
         );
 
         pack();
@@ -245,6 +260,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         JFrame frame = new JFrame("Crear Reparación");
         frame.setContentPane(new CrearReparacion(cliente));
         frame.pack();
+        frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }//GEN-LAST:event_añadirButtonActionPerformed
@@ -293,6 +309,11 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_modificarButtonActionPerformed
 
+    private void actualizarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarButtonActionPerformed
+        reparacionesList = ReparacionController.findReparacionesByIdCliente(cliente.getId());
+        cargarTabla(reparacionesList);
+    }//GEN-LAST:event_actualizarButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -322,6 +343,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton actualizarButton;
     private javax.swing.JButton añadirButton;
     private javax.swing.JLabel clienteLabel;
     private javax.swing.JLabel direccionLabel;

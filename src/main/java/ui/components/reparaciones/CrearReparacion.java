@@ -15,10 +15,12 @@ import entity.TipoReparacion;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import ui.frames.ReparacionFrame;
+import ui.components.clientes.ClienteReparacionesFrame;
 import utils.Utils;
 
 /**
@@ -39,6 +41,7 @@ public class CrearReparacion extends javax.swing.JPanel {
     private Modelo modeloSelect;
     private Marca marcaSelect;
     private TipoReparacion tipoReparacionSelect;
+    private List<Reparacion> reparacionesList;
     
     private String fechaActual = Utils.fechaActualToString();
     JComboBox<Marca> cmbMarca  = new JComboBox<>();
@@ -437,14 +440,9 @@ public class CrearReparacion extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(null, "Error al guardar la reparación.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-        // Refreco la lista de reparacion y cierro el JPanel
-        Window window = SwingUtilities.getWindowAncestor(this);
-        if (window != null) {
-            ReparacionFrame reparacionFrame = new ReparacionFrame();
-            reparacionFrame.cargarTablaReparaciones();
-            window.dispose();
-        }
+
+        Window window = SwingUtilities.getWindowAncestor(this);         
+        window.dispose();
     }//GEN-LAST:event_guardarButtonActionPerformed
 
     private void entradaTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entradaTextFieldActionPerformed
