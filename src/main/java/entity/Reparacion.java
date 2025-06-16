@@ -25,11 +25,12 @@ public class Reparacion {
     private BigDecimal precioReparacion;
     private boolean garantia;
     private String comentarios;
+    private String estado;
     private int idCliente;
     private Cliente cliente;
     
    // CONSTRUCTOR  
-    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, int idCliente) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -39,10 +40,11 @@ public class Reparacion {
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
+        this.estado = estado;
         this.idCliente = idCliente;
     }
 
-    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, int idCliente) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, int idCliente) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.idMarca = idMarca;
@@ -51,10 +53,11 @@ public class Reparacion {
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
+        this.estado = estado;
         this.idCliente = idCliente;
     }
 
-    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -64,6 +67,7 @@ public class Reparacion {
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
+        this.estado = estado;
     }
     
     public Reparacion(){
@@ -167,6 +171,14 @@ public class Reparacion {
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
+    
+    public String getEstado(){
+        return estado;
+    }
+    
+    public void setEstado(String estado){
+        this.estado = estado;
+    }
 
     public int getIdCliente() {
         return idCliente;
@@ -182,8 +194,7 @@ public class Reparacion {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
-    }
-    
+    }   
 
     @Override
     public String toString() {
@@ -196,6 +207,7 @@ public class Reparacion {
                 ", idMarca=" + idMarca +
                 ", idModelo=" + idModelo + 
                 ", idTipoReparacion=" + idTipoReparacion +
+                ", estado=" + estado +
                 ", idCliente=" + idCliente +'}';
     }  
 }

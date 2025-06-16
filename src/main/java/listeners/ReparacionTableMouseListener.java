@@ -31,7 +31,6 @@ public class ReparacionTableMouseListener extends MouseAdapter {
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println("listener activado");
         if (e.getClickCount() == 2) {
             int filaVista = reparacionesTable.rowAtPoint(e.getPoint());
             if (filaVista != -1) {

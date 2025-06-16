@@ -81,8 +81,7 @@ public class ClienteFrame extends JFrame {
         
     }
 
-    private void buscarCliente(){
-            
+    private void buscarCliente(){    
         String nombre = nombreTextField.getText();
         String apellidos = apellidosTextField.getText();
         String telefono = telefonoTextField.getText();

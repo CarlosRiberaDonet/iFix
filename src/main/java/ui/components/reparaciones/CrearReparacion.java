@@ -48,9 +48,6 @@ public class CrearReparacion extends javax.swing.JPanel {
     JComboBox<Modelo> cmbModelo = new JComboBox<>();
     JComboBox<TipoReparacion> cmbTipoReparacion = new JComboBox<>();
 
-    
-    
-
     public CrearReparacion(Cliente cliente) {
         this.cliente = cliente;
         initComponents();
@@ -59,7 +56,6 @@ public class CrearReparacion extends javax.swing.JPanel {
         listenerComboBoxMarca();
         listenerComboBoxModelo();   
         listenerTipoReparacionComboBox();
-        
     }
 
     // Cargar Marcas disponibles en marcaComboBox
@@ -176,6 +172,7 @@ public class CrearReparacion extends javax.swing.JPanel {
         importeLabel = new javax.swing.JLabel();
         importeTextField = new javax.swing.JTextField();
         garantiaCheckBox = new javax.swing.JCheckBox();
+        estadoComboBox = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -241,6 +238,8 @@ public class CrearReparacion extends javax.swing.JPanel {
             }
         });
 
+        estadoComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Presupuesto", "Pieza Pedida", "En Reparación", "Reparado" }));
+
         javax.swing.GroupLayout reparacionPanelLayout = new javax.swing.GroupLayout(reparacionPanel);
         reparacionPanel.setLayout(reparacionPanelLayout);
         reparacionPanelLayout.setHorizontalGroup(
@@ -248,7 +247,9 @@ public class CrearReparacion extends javax.swing.JPanel {
             .addGroup(reparacionPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(reparacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator2)
+                    .addGroup(reparacionPanelLayout.createSequentialGroup()
+                        .addComponent(jSeparator2)
+                        .addContainerGap())
                     .addGroup(reparacionPanelLayout.createSequentialGroup()
                         .addComponent(entradaLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -262,9 +263,10 @@ public class CrearReparacion extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(importeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
+                        .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(garantiaCheckBox)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(40, 40, 40))))
         );
         reparacionPanelLayout.setVerticalGroup(
             reparacionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,7 +279,8 @@ public class CrearReparacion extends javax.swing.JPanel {
                     .addComponent(salidaLabel)
                     .addComponent(importeLabel)
                     .addComponent(importeTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(garantiaCheckBox))
+                    .addComponent(garantiaCheckBox)
+                    .addComponent(estadoComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -312,31 +315,30 @@ public class CrearReparacion extends javax.swing.JPanel {
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(reparacionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(332, 332, 332)
-                                .addComponent(comentariosLabel))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(64, 64, 64)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(telefonoTextField)
-                                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(51, 51, 51)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel6))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(apellidosTextField)
-                                    .addComponent(direccionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(48, 48, 48)
-                                .addComponent(guardarButton)))
-                        .addGap(0, 48, Short.MAX_VALUE)))
+                        .addGap(332, 332, 332)
+                        .addComponent(comentariosLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(telefonoTextField)
+                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(apellidosTextField)
+                    .addComponent(direccionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(guardarButton)
+                .addGap(45, 45, 45))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -364,7 +366,7 @@ public class CrearReparacion extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(guardarButton)
-                        .addGap(24, 24, 24)))
+                        .addGap(26, 26, 26)))
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(reparacionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -373,7 +375,7 @@ public class CrearReparacion extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(comentariosLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -395,6 +397,8 @@ public class CrearReparacion extends javax.swing.JPanel {
         LocalDate fechaSalida = Utils.checkFecha(fechaSalidaStr);
         String textoImporte = importeTextField.getText();
         BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
+        String estado = (String) estadoComboBox.getSelectedItem();
+        
         if(importe == null){
             JOptionPane.showMessageDialog(null, "Revise el importe", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
@@ -434,7 +438,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             tipoReparacionSelect = TipoReparacionController.addTipoReparacion(nuevotipoReparacionStr);
             idTipoReparacion = tipoReparacionSelect.getId();
         }
-        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, idCliente);
+        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, estado, idCliente);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
             JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");
         } else {
@@ -456,6 +460,7 @@ public class CrearReparacion extends javax.swing.JPanel {
     private javax.swing.JTextField direccionTextField;
     private javax.swing.JLabel entradaLabel;
     private javax.swing.JTextField entradaTextField;
+    private javax.swing.JComboBox<String> estadoComboBox;
     private javax.swing.JCheckBox garantiaCheckBox;
     private javax.swing.JButton guardarButton;
     private javax.swing.JLabel importeLabel;

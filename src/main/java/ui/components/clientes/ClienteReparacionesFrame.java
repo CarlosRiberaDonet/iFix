@@ -41,11 +41,10 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         telefonoLabel.setText(cliente.getTelefono());
         direccionLabel.setText(cliente.getDireccion().toUpperCase());
         
-        if(reparacionesList.isEmpty() || reparacionesList == null){
+        if(reparacionesList.isEmpty()){
             modificarButton.setEnabled(false);
             eliminarButton.setEnabled(false);
         }
-        
     }
 
     public void cargarTabla(List<Reparacion> reparacionesList){
@@ -54,7 +53,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
         
         // Crear el modelo de la tabla con las columnas
         DefaultTableModel modelo = new DefaultTableModel(new Object[][] {}, new String[] {
-            "ID", "ENTRADA", "SALIDA", "DISPOSITIVO", "REPARACION", "IMPORTE", "GARANTIA"
+            "ID", "ENTRADA", "SALIDA", "DISPOSITIVO", "REPARACION", "ESTADO", "IMPORTE"
         }) {
         // Sobrescribir el método isCellEditable para hacer que ninguna celda sea editable
             @Override
@@ -72,8 +71,8 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                 fechaSalida,
                 r.getModelo().getModelo(),
                 r.getTipoReparacion(),
-                r.getPrecioReparacion(),
-                r.isGarantia()
+                r.getEstado(),
+                r.getPrecioReparacion()
             });
         }
         

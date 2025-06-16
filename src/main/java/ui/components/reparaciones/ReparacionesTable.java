@@ -24,7 +24,7 @@ public class ReparacionesTable extends JPanel{
 
     public ReparacionesTable(List<Reparacion> reparacionesList) {
         
-        String[] columnas = {"ID", "ENTRADA", "SALIDA", "CLIENTE", "DISPOSITIVO", "REPARACION", "IMPORTE", "GARANTÍA"};
+        String[] columnas = {"ID", "ENTRADA", "SALIDA", "CLIENTE", "DISPOSITIVO", "REPARACION", "ESTADO", "IMPORTE"};
         reparacionesTable = new DefaultTableModel(columnas, 0){
             @Override
             public boolean isCellEditable(int row, int column){
@@ -51,10 +51,11 @@ public class ReparacionesTable extends JPanel{
                 r.getCliente().getNombre().toUpperCase() + " " + r.getCliente().getApellidos().toUpperCase(),
                 r.getModelo().getModelo().toUpperCase(),
                 r.getTipoReparacion().getTipoReparacion().toUpperCase(),
-                r.getPrecioReparacion(),
-                r.isGarantia()
+                r.getEstado(),
+                r.getPrecioReparacion()             
             };
             reparacionesTable.addRow(fila);
+            System.out.println("ESTADO REPARACION: " + r.getEstado());
         }
    }
    

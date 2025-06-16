@@ -73,6 +73,7 @@ public class ReparacionDao {
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
+                r.setEstado(rs.getString("estado"));
                 r.setIdCliente(c.getId());
                 r.setCliente(c);
                 r.setMarca(m);
@@ -209,6 +210,7 @@ public class ReparacionDao {
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
+                r.setEstado(rs.getString("estado"));
                 r.setIdCliente(c.getId());
                 r.setCliente(c);
                 r.setMarca(m);
@@ -454,10 +456,11 @@ public class ReparacionDao {
             stmt.setBigDecimal(3, r.getPrecioReparacion());
             stmt.setBoolean(4, r.isGarantia());
             stmt.setString(5, r.getComentarios());
-            stmt.setInt(6, r.getIdMarca());
-            stmt.setInt(7, r.getIdModelo());
-            stmt.setInt(8, r.getIdTipoReparacion());
-            stmt.setInt(9, r.getId());
+            stmt.setString(6, r.getEstado());
+            stmt.setInt(7, r.getIdMarca());
+            stmt.setInt(8, r.getIdModelo());
+            stmt.setInt(9, r.getIdTipoReparacion());
+            stmt.setInt(10, r.getId());
             
             int filasAfectadas = stmt.executeUpdate();
             if(filasAfectadas > 0){
