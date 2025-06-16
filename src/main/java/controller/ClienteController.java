@@ -6,7 +6,6 @@ package controller;
 
 import dao.ClienteDao;
 import entity.Cliente;
-import entity.Reparacion;
 import java.util.List;
 /**
  *
@@ -14,7 +13,14 @@ import java.util.List;
  */
 public class ClienteController {
     
-    public static boolean nuevoCliente(Cliente nuevoCliente){
+    public static boolean nuevoCliente(Cliente nuevoCliente, String telefono){
+        List<Cliente> clientesList = ClienteDao.selectAllClientes();
+        for(Cliente c : clientesList){
+            if(c.getTelefono().equals(telefono)){
+                System.out.println("el telefono ya existe");
+                return false;
+            }
+        }
         return ClienteDao.addCliente(nuevoCliente);
     }
     
@@ -26,8 +32,8 @@ public class ClienteController {
         return ClienteDao.selectCliente(nombre, apellidos, telefono);
     }
 
-    public static boolean eliminarCliente(String telefono){
-        return ClienteDao.deleteCliente(telefono);
+    public static boolean eliminarCliente(int idCliente){
+        return ClienteDao.deleteCliente(idCliente);
     }
     
 //    // Llenar List de reparaciones

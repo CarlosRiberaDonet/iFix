@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -58,10 +59,11 @@ public class ClienteFrame extends JFrame {
 
         JButton buscarButton = new JButton("Buscar");
         JButton crearClienteButton = new JButton("Crear");
+        JButton eliminarCliente = new JButton("Eliminar");
         JButton salirButton = new JButton("Atrás");
-
         buscarButton.addActionListener(e -> buscarCliente());
         crearClienteButton.addActionListener(e -> abrirCrearCliente());
+        eliminarCliente.addActionListener(e -> eliminarCliente());
         salirButton.addActionListener(e -> dispose());
 
         topPanel.add(new JLabel("Nombre:"));
@@ -72,13 +74,13 @@ public class ClienteFrame extends JFrame {
         topPanel.add(telefonoTextField);
         topPanel.add(buscarButton);
         topPanel.add(crearClienteButton);
+        topPanel.add(eliminarCliente);
         topPanel.add(salirButton);
 
         add(topPanel, BorderLayout.NORTH);
         tablePanel = new ClientesTable();
         tablaClientes = tablePanel.getTablaClientes(); 
         add(tablePanel, BorderLayout.CENTER);
-        
     }
 
     private void buscarCliente(){    
@@ -104,5 +106,19 @@ public class ClienteFrame extends JFrame {
         dialog.setLayout(new BorderLayout());
         dialog.add(new CrearClientePanel(), BorderLayout.CENTER);
         dialog.setVisible(true);
+    }
+    
+    private void eliminarCliente(){
+        int filaSelect = tablaClientes.getSelectedRow();
+        if(filaSelect >= 0){
+            int idCliente = (int) tablaClientes.getValueAt(filaSelect, 0);
+            if(ClienteController.eliminarCliente(idCliente)){
+                 JOptionPane.showMessageDialog(this, "Cliente eliminado exitósamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
+                tablePanel.cargarClientes(clientesList);
+                tablePanel.cargarClientes(ClienteController.getAllClientes());
+            } else{
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar el cliente.","ERROR",  JOptionPane.ERROR_MESSAGE);
+            }
+        }
     }
 }

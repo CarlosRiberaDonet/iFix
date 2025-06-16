@@ -21,7 +21,7 @@ public class ClienteDao {
     private static final String SELECT_ALL_CLIENTES = "SELECT * FROM cliente";
     private static final String SELECT_CLIENTE = "SELECT * FROM cliente WHERE nombre LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
     private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?);";
-    private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE telefono = ?";
+    private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE id = ?";
     
     public static List<Cliente> selectAllClientes(){
         
@@ -156,13 +156,12 @@ public class ClienteDao {
         return clienteList;
     }
 
-    public static boolean deleteCliente(String telefono){
-        
-        Connection conn = ConexionBD.connect();
-        
+    public static boolean deleteCliente(int idCliente){
+        Connection conn = ConexionBD.connect();     
         try{
             PreparedStatement stmt = conn.prepareStatement(DELETE_CLIENTE);
-            stmt.setString(1, telefono);
+            stmt.setString(1, "id");
+            System.out.println("eliminando cliente con id: " + idCliente);
             int resultado = stmt.executeUpdate();
             if(resultado > 0){
             return true; 

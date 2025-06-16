@@ -187,7 +187,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         salidaLabel = new javax.swing.JLabel();
         fechaSalidaTextField = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
-        jButton1 = new javax.swing.JButton();
+        eliminarButton = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         importeLabel = new javax.swing.JLabel();
@@ -230,7 +230,12 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
 
         fechaSalidaTextField.setEditable(false);
 
-        jButton1.setText("Eliminar Reparación");
+        eliminarButton.setText("Eliminar Reparación");
+        eliminarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarButtonActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Menú Reparaciones");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -316,7 +321,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(modificarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(eliminarButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(88, 88, 88))))
         );
         layout.setVerticalGroup(
@@ -347,7 +352,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(modificarButton)
                         .addGap(10, 10, 10)
-                        .addComponent(jButton1)
+                        .addComponent(eliminarButton)
                         .addGap(6, 6, 6)
                         .addComponent(jButton2)))
                 .addGap(18, 18, 18)
@@ -384,19 +389,31 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
        dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void eliminarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarButtonActionPerformed
+        if(Utils.confirmationMessage("ELIMINAR", "ELIMINAR REPARACIÓN")){ 
+            if(ReparacionController.eliminarReparacion(reparacion.getId())){
+                JOptionPane.showMessageDialog(this, "Reparación eliminada correctamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
+                dispose();
+            } else{
+                JOptionPane.showMessageDialog(this, "No se ha podido eliminar la reparación.","ERROR",  JOptionPane.ERROR_MESSAGE);
+                dispose();
+            }
+        }   
+    }//GEN-LAST:event_eliminarButtonActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel clienteLabel;
     private javax.swing.JTextField clienteTextField;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JLabel comentariosLabel;
     private javax.swing.JTextArea comentariosTextArea;
+    private javax.swing.JButton eliminarButton;
     private javax.swing.JLabel entradaLabel;
     private javax.swing.JTextField fechaEntradaTextField;
     private javax.swing.JTextField fechaSalidaTextField;
     private javax.swing.JCheckBox garantiaCheckBox;
     private javax.swing.JLabel importeLabel;
     private javax.swing.JTextField importeTextField;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
