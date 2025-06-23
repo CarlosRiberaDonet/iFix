@@ -5,7 +5,6 @@
 package utils;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -34,6 +33,16 @@ public class Utils {
             JOptionPane.showMessageDialog(null, "El teléfono no puede estar vacío y, debe contener 9 dígitos.");
             return false;
         } 
+    }
+    
+    public static int stringImeiToInt(String imeiText){
+        if(!imeiText.trim().isEmpty() && imeiText.matches("\\d{15}")){
+            int imei = Integer.parseInt(imeiText);
+            return imei;
+        } else{
+            JOptionPane.showMessageDialog(null, "El IMEI no puede estar vacío y, debe contener 15 dígitos.");
+            return -1;
+        }
     }
 
     public static String checkTextField(String textField){

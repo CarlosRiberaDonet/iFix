@@ -16,54 +16,45 @@ public class Reparacion {
     private int id;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
-    private int idMarca;
-    private Marca marca;
-    private int idModelo;
-    private Modelo modelo;
-    private int idTipoReparacion;
+    private Dispositivo dispositivo;
     private TipoReparacion tipoReparacion;
     private BigDecimal precioReparacion;
     private boolean garantia;
     private String comentarios;
     private String estado;
-    private int idCliente;
     private Cliente cliente;
     
    // CONSTRUCTOR  
-    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, int idCliente) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, Dispositivo dispositivo, TipoReparacion tipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, Cliente cliente) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.idMarca = idMarca;
-        this.idModelo = idModelo;
-        this.idTipoReparacion = idTipoReparacion;
+        this.dispositivo = dispositivo;
+        this.tipoReparacion = tipoReparacion;
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
         this.estado = estado;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
     }
 
-    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, int idCliente) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida,Dispositivo dispositivo, Reparacion reparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, Cliente cliente) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.idMarca = idMarca;
-        this.idModelo = idModelo;
-        this.idTipoReparacion = idTipoReparacion;
+        this.dispositivo = dispositivo;
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
         this.estado = estado;
-        this.idCliente = idCliente;
+        this.cliente = cliente;
     }
 
-    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, int idMarca, int idModelo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, Dispositivo dispositivo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
-        this.idMarca = idMarca;
-        this.idModelo = idModelo;
-        this.idTipoReparacion = idTipoReparacion;
+        this.dispositivo = dispositivo;
+        this.tipoReparacion = tipoReparacion;
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
@@ -100,51 +91,19 @@ public class Reparacion {
         this.fechaSalida = fechaSalida;
     }
 
-    public int getIdMarca() {
-        return idMarca;
+    public Dispositivo getDispositivo() {
+        return dispositivo;
     }
 
-    public void setIdMarca(int idMarca) {
-        this.idMarca = idMarca;
-    }
-
-    public Marca getMarca() {
-        return marca;
-    }
-
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
-
-    public int getIdModelo() {
-        return idModelo;
-    }
-
-    public void setIdModelo(int idModelo) {
-        this.idModelo = idModelo;
-    }
-
-    public Modelo getModelo() {
-        return modelo;
-    }
-
-    public void setModelo(Modelo modelo) {
-        this.modelo = modelo;
-    }
-
-    public int getIdTipoReparacion() {
-        return idTipoReparacion;
-    }
-
-    public void setIdTipoReparacion(int idTipoReparacion) {
-        this.idTipoReparacion = idTipoReparacion;
+    public void setIdMarca(Dispositivo dispositivo) {
+        this.dispositivo = dispositivo;
     }
 
     public TipoReparacion getTipoReparacion() {
         return tipoReparacion;
     }
 
-    public void setTipoReparacion(TipoReparacion tipoReparacion) {
+    public void setIdTipoReparacion(TipoReparacion tipoReparacion) {
         this.tipoReparacion = tipoReparacion;
     }
 
@@ -180,21 +139,13 @@ public class Reparacion {
         this.estado = estado;
     }
 
-    public int getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
     public Cliente getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setIdCliente(Cliente cliente) {
         this.cliente = cliente;
-    }   
+    }
 
     @Override
     public String toString() {
@@ -204,10 +155,11 @@ public class Reparacion {
                 ", precioReparacion=" + precioReparacion +
                 ", garantia=" + garantia +
                 ", comentarios=" + comentarios +
-                ", idMarca=" + idMarca +
-                ", idModelo=" + idModelo + 
-                ", idTipoReparacion=" + idTipoReparacion +
+                ", idMarca=" + dispositivo.getIdMarca() +
+                ", idModelo=" + dispositivo.getIdModelo() +
+                ", imei=" + dispositivo.getImei() +
+                ", idTipoReparacion=" + tipoReparacion.getId() +
                 ", estado=" + estado +
-                ", idCliente=" + idCliente +'}';
+                ", idCliente=" + cliente.getId() +'}';
     }  
 }

@@ -160,7 +160,7 @@ public class ClienteDao {
         Connection conn = ConexionBD.connect();     
         try{
             PreparedStatement stmt = conn.prepareStatement(DELETE_CLIENTE);
-            stmt.setString(1, "id");
+            stmt.setInt(1, idCliente);
             System.out.println("eliminando cliente con id: " + idCliente);
             int resultado = stmt.executeUpdate();
             if(resultado > 0){

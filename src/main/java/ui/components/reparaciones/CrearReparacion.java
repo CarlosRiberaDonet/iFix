@@ -8,6 +8,7 @@ import controller.MarcaModeloController;
 import controller.ReparacionController;
 import controller.TipoReparacionController;
 import entity.Cliente;
+import entity.Dispositivo;
 import entity.Marca;
 import entity.Modelo;
 import entity.Reparacion;
@@ -15,12 +16,10 @@ import entity.TipoReparacion;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
-import ui.components.clientes.ClienteReparacionesFrame;
 import utils.Utils;
 
 /**
@@ -38,8 +37,9 @@ public class CrearReparacion extends javax.swing.JPanel {
     private int idModelo;
     private int idTipoReparacion;
     private Cliente cliente;
-    private Modelo modeloSelect;
-    private Marca marcaSelect;
+    private Dispositivo dispositivo;
+    private Dispositivo marcaSelect;
+    private Dispositivo modeloSelect;
     private TipoReparacion tipoReparacionSelect;
     private List<Reparacion> reparacionesList;
     
@@ -64,14 +64,14 @@ public class CrearReparacion extends javax.swing.JPanel {
          cmbMarca.addActionListener(e -> {
             // Obtengo la Marca seleccionada
             Object item = cmbMarca.getSelectedItem();
-            if(item instanceof Marca){
-                marcaSelect = (Marca) item;
+            if(item instanceof Dispositivo){
+                marcaSelect = (Dispositivo) item;
                 idMarca = marcaSelect.getIdMarca();
                 // Cargo modeloComboBox
                 rc.llenarComboBoxModelo(idMarca, cmbModelo); 
             } else{
                 // Preparo instancia para crear un nuevo tipo Modelo en la BD
-                marcaSelect = new Marca();
+                marcaSelect = new Dispositivo();
                 marcaSelect.setIdMarca(-1);
             }          
          });
@@ -83,11 +83,11 @@ public class CrearReparacion extends javax.swing.JPanel {
             /// Obtengo el modelo seleccionado
             Object item = cmbModelo.getSelectedItem();
             // Si se ha seleccionado un item del comboBox (No se ha añadido un modelo nuevo manualmente)
-            if(item instanceof Modelo){
-                modeloSelect = (Modelo) item;
+            if(item instanceof Dispositivo){
+                modeloSelect = (Dispositivo) item;
             } else{
                 // Preparo instancia para crear un nuevo tipo Modelo en la BD
-                modeloSelect = new Modelo();
+                modeloSelect = new Dispositivo();
                 modeloSelect.setIdModelo(-1);
             }
         });
@@ -119,11 +119,11 @@ public class CrearReparacion extends javax.swing.JPanel {
         // LLeno el comboBox de tipo Marca y obtengo el id del primer valor
         cmbMarca = new JComboBox<>();
         rc.llenarComboBoxMarca(cmbMarca);
-        marcaSelect = (Marca) cmbMarca.getSelectedItem();
+        marcaSelect = (Dispositivo) cmbMarca.getSelectedItem();
         idMarca = marcaSelect.getIdMarca();
         // LLeno el comboBox de tipo Modelo y obtengo su id
         cmbModelo = rc.llenarComboBoxModelo(idMarca, cmbModelo);
-        modeloSelect = (Modelo) cmbModelo.getSelectedItem();
+        modeloSelect = (Dispositivo) cmbModelo.getSelectedItem();
         idModelo = (int) modeloSelect.getIdModelo();
         
         cmbMarca.setBounds(30, 20, 150, 30);
@@ -177,6 +177,8 @@ public class CrearReparacion extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        imeiTextField = new javax.swing.JTextField();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -300,6 +302,8 @@ public class CrearReparacion extends javax.swing.JPanel {
         jPanel1.add(jLabel7);
         jLabel7.setBounds(400, 0, 120, 16);
 
+        jLabel8.setText("IMEI");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -310,9 +314,6 @@ public class CrearReparacion extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jScrollPane1))
                     .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(reparacionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(332, 332, 332)
@@ -339,40 +340,55 @@ public class CrearReparacion extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(guardarButton)
                 .addGap(45, 45, 45))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(imeiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(direccionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(apellidosTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(telefonoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(30, 30, 30)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel6)
+                                            .addComponent(direccionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4)
+                                            .addComponent(apellidosTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(nombreTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                            .addComponent(jLabel5)
+                                            .addComponent(telefonoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(guardarButton)
+                                .addGap(26, 26, 26)))
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(reparacionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(guardarButton)
-                        .addGap(26, 26, 26)))
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(reparacionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(imeiTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)))
                 .addComponent(comentariosLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
@@ -431,6 +447,8 @@ public class CrearReparacion extends javax.swing.JPanel {
             idModelo = modeloSelect.getIdModelo();
         }
         
+        int imei = Utils.stringImeiToInt(imeiTextField.getText());
+        
         // Obtengo el id del tipoReparacion
         idTipoReparacion = tipoReparacionSelect.getId();
         if(idTipoReparacion < 1){
@@ -438,7 +456,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             tipoReparacionSelect = TipoReparacionController.addTipoReparacion(nuevotipoReparacionStr);
             idTipoReparacion = tipoReparacionSelect.getId();
         }
-        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, idTipoReparacion, importe, garantia, comentarios, estado, idCliente);
+        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, imei, idTipoReparacion, importe, garantia, comentarios, estado, idCliente);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
             JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");
         } else {
@@ -463,6 +481,7 @@ public class CrearReparacion extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> estadoComboBox;
     private javax.swing.JCheckBox garantiaCheckBox;
     private javax.swing.JButton guardarButton;
+    private javax.swing.JTextField imeiTextField;
     private javax.swing.JLabel importeLabel;
     private javax.swing.JTextField importeTextField;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
@@ -473,6 +492,7 @@ public class CrearReparacion extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;

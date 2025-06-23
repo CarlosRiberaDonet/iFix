@@ -113,7 +113,7 @@ public class ClienteFrame extends JFrame {
         if(filaSelect >= 0){
             int idCliente = (int) tablaClientes.getValueAt(filaSelect, 0);
             if(ClienteController.eliminarCliente(idCliente)){
-                 JOptionPane.showMessageDialog(this, "Cliente eliminado exitósamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Cliente eliminado exitósamente.","ÉXITO",  JOptionPane.INFORMATION_MESSAGE);
                 tablePanel.cargarClientes(clientesList);
                 tablePanel.cargarClientes(ClienteController.getAllClientes());
             } else{

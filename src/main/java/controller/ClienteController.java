@@ -35,12 +35,6 @@ public class ClienteController {
     public static boolean eliminarCliente(int idCliente){
         return ClienteDao.deleteCliente(idCliente);
     }
-    
-//    // Llenar List de reparaciones
-//    public static List<Reparacion> cargarReparacionesList(int idCliente){      
-//        List<Reparacion> reparacionesList = ReparacionController.findReparacionesByIdCliente(idCliente);
-//        return reparacionesList;
-//    }
 }
 
 
