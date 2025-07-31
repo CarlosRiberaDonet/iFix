@@ -4,7 +4,7 @@
  */
 package ui.components.reparaciones;
 
-import controller.MarcaModeloController;
+import controller.Dispositivo;
 import controller.ReparacionController;
 import controller.TipoReparacionController;
 import entity.Cliente;
@@ -430,7 +430,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             // Casteo a String el dato introducido por el USR en marcaCombobox
             String nuevaMarcaStr = (String) cmbMarca.getEditor().getItem();  
            // Creo la nueva Marca en la BD y la instancio en marcaSelect
-            marcaSelect = MarcaModeloController.addMarca(nuevaMarcaStr);  
+            marcaSelect = Dispositivo.addMarca(nuevaMarcaStr);  
             // Obtengo el id de la nueva marca
             idMarca = marcaSelect.getIdMarca();
         }
@@ -442,7 +442,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             // Casteo a String el dato introducido por el USR en modeloCombobox
             String nuevoModeloStr = (String) cmbModelo.getEditor().getItem();
             // Creo el nuevo Modelo en la BD y lo instancio en modeloSelect
-            modeloSelect = MarcaModeloController.addModelo(nuevoModeloStr, idMarca);
+            modeloSelect = Dispositivo.addModelo(nuevoModeloStr, idMarca);
             // Obtengo el id del nuevo modelo
             idModelo = modeloSelect.getIdModelo();
         }

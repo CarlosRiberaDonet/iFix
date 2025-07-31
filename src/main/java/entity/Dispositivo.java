@@ -12,15 +12,16 @@ import java.util.Objects;
  */
 public class Dispositivo {
     private int id;
-    private int idMarca;
-    private int idModelo;
     private int imei;
+    private int idCliente;
+    private int idMarca;
+    
     
     // CONSTRUCTOR
     public Dispositivo(int id, int idMarca, int idModelo, int imei) {
         this.id = id;
-        this.idMarca = idMarca;
-        this.idModelo = idModelo;
+        this.idCliente = idMarca;
+        this.idMarca = idModelo;
     }
     
     public Dispositivo(){
@@ -38,19 +39,19 @@ public class Dispositivo {
     }
 
     public int getIdMarca() {
-        return idMarca;
+        return idCliente;
     }
 
     public void setIdMarca(int idMarca) {
-        this.idMarca = idMarca;
+        this.idCliente = idMarca;
     }
 
     public int getIdModelo() {
-        return idModelo;
+        return idMarca;
     }
 
     public void setIdModelo(int idModelo) {
-        this.idModelo = idModelo;
+        this.idMarca = idModelo;
     }
 
     public int getImei() {

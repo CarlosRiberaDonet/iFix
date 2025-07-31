@@ -76,7 +76,7 @@ public class ReparacionController {
     // Cargar modelos disponibles en modeloComboBox
     public JComboBox llenarComboBoxModelo(int idMarca, JComboBox modeloComboBox){
         
-        MarcaModeloController modeloController = new MarcaModeloController(); 
+        Dispositivo modeloController = new Dispositivo(); 
         List<Modelo> modelosList = modeloController.filterModelosByMarca(idMarca);
         
         DefaultComboBoxModel<Modelo> model = new DefaultComboBoxModel<>();

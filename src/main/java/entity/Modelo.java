@@ -13,12 +13,12 @@ import java.util.Objects;
 public class Modelo {
     
     private int idModelo;
-    private String modelo;
+    private String nombreModelo;
     private int idMarca;
 
     public Modelo(int id, String modelo, int id_marca) {
         this.idModelo = id;
-        this.modelo = modelo;
+        this.nombreModelo = modelo;
         this.idMarca = id_marca;
     }
     
@@ -35,11 +35,11 @@ public class Modelo {
     }
 
     public String getModelo() {
-        return modelo;
+        return nombreModelo;
     }
 
     public void setModelo(String modelo) {
-        this.modelo = modelo;
+        this.nombreModelo = modelo;
     }
 
     public int getIdMarca() {
@@ -65,6 +65,6 @@ public class Modelo {
 
     @Override
     public String toString(){
-        return modelo.toUpperCase();
+        return nombreModelo.toUpperCase();
     }
 }

@@ -31,7 +31,6 @@ public class Cliente {
     }
     
     public Cliente(String nombre, String apellidos, String telefono, String direccion){
-        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.telefono = telefono;
