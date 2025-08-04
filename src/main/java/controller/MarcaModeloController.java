@@ -14,12 +14,13 @@ import java.util.List;
  *
  * @author Carlos
  */
-public class Dispositivo {
+public class MarcaModeloController {
     
     
-    public static List<Modelo> getDispositivosList(){
+    public static List<Modelo> getModelosList(){
         
-        List<Dispositivo> Dispositivo = MarcaModeloDao.getModelos();
+        List<Modelo> modelosList
+                = MarcaModeloDao.getModelos();
         
         return modelosList;
     }

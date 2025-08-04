@@ -4,7 +4,7 @@
  */
 package listeners;
 
-import controller.Dispositivo;
+import controller.MarcaModeloController;
 import dao.MarcaModeloDao;
 import entity.Marca;
 import entity.Modelo;
@@ -47,7 +47,7 @@ public class MarcaComboBoxListener implements ActionListener{
                 }
             }
 
-            Dispositivo modeloController = new Dispositivo();
+            MarcaModeloController modeloController = new MarcaModeloController();
             List<Modelo> modelos = modeloController.filterModelosByMarca(idMarca);
             for (Modelo m : modelos) {
                 modeloComboBox.addItem(m.getModelo().toUpperCase());

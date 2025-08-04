@@ -4,7 +4,7 @@
  */
 package controller;
 
-import entity.Dispositivo;
+import dao.DispositivoDao;
 
 /**
  *
@@ -13,9 +13,11 @@ import entity.Dispositivo;
 public class DispositivoController {
     
     
-    public static Dispositivo nuevoDispositivo(int idMarca, int idModelo, Dispositivo Dispositivo){
-        
-        
+    public static MarcaModeloController addDispositivo(int idMarca, int idModelo, MarcaModeloController Dispositivo){
         return null;
+    }
+    
+    public static boolean checkImei(int imei){
+        return DispositivoDao.getImei(imei);
     }
 }

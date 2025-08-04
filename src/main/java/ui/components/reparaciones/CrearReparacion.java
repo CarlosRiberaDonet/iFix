@@ -4,7 +4,8 @@
  */
 package ui.components.reparaciones;
 
-import controller.Dispositivo;
+import controller.DispositivoController;
+import controller.MarcaModeloController;
 import controller.ReparacionController;
 import controller.TipoReparacionController;
 import entity.Cliente;
@@ -37,12 +38,11 @@ public class CrearReparacion extends javax.swing.JPanel {
     private int idModelo;
     private int idTipoReparacion;
     private Cliente cliente;
+    private Marca marcaSelect;
+    private Modelo modeloSelect;
     private Dispositivo dispositivo;
-    private Dispositivo marcaSelect;
-    private Dispositivo modeloSelect;
     private TipoReparacion tipoReparacionSelect;
     private List<Reparacion> reparacionesList;
-    
     private String fechaActual = Utils.fechaActualToString();
     JComboBox<Marca> cmbMarca  = new JComboBox<>();
     JComboBox<Modelo> cmbModelo = new JComboBox<>();
@@ -64,14 +64,14 @@ public class CrearReparacion extends javax.swing.JPanel {
          cmbMarca.addActionListener(e -> {
             // Obtengo la Marca seleccionada
             Object item = cmbMarca.getSelectedItem();
-            if(item instanceof Dispositivo){
-                marcaSelect = (Dispositivo) item;
+            if(item instanceof Modelo){
+                marcaSelect = (Marca) item;
                 idMarca = marcaSelect.getIdMarca();
                 // Cargo modeloComboBox
                 rc.llenarComboBoxModelo(idMarca, cmbModelo); 
             } else{
                 // Preparo instancia para crear un nuevo tipo Modelo en la BD
-                marcaSelect = new Dispositivo();
+                marcaSelect = new Marca();
                 marcaSelect.setIdMarca(-1);
             }          
          });
@@ -80,14 +80,14 @@ public class CrearReparacion extends javax.swing.JPanel {
     public void listenerComboBoxModelo(){
         cmbModelo.addActionListener(e -> {
             
-            /// Obtengo el modelo seleccionado
+            // Obtengo el modelo seleccionado
             Object item = cmbModelo.getSelectedItem();
             // Si se ha seleccionado un item del comboBox (No se ha añadido un modelo nuevo manualmente)
             if(item instanceof Dispositivo){
-                modeloSelect = (Dispositivo) item;
+                modeloSelect = (Modelo) item;
             } else{
                 // Preparo instancia para crear un nuevo tipo Modelo en la BD
-                modeloSelect = new Dispositivo();
+                modeloSelect = new Modelo();
                 modeloSelect.setIdModelo(-1);
             }
         });
@@ -119,11 +119,11 @@ public class CrearReparacion extends javax.swing.JPanel {
         // LLeno el comboBox de tipo Marca y obtengo el id del primer valor
         cmbMarca = new JComboBox<>();
         rc.llenarComboBoxMarca(cmbMarca);
-        marcaSelect = (Dispositivo) cmbMarca.getSelectedItem();
+        marcaSelect = (Marca) cmbMarca.getSelectedItem();
         idMarca = marcaSelect.getIdMarca();
         // LLeno el comboBox de tipo Modelo y obtengo su id
         cmbModelo = rc.llenarComboBoxModelo(idMarca, cmbModelo);
-        modeloSelect = (Dispositivo) cmbModelo.getSelectedItem();
+        modeloSelect = (Modelo) cmbModelo.getSelectedItem();
         idModelo = (int) modeloSelect.getIdModelo();
         
         cmbMarca.setBounds(30, 20, 150, 30);
@@ -414,15 +414,16 @@ public class CrearReparacion extends javax.swing.JPanel {
         String textoImporte = importeTextField.getText();
         BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
         String estado = (String) estadoComboBox.getSelectedItem();
+        int imei = Utils.stringImeiToInt(imeiTextField.getText());
+        boolean garantia = garantiaCheckBox.isSelected();
+        String comentarios = comentariosTextArea.getText();
+        int idCliente = cliente.getId();
         
         if(importe == null){
             JOptionPane.showMessageDialog(null, "Revise el importe", "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        boolean garantia = garantiaCheckBox.isSelected();
-        String comentarios = comentariosTextArea.getText();
-        int idCliente = cliente.getId();
-        
+             
         // Obtengo el id de la marca seleccionada
         idMarca = marcaSelect.getIdMarca();
         // Si la marca seleccionada ha sido introducida manualmente por el USR, (idMarca = -1)
@@ -430,7 +431,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             // Casteo a String el dato introducido por el USR en marcaCombobox
             String nuevaMarcaStr = (String) cmbMarca.getEditor().getItem();  
            // Creo la nueva Marca en la BD y la instancio en marcaSelect
-            marcaSelect = Dispositivo.addMarca(nuevaMarcaStr);  
+            marcaSelect = MarcaModeloController .addMarca(nuevaMarcaStr);  
             // Obtengo el id de la nueva marca
             idMarca = marcaSelect.getIdMarca();
         }
@@ -442,13 +443,18 @@ public class CrearReparacion extends javax.swing.JPanel {
             // Casteo a String el dato introducido por el USR en modeloCombobox
             String nuevoModeloStr = (String) cmbModelo.getEditor().getItem();
             // Creo el nuevo Modelo en la BD y lo instancio en modeloSelect
-            modeloSelect = Dispositivo.addModelo(nuevoModeloStr, idMarca);
+            modeloSelect = MarcaModeloController.addModelo(nuevoModeloStr, idMarca);
             // Obtengo el id del nuevo modelo
             idModelo = modeloSelect.getIdModelo();
         }
+        // Compruebo si el imei existe en la BD
+        if(DispositivoController.checkImei(imei)){
+            
+        } else{
+           dispositivo = new Dispositivo(imei, idModelo, idCliente); // Si no existe, creo un dispositivo nuevo
+        }
         
-        int imei = Utils.stringImeiToInt(imeiTextField.getText());
-        
+         
         // Obtengo el id del tipoReparacion
         idTipoReparacion = tipoReparacionSelect.getId();
         if(idTipoReparacion < 1){
@@ -456,7 +462,8 @@ public class CrearReparacion extends javax.swing.JPanel {
             tipoReparacionSelect = TipoReparacionController.addTipoReparacion(nuevotipoReparacionStr);
             idTipoReparacion = tipoReparacionSelect.getId();
         }
-        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, idMarca, idModelo, imei, idTipoReparacion, importe, garantia, comentarios, estado, idCliente);
+        
+        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, importe, garantia, comentarios, estado, dispositivo, idMarca);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
             JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");
         } else {

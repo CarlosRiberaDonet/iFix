@@ -13,15 +13,23 @@ import java.util.Objects;
 public class Dispositivo {
     private int id;
     private int imei;
+    private int idModelo;
     private int idCliente;
-    private int idMarca;
+
     
     
     // CONSTRUCTOR
-    public Dispositivo(int id, int idMarca, int idModelo, int imei) {
+    public Dispositivo(int id, int imei, int idModelo, int idCliente) {
         this.id = id;
-        this.idCliente = idMarca;
-        this.idMarca = idModelo;
+        this.imei = imei;
+        this.idModelo = idModelo;
+        this.idCliente = idCliente;
+    }
+    
+    public Dispositivo(int imei, int idModelo, int idCliente){
+        this.imei = imei;
+        this.idModelo = idModelo;
+        this.idCliente = idCliente;
     }
     
     public Dispositivo(){
@@ -37,29 +45,29 @@ public class Dispositivo {
     public void setId(int id) {
         this.id = id;
     }
-
-    public int getIdMarca() {
-        return idCliente;
-    }
-
-    public void setIdMarca(int idMarca) {
-        this.idCliente = idMarca;
-    }
-
-    public int getIdModelo() {
-        return idMarca;
-    }
-
-    public void setIdModelo(int idModelo) {
-        this.idMarca = idModelo;
-    }
-
+    
     public int getImei() {
         return imei;
     }
 
     public void setImei(int imei) {
         this.imei = imei;
+    }
+
+    public int getIdModelo() {
+        return idModelo;
+    }
+
+    public void setIdModelo(int idModelo) {
+        this.idModelo = idModelo;
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
     }
     
     @Override

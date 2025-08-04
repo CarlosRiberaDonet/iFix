@@ -20,7 +20,8 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private String estado;
-    private int idDispositivo;
+    private Dispositivo dispositivo;
+    private int idMarca;
     
    // CONSTRUCTOR  
     public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, int idDispositivo) {
@@ -50,6 +51,17 @@ public class Reparacion {
         this.garantia = garantia;
         this.comentarios = comentarios;
         this.estado = estado;
+    }
+
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, Dispositivo dispositivo, int idMarca) {
+        this.fechaEntrada = fechaEntrada;
+        this.fechaSalida = fechaSalida;
+        this.precioReparacion = precioReparacion;
+        this.garantia = garantia;
+        this.comentarios = comentarios;
+        this.estado = estado;
+        this.dispositivo = dispositivo;
+        this.idMarca = idMarca;
     }
     
     public Reparacion(){
@@ -105,23 +117,36 @@ public class Reparacion {
     public void setComentarios(String comentarios) {
         this.comentarios = comentarios;
     }
-    
-    public String getEstado(){
+
+    public String getEstado() {
         return estado;
     }
-    
-    public void setEstado(String estado){
+
+    public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Dispositivo getDispositivo() {
+        return dispositivo;
+    }
+
+    public void setDispositivo(Dispositivo dispositivo) {
+        this.dispositivo = dispositivo;
+    }
+
+    public int getIdMarca() {
+        return idMarca;
+    }
+
+    public void setIdMarca(int idMarca) {
+        this.idMarca = idMarca;
     }
 
     @Override
     public String toString() {
-        return "Reparacion{fechaEntrada=" + fechaEntrada +
-                ", id=" + id +
-                ", fechaSalida=" + fechaSalida +
-                ", precioReparacion=" + precioReparacion +
-                ", garantia=" + garantia +
-                ", comentarios=" + comentarios +
-                ", estado=" + estado;
-    }  
+        return "Reparacion{" + "id=" + id + ", fechaEntrada=" + fechaEntrada + ", fechaSalida=" + fechaSalida + ", precioReparacion=" + precioReparacion + ", garantia=" + garantia + ", comentarios=" + comentarios + ", estado=" + estado + ", dispositivo=" + dispositivo + ", idMarca=" + idMarca + '}';
+    }
+    
+    
+   
 }
