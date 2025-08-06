@@ -5,6 +5,7 @@
 package controller;
 
 import dao.DispositivoDao;
+import entity.Dispositivo;
 
 /**
  *
@@ -13,8 +14,8 @@ import dao.DispositivoDao;
 public class DispositivoController {
     
     
-    public static MarcaModeloController addDispositivo(int idMarca, int idModelo, MarcaModeloController Dispositivo){
-        return null;
+    public static boolean addDispositivo(Dispositivo nuevoDispositivo){
+        return DispositivoDao.createDispositivo(nuevoDispositivo);
     }
     
     public static boolean checkImei(int imei){

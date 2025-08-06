@@ -21,8 +21,34 @@ public class ClienteDao {
     private static final String SELECT_ALL_CLIENTES = "SELECT * FROM cliente";
     private static final String SELECT_CLIENTE = "SELECT * FROM cliente WHERE nombre LIKE ? AND apellidos LIKE ? AND telefono LIKE ?";
     private static final String ADD_CLIENTE = "INSERT INTO cliente(nombre, apellidos, telefono, direccion) VALUES (?, ?, ?, ?);";
+    private static final String SELECT_CLIENTE_BY_REPARACION = "SELECT c.id AS cliente_id, c.nombre, d.id AS dispositivo_id, " +
+            "r.id AS reparacion_id " +
+            "FROM cliente c " +
+            "JOIN dispositivo d ON d.cliente_id = c.id " +
+            "JOIN reparacion r ON r.dispositivo_id = d.id " +
+            "WHERE r.id = ?";
     private static final String DELETE_CLIENTE = "DELETE FROM cliente WHERE id = ?";
     
+    public static boolean addCliente(Cliente cliente){
+        
+        Connection conn = ConexionBD.connect();
+        
+        try(PreparedStatement stmt = conn.prepareStatement(ADD_CLIENTE)){
+            stmt.setString(1, cliente.getNombre());
+            stmt.setString (2, cliente.getApellidos());
+            stmt.setString(3, cliente.getTelefono());
+            stmt.setString(4, cliente.getDireccion());
+            stmt.executeUpdate();
+        }catch(SQLException e){
+            System.out.println("Error al añadir cliente a la BD" + e.getMessage());
+            e.printStackTrace();
+            return false;
+        } finally{
+            ConexionBD.close(conn);
+        }
+        return true;
+    }
+     
     public static List<Cliente> selectAllClientes(){
         
         List<Cliente> clientesList = new ArrayList<>();
@@ -49,7 +75,7 @@ public class ClienteDao {
         return clientesList;
     }
     
-    public static List<Cliente> selectCliente(String nombre, String apellidos, String telefono){
+    public static List<Cliente> selectClientesList(String nombre, String apellidos, String telefono){
         
         List<Cliente> clientesList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
@@ -75,26 +101,6 @@ public class ClienteDao {
             ConexionBD.close(conn);
         }
         return clientesList;
-    }
-    
-    public static boolean addCliente(Cliente cliente){
-        
-        Connection conn = ConexionBD.connect();
-        
-        try(PreparedStatement stmt = conn.prepareStatement(ADD_CLIENTE)){
-            stmt.setString(1, cliente.getNombre());
-            stmt.setString (2, cliente.getApellidos());
-            stmt.setString(3, cliente.getTelefono());
-            stmt.setString(4, cliente.getDireccion());
-            stmt.executeUpdate();
-        }catch(SQLException e){
-            System.out.println("Error al añadir cliente a la BD" + e.getMessage());
-            e.printStackTrace();
-            return false;
-        } finally{
-            ConexionBD.close(conn);
-        }
-        return true;
     }
    
     public static List<Cliente> findCliente(String nombre, String apellidos, String telefono) {
@@ -154,6 +160,12 @@ public class ClienteDao {
         }
 
         return clienteList;
+    }
+    
+    public static Cliente getClienteByDispositivo(int idReparacion){
+        
+        
+        return null;
     }
 
     public static boolean deleteCliente(int idCliente){

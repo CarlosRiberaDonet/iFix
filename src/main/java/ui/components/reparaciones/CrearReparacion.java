@@ -17,7 +17,6 @@ import entity.TipoReparacion;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.List;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
@@ -42,7 +41,6 @@ public class CrearReparacion extends javax.swing.JPanel {
     private Modelo modeloSelect;
     private Dispositivo dispositivo;
     private TipoReparacion tipoReparacionSelect;
-    private List<Reparacion> reparacionesList;
     private String fechaActual = Utils.fechaActualToString();
     JComboBox<Marca> cmbMarca  = new JComboBox<>();
     JComboBox<Modelo> cmbModelo = new JComboBox<>();
@@ -449,12 +447,13 @@ public class CrearReparacion extends javax.swing.JPanel {
         }
         // Compruebo si el imei existe en la BD
         if(DispositivoController.checkImei(imei)){
-            
+            imei = dispositivo.getImei();
         } else{
            dispositivo = new Dispositivo(imei, idModelo, idCliente); // Si no existe, creo un dispositivo nuevo
+           // Inserto el nuevo dispositivo en la BBDD
+           DispositivoController.addDispositivo(dispositivo);
         }
-        
-         
+           
         // Obtengo el id del tipoReparacion
         idTipoReparacion = tipoReparacionSelect.getId();
         if(idTipoReparacion < 1){
@@ -463,7 +462,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             idTipoReparacion = tipoReparacionSelect.getId();
         }
         
-        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, importe, garantia, comentarios, estado, dispositivo, idMarca);
+        Reparacion nuevaReparacion = new Reparacion(fechaEntrada, fechaSalida, importe, garantia, comentarios, estado, dispositivo);
         if (ReparacionController.crearReparacion(nuevaReparacion)) {
             JOptionPane.showMessageDialog(null, "Reparación guardada correctamente.");
         } else {

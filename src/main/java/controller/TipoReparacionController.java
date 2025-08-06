@@ -14,8 +14,13 @@ import entity.TipoReparacion;
 public class TipoReparacionController {
     
     
-     // Inserta una nuevo tipo de reparación en la BD y devuelve el objeto TipoReparacion con el ID generado
+    // Inserta una nuevo tipo de reparación en la BD y devuelve el objeto TipoReparacion con el ID generado
     public static TipoReparacion addTipoReparacion(String nuevotipoReparacionStr){  
        return TipoReparacionDao.insertTipoReparacion(nuevotipoReparacionStr);
+    }
+    
+    // Obtiene objeto TipoReparacion
+    public static TipoReparacion getTipoReparacion(int idReparacion){
+        return TipoReparacionDao.getTipoReparacionByReparacionId(idReparacion);
     }
 }

@@ -29,11 +29,15 @@ public class ClienteController {
     }
     
     public static List<Cliente> findCliente(String nombre, String apellidos, String telefono){
-        return ClienteDao.selectCliente(nombre, apellidos, telefono);
+        return ClienteDao.selectClientesList(nombre, apellidos, telefono);
     }
 
     public static boolean eliminarCliente(int idCliente){
         return ClienteDao.deleteCliente(idCliente);
+    }
+    
+    public static Cliente getClienteByReparacion(int idDispositivo){
+        return ClienteDao.getClienteByDispositivo(idDispositivo);
     }
 }
 

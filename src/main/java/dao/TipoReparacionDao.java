@@ -22,6 +22,10 @@ public class TipoReparacionDao {
     private static final String SELECT_TIPO_REPARACION = "SELECT * FROM tipo_reparacion";
     private static final String GET_ID_TIPO_REPARACION = "SELECT id FROM tipo_reparacion WHERE reparacion = ?";
     private static final String INSERT_TIPO_REPARACION = "INSERT INTO tipo_reparacion (reparacion) VALUES(?)";
+    private static final String GET_TIPO_REPARACION_BY_REPARACION = "SELECT t.id AS id_tipo_reparacion, nombre AS nombre_reparacion " +
+            "FROM tipo_reparacion t " +
+            "JOIN reparacion_tipo rt ON rt.id_tipo_reparacion = t.id " +
+            "WHERE rt.id_reparacion = ?";
     
     public List<TipoReparacion> getTipoReparacionList(){
         
@@ -29,9 +33,7 @@ public class TipoReparacionDao {
         
         Connection conn = ConexionBD.connect();
         
-        try{
-            PreparedStatement stmt = conn.prepareStatement(SELECT_TIPO_REPARACION);
-            
+        try(PreparedStatement stmt = conn.prepareStatement(SELECT_TIPO_REPARACION)){
             ResultSet rs = stmt.executeQuery();
             while(rs.next()){
                 TipoReparacion t = new TipoReparacion();
@@ -69,9 +71,8 @@ public class TipoReparacionDao {
         }
         return nuevoTipoReparacion;
     }
-    
-    
-      public static int getTipoReparacionId(String tipo){
+
+    public static int getTipoReparacionId(String tipo){
         
         int idTipo = -1;
         
@@ -93,5 +94,25 @@ public class TipoReparacionDao {
             throw new IllegalArgumentException("No se encontró el tipo de reparación: " + tipo);
         }
         return idTipo;
+    }
+    
+    public static TipoReparacion getTipoReparacionByReparacionId(int idReparacion){
+        
+        Connection conn = ConexionBD.connect();
+        try(PreparedStatement stmt = conn.prepareStatement(GET_TIPO_REPARACION_BY_REPARACION)){
+            stmt.setInt(1, idReparacion);
+            ResultSet rs = stmt.executeQuery();
+            if(rs.next()){
+                TipoReparacion t = new TipoReparacion();
+                t.setId(rs.getInt("id_tipo_reparacion"));
+                t.setTipoReparacion(rs.getString("nombre_reparacion"));
+                return t;
+            }
+           
+        } catch(SQLException e){
+            System.out.println("Error al obtener el tipo de reparacion en la clase TipoReparacionDao metodo getTipoReparacionByReparacionId");
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -16,8 +16,6 @@ public class Dispositivo {
     private int idModelo;
     private int idCliente;
 
-    
-    
     // CONSTRUCTOR
     public Dispositivo(int id, int imei, int idModelo, int idCliente) {
         this.id = id;

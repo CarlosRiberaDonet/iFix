@@ -5,6 +5,7 @@
 package dao;
 
 import entity.Cliente;
+import entity.Dispositivo;
 import entity.Marca;
 import entity.Modelo;
 import entity.Reparacion;
@@ -55,6 +56,10 @@ public class ReparacionDao {
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
+                Dispositivo d = new Dispositivo();
+                d.setId(rs.getInt("id"));
+                d.setImei(rs.getInt("imei"));
+                
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
@@ -67,19 +72,11 @@ public class ReparacionDao {
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql.toLocalDate());
-                r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getIdModelo());
-                r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
                 r.setEstado(rs.getString("estado"));
-                r.setIdCliente(c.getId());
-                r.setCliente(c);
-                r.setMarca(m);
-                r.setModelo(mo);
-                r.setTipoReparacion(t);
-                
+                r.setIdDispositivo(d.getId());
                 reparacionesList.add(r);
             }
             
@@ -126,6 +123,11 @@ public class ReparacionDao {
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
+                // Creo el objeto Dispositivo con los datos obtenidos
+                Dispositivo d = new Dispositivo();
+                d.setId(rs.getInt("id"));
+                d.setImei(rs.getInt("imei"));
+                
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
@@ -138,17 +140,11 @@ public class ReparacionDao {
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql.toLocalDate());
-                r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getIdModelo());
-                r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
-                r.setIdCliente(c.getId());
-                r.setCliente(c);
-                r.setMarca(m);
-                r.setModelo(mo);
-                r.setTipoReparacion(t);
+                r.setEstado(rs.getString("estado"));
+                r.setIdDispositivo(d.getId());
                 
                 reparacion = r;   
             }    
@@ -191,6 +187,11 @@ public class ReparacionDao {
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
+                // Creo el objeto Dispositivo con los datos obtenidos
+                Dispositivo d = new Dispositivo();
+                d.setId(rs.getInt("id"));
+                d.setImei(rs.getInt("imei"));
+                
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
@@ -204,18 +205,11 @@ public class ReparacionDao {
 
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql != null ? fechaSalidaSql.toLocalDate() : null);
-                r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getIdModelo());
-                r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
                 r.setEstado(rs.getString("estado"));
-                r.setIdCliente(c.getId());
-                r.setCliente(c);
-                r.setMarca(m);
-                r.setModelo(mo);
-                r.setTipoReparacion(t);
+                r.setIdDispositivo(d.getId());
                 
                 reparacionesList.add(r);
             }
@@ -256,6 +250,11 @@ public class ReparacionDao {
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
+                // Creo el objeto Dispositivo con los datos obtenidos
+                Dispositivo d = new Dispositivo();
+                d.setId(rs.getInt("id"));
+                d.setImei(rs.getInt("imei"));
+                
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
@@ -268,17 +267,11 @@ public class ReparacionDao {
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql.toLocalDate());
-                r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getIdModelo());
-                r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
-                r.setIdCliente(c.getId());
-                r.setCliente(c);
-                r.setMarca(m);
-                r.setModelo(mo);
-                r.setTipoReparacion(t);
+                r.setEstado(rs.getString("estado"));
+                r.setIdDispositivo(d.getId());
                 
                 reparacionesList.add(r);
             }
@@ -317,6 +310,11 @@ public class ReparacionDao {
                 mo.setIdModelo(rs.getInt("idModelo"));
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
+                            
+                // Creo el objeto Dispositivo con los datos obtenidos
+                Dispositivo d = new Dispositivo();
+                d.setId(rs.getInt("id"));
+                d.setImei(rs.getInt("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
@@ -330,17 +328,11 @@ public class ReparacionDao {
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql.toLocalDate());
-                r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getIdModelo());
-                r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
-                r.setIdCliente(c.getId());
-                r.setCliente(c);
-                r.setMarca(m);
-                r.setModelo(mo);
-                r.setTipoReparacion(t);
+                r.setEstado(rs.getString("estado"));
+                r.setIdDispositivo(d.getId());
                 
                 reparacionesList.add(r);
             }
@@ -379,6 +371,11 @@ public class ReparacionDao {
                 mo.setModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
+                // Creo el objeto Dispositivo con los datos obtenidos
+                Dispositivo d = new Dispositivo();
+                d.setId(rs.getInt("id"));
+                d.setImei(rs.getInt("imei"));
+                
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("idReparacion"));
@@ -391,17 +388,11 @@ public class ReparacionDao {
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
                 r.setFechaSalida(fechaSalidaSql.toLocalDate());
-                r.setIdMarca(m.getIdMarca());
-                r.setIdModelo(mo.getIdModelo());
-                r.setIdTipoReparacion(t.getId());
                 r.setPrecioReparacion(rs.getBigDecimal("precio"));
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
-                r.setIdCliente(c.getId());
-                r.setCliente(c);
-                r.setMarca(m);
-                r.setModelo(mo);
-                r.setTipoReparacion(t);
+                r.setEstado(rs.getString("estado"));
+                r.setIdDispositivo(d.getId());
                 
                 reparacionesList.add(r);
             }
@@ -423,13 +414,11 @@ public class ReparacionDao {
             LocalDate hoy = LocalDate.now();
             stmt.setDate(1, java.sql.Date.valueOf(hoy));
             stmt.setDate(2, java.sql.Date.valueOf(hoy));
-            stmt.setInt(3, r.getIdMarca());
-            stmt.setInt(4, r.getIdModelo());          
-            stmt.setInt(5, r.getIdTipoReparacion());
-            stmt.setBigDecimal(6, r.getPrecioReparacion());
-            stmt.setBoolean(7, r.isGarantia());
-            stmt.setString(8, r.getComentarios());
-            stmt.setInt(9, r.getIdCliente());
+            stmt.setBigDecimal(3, r.getPrecioReparacion());
+            stmt.setBoolean(4, r.isGarantia());
+            stmt.setString(5, r.getComentarios());
+            stmt.setInt(6, r.getIdDispositivo());
+            stmt.setString(7, r.getEstado());
             
             int filasAfectadas = stmt.executeUpdate();
             
@@ -457,10 +446,8 @@ public class ReparacionDao {
             stmt.setBoolean(4, r.isGarantia());
             stmt.setString(5, r.getComentarios());
             stmt.setString(6, r.getEstado());
-            stmt.setInt(7, r.getIdMarca());
-            stmt.setInt(8, r.getIdModelo());
-            stmt.setInt(9, r.getIdTipoReparacion());
-            stmt.setInt(10, r.getId());
+            stmt.setInt(7, r.getIdDispositivo());
+            stmt.setInt(8, r.getId());
             
             int filasAfectadas = stmt.executeUpdate();
             if(filasAfectadas > 0){

@@ -1,6 +1,8 @@
 package ui.components.reparaciones;
 
+import controller.ClienteController;
 import controller.ReparacionController;
+import entity.Cliente;
 import entity.Dispositivo;
 import entity.Marca;
 import entity.Modelo;
@@ -29,7 +31,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     
     private ReparacionController rc = new ReparacionController();
     private Reparacion reparacion;
-    private Marca marca;
+    private Cliente cliente;
     private Modelo modelo;
     private TipoReparacion tipoReparacion;
     private static boolean modoEdicion;
@@ -115,7 +117,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     // Lleno los comboBox
     private void cargarComboBox(){
         rc.llenarComboBoxMarca(cmbMarca);
-        rc.llenarComboBoxModelo(reparacion.getIdMarca(), cmbModelo);
+        rc.llenarComboBoxModelo(reparacion.getIdDispositivo(), cmbModelo);
         rc.llenarComboBoxReparacion(cmbTipoReparacion);       
         // Dibujo los ComboBox
         cmbMarca.setBounds(30, 20, 150, 30);
@@ -132,16 +134,17 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
               
         fechaEntradaTextField.setText(Utils.localDateToString(reparacion.getFechaEntrada()));
         fechaSalidaTextField.setText(Utils.localDateToString(reparacion.getFechaSalida()));
-        cmbMarca.setSelectedItem(reparacion.getMarca());
-        rc.seleccionarModeloPorId(cmbModelo, reparacion.getIdModelo());
-        imeiTextField.setText(String.valueOf(reparacion.getImei()));
-        rc.seleccionarTipoReparacionPorId(cmbTipoReparacion, reparacion.getTipoReparacion().getId());
+        cmbMarca.setSelectedItem(reparacion.getDispositivo().getIdModelo());
+        rc.seleccionarModeloPorId(cmbModelo, reparacion.getIdDispositivo());
+        imeiTextField.setText(String.valueOf(reparacion.getDispositivo().getImei()));
+        //rc.seleccionarTipoReparacionPorId(cmbTipoReparacion, reparacion.getTipoReparacion().getId());
         importeTextField.setText(reparacion.getPrecioReparacion().toString());
         garantiaCheckBox.setSelected(reparacion.isGarantia());
         comentariosTextArea.setText(reparacion.getComentarios());
         cmbEstado.setSelectedItem(reparacion.getEstado());
-        clienteTextField.setText(reparacion.getCliente().getNombre().toUpperCase() + " " + reparacion.getCliente().getApellidos().toUpperCase());
-        telefonoTextField.setText(reparacion.getCliente().getTelefono());
+        cliente = ClienteController.getClienteByReparacion(reparacion.getId());
+        clienteTextField.setText(cliente.getNombre().toUpperCase() + " " + cliente.getApellidos().toUpperCase());
+        telefonoTextField.setText(cliente.getTelefono());
     }
     
     public void guardarReparacion(Reparacion reparacion){
@@ -149,19 +152,16 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         int idReparacion = reparacion.getId();
         LocalDate fechaEntrada = Utils.stringToLocalDate(fechaEntradaTextField.getText());
         LocalDate fechaSalida =  Utils.stringToLocalDate(fechaSalidaTextField.getText());
-        marca = (Marca) cmbMarca.getSelectedItem();
-        int idMarca = marca.getIdMarca();
-        modelo = (Modelo) cmbModelo.getSelectedItem();
-        int idModelo = modelo.getIdModelo();
-        int imei = Integer.parseInt(imeiTextField.getText());
+        // marca = (Marca) cmbMarca.getSelectedItem();
+        // modelo = (Modelo) cmbModelo.getSelectedItem();
+        int idDispositivo = reparacion.getIdDispositivo();
         tipoReparacion = (TipoReparacion) cmbTipoReparacion.getSelectedItem();
-        int idTipoReparacion = tipoReparacion.getId();
         BigDecimal importe = Utils.stringToBigDecimal(importeTextField.getText());
         boolean garantia = garantiaCheckBox.isSelected();
         String comentarios = comentariosTextArea.getText();
         String estado = (String) cmbEstado.getSelectedItem();
         
-        Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, idMarca, idModelo, imei, idTipoReparacion, importe, garantia, comentarios, estado);
+        Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, importe, garantia, comentarios, estado, idDispositivo);
         ReparacionController.modificarReparacion(r);
         
         JOptionPane.showMessageDialog(null, "Reparación modificada", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);
@@ -253,7 +253,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 645, Short.MAX_VALUE)
+            .addGap(0, 673, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,13 +286,11 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(85, 85, 85)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 534, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(220, 220, 220)
-                                        .addComponent(comentariosLabel)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                        .addComponent(comentariosLabel)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()

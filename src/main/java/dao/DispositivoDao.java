@@ -38,8 +38,7 @@ public class DispositivoDao {
             return false;
         } finally{
             ConexionBD.close(conn);
-        }
-        
+        }     
        return true;
     }
     

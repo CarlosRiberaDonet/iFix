@@ -64,13 +64,10 @@ public class QuerySQL {
             "precio = ?, " +
             "garantia = ?, " +
             "comentarios = ?, " +
-            "estado = ?, " +
-            "id_marca = ?, " +
-            "id_modelo = ?, " +
-            "id_tipo_reparacion = ? " +
+            "id_dispositivo" +
             "WHERE id = ?";
     public static final String DELETE_REPARACION = "DELETE FROM reparacion WHERE id = ?";
-    public static final String INSERT_REPARACION = " INSERT INTO reparacion (fecha_entrada, fecha_salida, id_marca, id_modelo, id_tipo_reparacion, " + "precio, garantia, comentarios, id_cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    public static final String INSERT_REPARACION = " INSERT INTO reparacion (fecha_entrada, fecha_salida, precio, garantia, comentarios, id_dispositivo, estado) VALUES (?, ?, ?, ?, ?, ?, ?)";
     public static final String SELECT_REPARACION_BY_ID = "SELECT r.id, " + "r.fecha_entrada, " + "r.fecha_salida, " + "r.precio, " + "r.garantia, " + "r.comentarios, " + "r.id_marca AS idMarca, " + "r.id_modelo AS idModelo, " + "r.id_tipo_reparacion AS idReparacion, " + "r.id_cliente, " + "m.marca, " + "mo.modelo, " + "t.reparacion, " + "c.nombre, " + "c.apellidos, " + "c.telefono, " + "c.direccion " + "FROM reparacion r " + "JOIN marca m ON r.id_marca = m.id " + "JOIN modelo mo ON r.id_modelo = mo.id " + "JOIN tipo_reparacion t ON r.id_tipo_reparacion = t.id " + "JOIN cliente c ON r.id_cliente = c.id " + "WHERE r.id = ?";
     public static final String SELECT_REPARACION_BY_DATE = "SELECT r.id AS idReparacion, " +
             "r.fecha_entrada, " +

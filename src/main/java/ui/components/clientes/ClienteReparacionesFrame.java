@@ -69,8 +69,7 @@ public class ClienteReparacionesFrame extends javax.swing.JFrame {
                 r.getId(),
                 fechaEntrada,
                 fechaSalida,
-                r.getModelo().getModelo(),
-                r.getTipoReparacion(),
+                r.getIdDispositivo(),
                 r.getEstado(),
                 r.getPrecioReparacion()
             });

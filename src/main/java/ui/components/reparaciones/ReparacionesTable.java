@@ -48,7 +48,7 @@ public class ReparacionesTable extends JPanel{
                 r.getId(),
                 fechaEntrada,
                 fechaSalida,
-                r.getCliente().getNombre().toUpperCase() + " " + r.getCliente().getApellidos().toUpperCase(),
+                r.getDispositivo().getIdCliente().toUpperCase() + " " + r.getCliente().getApellidos().toUpperCase(),
                 r.getModelo().getModelo().toUpperCase(),
                 r.getTipoReparacion().getTipoReparacion().toUpperCase(),
                 r.getEstado(),
