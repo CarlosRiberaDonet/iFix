@@ -35,13 +35,12 @@ public class Utils {
         } 
     }
     
-    public static int stringImeiToInt(String imeiText){
-        if(!imeiText.trim().isEmpty() && imeiText.matches("\\d{15}")){
-            int imei = Integer.parseInt(imeiText);
+    public static String stringImeiToInt(String imei){
+        if(!imei.trim().isEmpty() && imei.matches("\\d{15}")){
             return imei;
         } else{
             JOptionPane.showMessageDialog(null, "El IMEI no puede estar vacío y, debe contener 15 dígitos.");
-            return -1;
+            return "";
         }
     }
 

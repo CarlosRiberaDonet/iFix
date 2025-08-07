@@ -4,8 +4,10 @@
  */
 package entity;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
@@ -13,6 +15,8 @@ import java.time.LocalDate;
  */
 public class Reparacion {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremento en BD
     private int id;
     private LocalDate fechaEntrada;
     private LocalDate fechaSalida;
@@ -20,11 +24,21 @@ public class Reparacion {
     private boolean garantia;
     private String comentarios;
     private String estado;
+    @ManyToOne
+    @JoinColumn(name = "id_dispositivo")
     private Dispositivo dispositivo;
     private int idDispositivo;
     
+    @ManyToMany
+    @JoinTable(
+        name = "reparacion_tipo",
+        joinColumns = @JoinColumn(name = "id_reparacion"),
+        inverseJoinColumns = @JoinColumn(name = "id_tipo_reparacion")
+    )
+    private List<TipoReparacion> tipoReparacion;
+    
    // CONSTRUCTOR  
-    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, int idDispositivo) {
+    public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, Dispositivo dispositivo) {
         this.id = id;
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
@@ -34,13 +48,14 @@ public class Reparacion {
         this.estado = estado;
     }
 
-    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, Reparacion reparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado) {
+    public Reparacion(LocalDate fechaEntrada, LocalDate fechaSalida, Reparacion reparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado, List<TipoReparacion> tipoReparacion) {
         this.fechaEntrada = fechaEntrada;
         this.fechaSalida = fechaSalida;
         this.precioReparacion = precioReparacion;
         this.garantia = garantia;
         this.comentarios = comentarios;
         this.estado = estado;
+        this.tipoReparacion = tipoReparacion;
     }
 
     public Reparacion(int id, LocalDate fechaEntrada, LocalDate fechaSalida, Dispositivo dispositivo, int idTipoReparacion, BigDecimal precioReparacion, boolean garantia, String comentarios, String estado) {
@@ -68,7 +83,6 @@ public class Reparacion {
     }
     
     // GETTERS Y SETTERS
-
     public int getId() {
         return id;
     }
@@ -132,13 +146,13 @@ public class Reparacion {
     public void setDispositivo(Dispositivo dispositivo) {
         this.dispositivo = dispositivo;
     }
-    
-    public int getIdDispositivo(){
-        return idDispositivo;
+
+    public List<TipoReparacion> getTipoReparacion() {
+        return tipoReparacion;
     }
-    
-    public void setIdDispositivo(int idDispositivo){
-        this.idDispositivo = idDispositivo;
+
+    public void setTipoReparacion(List<TipoReparacion> tipoReparacion) {
+        this.tipoReparacion = tipoReparacion;
     }
 
     @Override

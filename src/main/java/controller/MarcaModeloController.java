@@ -31,7 +31,7 @@ public class MarcaModeloController {
         List<Modelo> modelosFiltrados = new ArrayList<>();
         
         for(Modelo m : modelosList){
-            if(m.getIdMarca() == idMarca){
+            if(m.getMarca().getIdMarca() == idMarca){
                 modelosFiltrados.add(m);
             }
         }

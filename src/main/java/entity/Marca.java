@@ -4,18 +4,23 @@
  */
 package entity;
 
+import jakarta.persistence.*;
 /**
  *
  * @author Carlos
  */
+@Entity
+@Table(name = "marca")
 public class Marca {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMarca;
-    private String marca;
+    private String nombre;
 
     public Marca(int idMarca, String marca) {
         this.idMarca = idMarca;
-        this.marca = marca;
+        this.nombre = marca;
     }
     
     public Marca(){
@@ -31,11 +36,11 @@ public class Marca {
     }
 
     public String getMarca() {
-        return marca;
+        return nombre;
     }
 
     public void setMarca(String marca) {
-        this.marca = marca;
+        this.nombre = marca;
     }
     
     @Override
@@ -48,6 +53,6 @@ public class Marca {
     
     @Override
     public String toString(){
-        return this.marca.toUpperCase();
+        return this.nombre.toUpperCase();
     }
 }

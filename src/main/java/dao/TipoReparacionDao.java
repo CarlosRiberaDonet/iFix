@@ -96,23 +96,26 @@ public class TipoReparacionDao {
         return idTipo;
     }
     
-    public static TipoReparacion getTipoReparacionByReparacionId(int idReparacion){
+    public static List<TipoReparacion> getTipoReparacionByReparacionId(int idReparacion){
+        
+        List<TipoReparacion> tipoReparacionList = new ArrayList<>();
         
         Connection conn = ConexionBD.connect();
+                
         try(PreparedStatement stmt = conn.prepareStatement(GET_TIPO_REPARACION_BY_REPARACION)){
             stmt.setInt(1, idReparacion);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()){
+            while(rs.next()){
                 TipoReparacion t = new TipoReparacion();
                 t.setId(rs.getInt("id_tipo_reparacion"));
                 t.setTipoReparacion(rs.getString("nombre_reparacion"));
-                return t;
+                tipoReparacionList.add(t);
             }
            
         } catch(SQLException e){
             System.out.println("Error al obtener el tipo de reparacion en la clase TipoReparacionDao metodo getTipoReparacionByReparacionId");
             e.printStackTrace();
         }
-        return null;
+        return tipoReparacionList;
     }
 }

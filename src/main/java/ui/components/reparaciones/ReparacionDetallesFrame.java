@@ -117,7 +117,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
     // Lleno los comboBox
     private void cargarComboBox(){
         rc.llenarComboBoxMarca(cmbMarca);
-        rc.llenarComboBoxModelo(reparacion.getIdDispositivo(), cmbModelo);
+        rc.llenarComboBoxModelo(reparacion.getDispositivo().getId(), cmbModelo);
         rc.llenarComboBoxReparacion(cmbTipoReparacion);       
         // Dibujo los ComboBox
         cmbMarca.setBounds(30, 20, 150, 30);
@@ -135,7 +135,7 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         fechaEntradaTextField.setText(Utils.localDateToString(reparacion.getFechaEntrada()));
         fechaSalidaTextField.setText(Utils.localDateToString(reparacion.getFechaSalida()));
         cmbMarca.setSelectedItem(reparacion.getDispositivo().getIdModelo());
-        rc.seleccionarModeloPorId(cmbModelo, reparacion.getIdDispositivo());
+        rc.seleccionarModeloPorId(cmbModelo, reparacion.getDispositivo().getId());
         imeiTextField.setText(String.valueOf(reparacion.getDispositivo().getImei()));
         //rc.seleccionarTipoReparacionPorId(cmbTipoReparacion, reparacion.getTipoReparacion().getId());
         importeTextField.setText(reparacion.getPrecioReparacion().toString());
@@ -152,16 +152,14 @@ public class ReparacionDetallesFrame extends javax.swing.JFrame {
         int idReparacion = reparacion.getId();
         LocalDate fechaEntrada = Utils.stringToLocalDate(fechaEntradaTextField.getText());
         LocalDate fechaSalida =  Utils.stringToLocalDate(fechaSalidaTextField.getText());
-        // marca = (Marca) cmbMarca.getSelectedItem();
-        // modelo = (Modelo) cmbModelo.getSelectedItem();
-        int idDispositivo = reparacion.getIdDispositivo();
+        Dispositivo dispositivo = reparacion.getDispositivo();
         tipoReparacion = (TipoReparacion) cmbTipoReparacion.getSelectedItem();
         BigDecimal importe = Utils.stringToBigDecimal(importeTextField.getText());
         boolean garantia = garantiaCheckBox.isSelected();
         String comentarios = comentariosTextArea.getText();
         String estado = (String) cmbEstado.getSelectedItem();
         
-        Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, importe, garantia, comentarios, estado, idDispositivo);
+        Reparacion r = new Reparacion(idReparacion, fechaEntrada, fechaSalida, importe, garantia, comentarios, estado, dispositivo);
         ReparacionController.modificarReparacion(r);
         
         JOptionPane.showMessageDialog(null, "Reparación modificada", "ÉXITO", JOptionPane.INFORMATION_MESSAGE);

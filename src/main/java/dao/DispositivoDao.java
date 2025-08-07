@@ -27,9 +27,9 @@ public class DispositivoDao {
         Connection conn = ConexionBD.connect();
         
         try(PreparedStatement stmt = conn.prepareStatement(INSERT_MODELO)){
-            stmt.setInt(1, nuevoDispositivo.getImei());
-            stmt.setInt(2, nuevoDispositivo.getIdModelo());
-            stmt.setInt(3, nuevoDispositivo.getIdCliente());
+            stmt.setString(1, nuevoDispositivo.getImei());
+            stmt.setInt(2, nuevoDispositivo.getId());
+            stmt.setInt(3, nuevoDispositivo.getIdCliente().getId());
             stmt.executeUpdate();
             
         } catch(SQLException e){
@@ -42,12 +42,12 @@ public class DispositivoDao {
        return true;
     }
     
-    public static boolean getImei(int imei){
+    public static boolean getImei(String imei){
         
         Connection conn = ConexionBD.connect();
         
         try(PreparedStatement stmt = conn.prepareStatement(GET_IMEI)){
-            stmt.setInt(1, imei);
+            stmt.setString(1, imei);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 return true; // Si existe un dispositivo con ese imei, devuelve true

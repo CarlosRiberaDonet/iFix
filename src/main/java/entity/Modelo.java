@@ -4,22 +4,37 @@
  */
 package entity;
 
+import jakarta.persistence.*;
 import java.util.Objects;
 
 /**
  *
  * @author Carlos
  */
+@Entity
+@Table(name = "modelo")
 public class Modelo {
     
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idModelo;
     private String nombreModelo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_marca")
+    private Marca marca;
     private int idMarca;
 
-    public Modelo(int id, String modelo, int id_marca) {
+    public Modelo(int id, String nombreModelo, Marca marca) {
         this.idModelo = id;
-        this.nombreModelo = modelo;
-        this.idMarca = id_marca;
+        this.nombreModelo = nombreModelo;
+        this.marca = marca;
+    }
+    
+    public Modelo(int id, String nombreModelo, int idMarca) {
+        this.idModelo = id;
+        this.nombreModelo = nombreModelo;
+        this.marca = marca;
     }
     
     public Modelo(){
@@ -34,12 +49,20 @@ public class Modelo {
         this.idModelo = id;
     }
 
-    public String getModelo() {
+    public String getnombreModelo() {
         return nombreModelo;
     }
 
-    public void setModelo(String modelo) {
-        this.nombreModelo = modelo;
+    public void setNombreModelo(String nombreModelo) {
+        this.nombreModelo = nombreModelo;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
     }
 
     public int getIdMarca() {
@@ -49,6 +72,8 @@ public class Modelo {
     public void setIdMarca(int idMarca) {
         this.idMarca = idMarca;
     }
+    
+    
     
     @Override
     public boolean equals(Object obj) {

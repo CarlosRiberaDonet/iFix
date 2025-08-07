@@ -4,6 +4,7 @@
  */
 package entity;
 
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,13 +12,17 @@ import java.util.List;
  *
  * @author Carlos Ribera
  */
+@Entity
+@Table(name = "cliente")
 public class Cliente {
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremento en BD
     private int id;
     private String nombre;
     private String apellidos;
     private String telefono;
     private String direccion;
+    @OneToMany(mappedBy = "cliente")
     private List<Reparacion> reparacionesList = new ArrayList<>();
     
     

@@ -7,6 +7,7 @@ package ui.frames;
 import com.toedter.calendar.JDateChooser;
 import controller.ReparacionController;
 import entity.Reparacion;
+import entity.TipoReparacion;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.time.LocalDate;
@@ -40,6 +41,7 @@ public class ReparacionFrame extends JFrame {
     private JDateChooser fechaEntradaChooser = null;
     private JDateChooser fechaSalidaChooser = null;
     private List<Reparacion> reparacionesList  = new ArrayList<>();
+    private List<TipoReparacion> tipoReparacionList  = new ArrayList<>();
     
     public ReparacionFrame(){
         setTitle("REPARACIONES");
@@ -78,7 +80,7 @@ public class ReparacionFrame extends JFrame {
         topPanel.add(volverButton);
         
         add(topPanel, BorderLayout.NORTH);
-        tablePanel = new ReparacionesTable(reparacionesList);
+        tablePanel = new ReparacionesTable(reparacionesList, tipoReparacionList);
         tablaReparaciones = tablePanel.getTablaReparaciones();
         cargarTablaReparaciones();
 
@@ -118,7 +120,7 @@ public class ReparacionFrame extends JFrame {
         else{
             reparacionesList.addAll(ReparacionController.getAllReparaciones());
         }
-        tablePanel.setReparaciones(reparacionesList);
+        tablePanel.setReparaciones(reparacionesList, tipoReparacionList);
     }
     
     // Busqueda por teléfono

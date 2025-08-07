@@ -412,10 +412,11 @@ public class CrearReparacion extends javax.swing.JPanel {
         String textoImporte = importeTextField.getText();
         BigDecimal importe = Utils.stringToBigDecimal(textoImporte);
         String estado = (String) estadoComboBox.getSelectedItem();
-        int imei = Utils.stringImeiToInt(imeiTextField.getText());
+        String imei = Utils.stringImeiToInt(imeiTextField.getText());
         boolean garantia = garantiaCheckBox.isSelected();
         String comentarios = comentariosTextArea.getText();
-        int idCliente = cliente.getId();
+        Modelo modelo = new Modelo();
+        Marca marca = new Marca();
         
         if(importe == null){
             JOptionPane.showMessageDialog(null, "Revise el importe", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -432,6 +433,7 @@ public class CrearReparacion extends javax.swing.JPanel {
             marcaSelect = MarcaModeloController .addMarca(nuevaMarcaStr);  
             // Obtengo el id de la nueva marca
             idMarca = marcaSelect.getIdMarca();
+            marca = new Marca(idMarca, nuevaMarcaStr);
         }
         
         // Obtengo el id del modelo seleccionado
@@ -444,12 +446,13 @@ public class CrearReparacion extends javax.swing.JPanel {
             modeloSelect = MarcaModeloController.addModelo(nuevoModeloStr, idMarca);
             // Obtengo el id del nuevo modelo
             idModelo = modeloSelect.getIdModelo();
+            modelo = new Modelo(idModelo, nuevoModeloStr, marca);
         }
         // Compruebo si el imei existe en la BD
         if(DispositivoController.checkImei(imei)){
             imei = dispositivo.getImei();
         } else{
-           dispositivo = new Dispositivo(imei, idModelo, idCliente); // Si no existe, creo un dispositivo nuevo
+           dispositivo = new Dispositivo(imei, modelo, cliente); // Si no existe, creo un dispositivo nuevo
            // Inserto el nuevo dispositivo en la BBDD
            DispositivoController.addDispositivo(dispositivo);
         }

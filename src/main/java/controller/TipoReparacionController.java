@@ -6,6 +6,7 @@ package controller;
 
 import dao.TipoReparacionDao;
 import entity.TipoReparacion;
+import java.util.List;
 
 /**
  *
@@ -20,7 +21,7 @@ public class TipoReparacionController {
     }
     
     // Obtiene objeto TipoReparacion
-    public static TipoReparacion getTipoReparacion(int idReparacion){
+    public static List<TipoReparacion> getTipoReparacionList(int idReparacion){
         return TipoReparacionDao.getTipoReparacionByReparacionId(idReparacion);
     }
 }

@@ -4,30 +4,40 @@
  */
 package entity;
 
+import jakarta.persistence.*;
 import java.util.Objects;
 
 /**
  *
  * @author Carlos Ribera
  */
+@Entity
+@Table(name = "dispositivo")
 public class Dispositivo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-incremento en BD
     private int id;
-    private int imei;
-    private int idModelo;
-    private int idCliente;
+    private String imei;
+    @ManyToOne
+    @JoinColumn(name = "id_modelo", nullable = false)
+    private Modelo modelo;
+
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
 
     // CONSTRUCTOR
-    public Dispositivo(int id, int imei, int idModelo, int idCliente) {
+    public Dispositivo(int id, String imei, Modelo modelo, Cliente cliente) {
         this.id = id;
         this.imei = imei;
-        this.idModelo = idModelo;
-        this.idCliente = idCliente;
+        this.modelo = modelo;
+        this.cliente = cliente;
     }
     
-    public Dispositivo(int imei, int idModelo, int idCliente){
+    public Dispositivo(String imei, Modelo modelo, Cliente cliente) {
         this.imei = imei;
-        this.idModelo = idModelo;
-        this.idCliente = idCliente;
+        this.modelo = modelo;
+        this.cliente = cliente;
     }
     
     public Dispositivo(){
@@ -44,28 +54,28 @@ public class Dispositivo {
         this.id = id;
     }
     
-    public int getImei() {
+    public String getImei() {
         return imei;
     }
 
-    public void setImei(int imei) {
+    public void setImei(String imei) {
         this.imei = imei;
     }
 
-    public int getIdModelo() {
-        return idModelo;
+    public Modelo getIdModelo() {
+        return modelo;
     }
 
-    public void setIdModelo(int idModelo) {
-        this.idModelo = idModelo;
+    public void setIdModelo(Modelo idModelo) {
+        this.modelo = modelo;
     }
 
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente getIdCliente() {
+        return cliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setIdCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
     
     @Override

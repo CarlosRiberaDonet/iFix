@@ -39,7 +39,7 @@ public class ReparacionDao {
                 
                 // Creo el objeto Cliente con los datos obtenidos
                 Cliente c = new Cliente();
-                c.setId(rs.getInt("id"));
+                c.setId(rs.getInt("idCliente"));
                 c.setNombre(rs.getString("nombre"));
                 c.setApellidos(rs.getString("apellidos"));
                 c.setTelefono(rs.getString("telefono"));
@@ -53,21 +53,21 @@ public class ReparacionDao {
                 // Creo el objeto Modelo con los datos obtenidos
                 Modelo mo = new Modelo();
                 mo.setIdModelo(rs.getInt("idModelo"));
-                mo.setModelo(rs.getString("modelo"));
+                mo.setNombreModelo(rs.getString("modelo"));
                 mo.setIdMarca(m.getIdMarca());
                 
                 Dispositivo d = new Dispositivo();
-                d.setId(rs.getInt("id"));
-                d.setImei(rs.getInt("imei"));
+                d.setId(rs.getInt("idDispositivo"));
+                d.setImei(rs.getString("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
-                t.setId(rs.getInt("idReparacion"));
+                t.setId(rs.getInt("idTipoReparacion"));
                 t.setTipoReparacion(rs.getString("reparacion"));
                 
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
-                r.setId(rs.getInt("id"));
+                r.setId(rs.getInt("idReparacion"));
                 java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
                 r.setFechaEntrada(fechaEntradaSql.toLocalDate());
                 java.sql.Date fechaSalidaSql = rs.getDate("fecha_salida");
@@ -76,12 +76,13 @@ public class ReparacionDao {
                 r.setGarantia(rs.getBoolean("garantia"));
                 r.setComentarios(rs.getString("comentarios"));
                 r.setEstado(rs.getString("estado"));
-                r.setIdDispositivo(d.getId());
+                r.setDispositivo(d.getId());
                 reparacionesList.add(r);
             }
             
         } catch(SQLException e){
-            System.out.println("Error al obtener la lista de reparaciones de la BD.");
+            System.out.println("Error al obtener la lista de reparaciones de la BD getAllReparacionesList.");
+            e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
         }
@@ -126,7 +127,7 @@ public class ReparacionDao {
                 // Creo el objeto Dispositivo con los datos obtenidos
                 Dispositivo d = new Dispositivo();
                 d.setId(rs.getInt("id"));
-                d.setImei(rs.getInt("imei"));
+                d.setImei(rs.getString("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
@@ -149,7 +150,7 @@ public class ReparacionDao {
                 reparacion = r;   
             }    
         } catch(SQLException e){
-            System.out.println("Error al buscar la reparacion: " + e.getMessage());
+            System.out.println("Error al buscar la reparacion getReparacionById: " + e.getMessage());
             e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
@@ -163,14 +164,14 @@ public class ReparacionDao {
         List<Reparacion> reparacionesList = new ArrayList<>();
         Connection conn = ConexionBD.connect();
         
-        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELECT_REPARACIONES_BY_CLIENTE_ID)){
+        try(PreparedStatement stmt = conn.prepareStatement(QuerySQL.SELEC_REPARACION_BY_CLIENTE_ID)){
             stmt.setInt(1, idCliente);
             ResultSet rs = stmt.executeQuery();
             
             while(rs.next()){
-                  // Creo el objeto Cliente con los datos obtenidos
+                // Creo el objeto Cliente con los datos obtenidos
                 Cliente c = new Cliente();
-                c.setId(rs.getInt("id"));
+                c.setId(rs.getInt("idCliente"));
                 c.setNombre(rs.getString("nombre"));
                 c.setApellidos(rs.getString("apellidos"));
                 c.setTelefono(rs.getString("telefono"));
@@ -185,21 +186,20 @@ public class ReparacionDao {
                 Modelo mo = new Modelo();
                 mo.setIdModelo(rs.getInt("idModelo"));
                 mo.setModelo(rs.getString("modelo"));
-                mo.setIdMarca(m.getIdMarca());
                 
                 // Creo el objeto Dispositivo con los datos obtenidos
                 Dispositivo d = new Dispositivo();
-                d.setId(rs.getInt("id"));
-                d.setImei(rs.getInt("imei"));
+                d.setId(rs.getInt("idDispositivo"));
+                d.setImei(rs.getString("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
-                t.setId(rs.getInt("idReparacion"));
+                t.setId(rs.getInt("idTipoReparacion"));
                 t.setTipoReparacion(rs.getString("reparacion"));
                 
                 // Creo el objeto Reparacion con los datos obtenidos  
                 Reparacion r = new Reparacion();
-                r.setId(rs.getInt("id"));
+                r.setId(rs.getInt("idReparacion"));
                 java.sql.Date fechaEntradaSql = rs.getDate("fecha_entrada");
                 r.setFechaEntrada(fechaEntradaSql != null ? fechaEntradaSql.toLocalDate() : null);
 
@@ -215,7 +215,7 @@ public class ReparacionDao {
             }
             
         } catch(SQLException e){
-            System.out.println("Error al obtener las reparaciones: " + e.getMessage());
+            System.out.println("Error al obtener las reparaciones getReparacionesByClienteId: " + e.getMessage());
         } finally{
             ConexionBD.close(conn);
         }
@@ -253,7 +253,7 @@ public class ReparacionDao {
                 // Creo el objeto Dispositivo con los datos obtenidos
                 Dispositivo d = new Dispositivo();
                 d.setId(rs.getInt("id"));
-                d.setImei(rs.getInt("imei"));
+                d.setImei(rs.getString("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
@@ -276,7 +276,7 @@ public class ReparacionDao {
                 reparacionesList.add(r);
             }
         } catch(SQLException e){
-            System.out.println("Error al obtener las reparaciones: " + e.getMessage());
+            System.out.println("Error al obtener las reparaciones getReparacionesbyTelefono: " + e.getMessage());
         } finally{
             ConexionBD.close(conn);
         }
@@ -314,7 +314,7 @@ public class ReparacionDao {
                 // Creo el objeto Dispositivo con los datos obtenidos
                 Dispositivo d = new Dispositivo();
                 d.setId(rs.getInt("id"));
-                d.setImei(rs.getInt("imei"));
+                d.setImei(rs.getString("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
@@ -337,7 +337,7 @@ public class ReparacionDao {
                 reparacionesList.add(r);
             }
         } catch(SQLException e){
-            System.out.println("Error al obtener las reparaciones: " + e.getMessage());
+            System.out.println("Error al obtener las reparaciones getReparacionByDate: " + e.getMessage());
         }finally{
             ConexionBD.close(conn);
         }
@@ -374,7 +374,7 @@ public class ReparacionDao {
                 // Creo el objeto Dispositivo con los datos obtenidos
                 Dispositivo d = new Dispositivo();
                 d.setId(rs.getInt("id"));
-                d.setImei(rs.getInt("imei"));
+                d.setImei(rs.getString("imei"));
                 
                 // Creo el objeto TipoReparacion con los datos obtenidos  
                 TipoReparacion t = new TipoReparacion();
@@ -397,7 +397,7 @@ public class ReparacionDao {
                 reparacionesList.add(r);
             }
         } catch(SQLException e){
-             System.out.println("Error al obtener las reparaciones filtradas por telefono y fecha: " + e.getMessage());
+             System.out.println("Error al obtener las reparaciones getReparacionByPhoneAndDate: " + e.getMessage());
         } finally{
             ConexionBD.close(conn);
         }
@@ -427,7 +427,7 @@ public class ReparacionDao {
             } 
             
         } catch(SQLException e){
-            System.out.println("Error al insertar reparacion: " + e.getMessage());
+            System.out.println("Error al insertar reparacion insertarReparacion: " + e.getMessage());
             e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
@@ -455,7 +455,7 @@ public class ReparacionDao {
             }
             
         } catch(SQLException e){
-            System.out.println("Error al modificar la reparacion" + e.getMessage());
+            System.out.println("Error al modificar la reparacion updateReparacion" + e.getMessage());
             e.printStackTrace();
             return false;
         } finally{
@@ -477,7 +477,7 @@ public class ReparacionDao {
                 }
             }
         } catch(SQLException e){
-            System.out.println("Error al actulizar el estado garantia de la reparacion: " + e.getMessage());
+            System.out.println("Error al actulizar el estado garantia de la reparacion updateGarantia: " + e.getMessage());
             e.printStackTrace();
         } finally{
             ConexionBD.close(conn);
@@ -492,7 +492,7 @@ public class ReparacionDao {
             return stmt.executeUpdate() > 0;
             
         } catch(SQLException e){
-            System.out.println("Error al eliminar la reparacion con id: " + idReparacion + e.getMessage());
+            System.out.println("Error al eliminar la reparacion con id deleteReparacion: " + idReparacion + e.getMessage());
             e.printStackTrace();
         } finally{
             ConexionBD.close(conn);

@@ -130,10 +130,10 @@ public class MarcaModeloDao {
                 int id = rs.getInt("id");
                 String modelo = rs.getString("modelo");
                 int idMarca = rs.getInt("id_marca");
-                Modelo m = new Modelo(id, modelo, idMarca);
-                modelosList.add(m);
-                
-                
+                Marca marca = new Marca();
+                marca.setIdMarca(idMarca);
+                Modelo m = new Modelo(id, modelo, marca);
+                modelosList.add(m);    
             }
         } catch(SQLException e){
             System.out.println("Error al obener la lista de modelos");
@@ -157,7 +157,7 @@ public class MarcaModeloDao {
                     if(rs.next()){
                         nuevoModelo = new Modelo();
                         nuevoModelo.setIdModelo(rs.getInt(1));
-                        nuevoModelo.setModelo(nuevoModeloStr);
+                        nuevoModelo.setNombreModelo(nuevoModeloStr);
                     }
                 }
             }

@@ -50,7 +50,7 @@ public class MarcaComboBoxListener implements ActionListener{
             MarcaModeloController modeloController = new MarcaModeloController();
             List<Modelo> modelos = modeloController.filterModelosByMarca(idMarca);
             for (Modelo m : modelos) {
-                modeloComboBox.addItem(m.getModelo().toUpperCase());
+                modeloComboBox.addItem(m.getnombreModelo().toUpperCase());
             }
         }
     }

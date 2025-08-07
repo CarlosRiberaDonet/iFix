@@ -18,7 +18,7 @@ public class DispositivoController {
         return DispositivoDao.createDispositivo(nuevoDispositivo);
     }
     
-    public static boolean checkImei(int imei){
+    public static boolean checkImei(String imei){
         return DispositivoDao.getImei(imei);
     }
 }
